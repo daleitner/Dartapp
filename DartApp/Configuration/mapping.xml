@@ -1,0 +1,52 @@
+<Mapping>
+	<Table name="Players" csobject="Player">
+		<Column name="Pid" attribute="Id" type="VARCHAR" />
+		<Column name="Name" attribute="VorName" type="VARCHAR" />
+		<Column name="Lastname" attribute="NachName" type="VARCHAR" />
+		<Column name="Birthdate" attribute="Birthdate" type="DATE" />
+		<Column name="Imagename" attribute="ImageName" type="VARCHAR" />
+	</Table>
+	<Table name="Holiday" csobject="Holiday">
+		<Column name="Hid" attribute="Id" type="VARCHAR" />
+		<Column name="Pid" attribute="Player" type="VARCHAR" />
+	</Table>
+	<Table name="Tournaments" csobject="Tournament">
+		<Column name="Tid" attribute="Id" type="VARCHAR" />
+		<Column name="Tournamentdate" type="DATE" />
+	</Table>
+	<Table name="Matches" csobject="Match">
+		<Column name="Mid" attribute="Id" type="VARCHAR" />
+		<Column name="Tid" attribute="Tournament" type="VARCHAR" />
+		<Column name="Player1" attribute="Player1" type="VARCHAR" />
+		<Column name="Player2" attribute="Player2" type="VARCHAR" />
+		<Column name="Positionkey" attribute="PositionKey" type="INTEGER" />
+		<Column name="Player1Legs" attribute="Player1Legs" type="INTEGER" />
+		<Column name="Player2Legs" attribute="Player2Legs" type="INTEGER" />
+	</Table>
+	<Table name="Placements" csobject="Placement">
+		<Column name="Pid" attribute="Id" type="VARCHAR" />
+		<Column name="Tid" attribute="Tournament" type="VARCHAR" />
+		<Column name="Player" attribute="Player" type="VARCHAR" />
+		<Column name="Position" attribute="Position" type="INTEGER" />
+	</Table>
+	<Table name="PlacementPoints" csobject="PlacementPoint">
+		<Column name="Ppid" attribute="Id" type="VARCHAR" />
+		<Column name="Position" attribute="Position" type="INTEGER" />
+		<Column name="Points" attribute="Points" type="INTEGER" />
+	</Table>
+	<Table name="Statistics" csobject="Statistic">
+		<Column name="Sid" attribute="Id" type="VARCHAR" />
+		<Column name="Player" attribute="Player" type="VARCHAR" />
+		<Column name="Year" attribute="Year" type="INTEGER" />
+		<Column name="Wonsets" attribute="WonSets" type="INTEGER" />
+		<Column name="Lostsets" attribute="LostSets" type="INTEGER" />
+		<Column name="Wonlegs" attribute="WonLegs" type="INTEGER" />
+		<Column name="Lostlegs" attribute="LostLegs" type="INTEGER" />
+		<Column name="FLs" attribute="FLs" type="INTEGER" />
+		<Column name="Avg" attribute="Average" type="INTEGER" />
+		<Column name="First" attribute="First" type="INTEGER" />
+		<Column name="Second" attribute="Second" type="INTEGER" />
+		<Column name="Third" attribute="Third" type="INTEGER" />
+		<Column name="Points" attribute="Points" type="INTEGER" />
+	</Table>
+</Mapping>

@@ -1,0 +1,54 @@
+<Database name="Retrieval">
+<Tables>
+	<Table name="Players">
+		<Column name="Pid" type="VARCHAR" primarykey="true" />
+		<Column name="Name" type="VARCHAR" />
+		<Column name="Lastname" type="VARCHAR" />
+		<Column name="Birthdate" type="DATE" />
+		<Column name="Imagename" type="VARCHAR" />
+	</Table>
+	<Table name="Holiday">
+		<Column name="Hid" type="VARCHAR" primarykey="true" />
+		<Column name="Pid" type="VARCHAR" foreignkey="Pid" reference="Players" />
+	</Table>
+	<Table name="Tournaments">
+		<Column name="Tid" type="VARCHAR" primarykey="true" />
+		<Column name="Tournamentdate" type="DATE" />
+	</Table>
+	<Table name="Matches">
+		<Column name="Mid" type="VARCHAR" primarykey="true" />
+		<Column name="Tid" type="VARCHAR" foreignkey="Tid" reference="Tournaments" />
+		<Column name="Player1" type="VARCHAR" foreignkey="Pid" reference="Players" />
+		<Column name="Player2" type="VARCHAR" foreignkey="Pid" reference="Players" />
+		<Column name="Positionkey" type="INTEGER" />
+		<Column name="Player1Legs" type="INTEGER" />
+		<Column name="Player2Legs" type="INTEGER" />
+	</Table>
+	<Table name="Placements">
+		<Column name="Pid" type="VARCHAR" primarykey="true" />
+		<Column name="Tid" type="VARCHAR" foreignkey="Tid" reference="Tournaments" />
+		<Column name="Player" type="VARCHAR" foreignkey="Pid" reference="Players" />
+		<Column name="Position" type="INTEGER" />
+	</Table>
+	<Table name="PlacementPoints">
+		<Column name="Ppid" type="VARCHAR" primarykey="true" />
+		<Column name="Position" type="INTEGER" />
+		<Column name="Points" type="INTEGER" />
+	</Table>
+	<Table name="Statistics">
+		<Column name="Sid" type="VARCHAR" primarykey="true" />
+		<Column name="Player" type="VARCHAR" foreignkey="Pid" reference="Players" />
+		<Column name="Year" type="INTEGER" />
+		<Column name="Wonsets" type="INTEGER" />
+		<Column name="Lostsets" type="INTEGER" />
+		<Column name="Wonlegs" type="INTEGER" />
+		<Column name="Lostlegs" type="INTEGER" />
+		<Column name="FLs" type="INTEGER" />
+		<Column name="Avg" type="INTEGER" />
+		<Column name="First" type="INTEGER" />
+		<Column name="Second" type="INTEGER" />
+		<Column name="Third" type="INTEGER" />
+		<Column name="Points" type="INTEGER" />
+	</Table>
+</Tables>
+</Database>
