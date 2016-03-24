@@ -7,96 +7,35 @@ namespace DartApp
 {
 	public class MainViewModel : ViewModelBase
 	{
-		private string state;
-		private RelayCommand holidayCommand;
-		private RelayCommand trainingCommand;
-		private RelayCommand vdsvCommand;
+		private ViewModelBase content;
 		public MainViewModel()
 		{
-			string setup = Directory.GetCurrentDirectory() + "\\database.xml";
-			string testValueFile = Directory.GetCurrentDirectory() + "\\dbtestvalues.txt";
-			string mappingPath = Directory.GetCurrentDirectory() + "\\mapping.xml";
+			this.content = new HomeViewModel();
+			var setup = Directory.GetCurrentDirectory() + "\\database.xml";
+			var testValueFile = Directory.GetCurrentDirectory() + "\\dbtestvalues.txt";
+			var mappingPath = Directory.GetCurrentDirectory() + "\\mapping.xml";
 			try
 			{
 				var dbc = DataBaseCreator.GetInstance(setup, mappingPath, testValueFile);
-				this.State = "database ready";
 			}
 			catch (Exception e)
 			{
-				this.State = e.Message;
+				
 			}
-			
-			
 		}
 
-		public string State
+		public ViewModelBase Content
 		{
 			get
 			{
-				return this.state;
+				return this.content;
+				
 			}
 			set
 			{
-				this.state = value;
-				OnPropertyChanged("State");
+				this.content = value;
+				OnPropertyChanged("Content");
 			}
-		}
-
-		public ICommand HolidayCommand
-		{
-			get
-			{
-				return this.holidayCommand ?? (this.holidayCommand = new RelayCommand(
-					param => OpenHoliday()
-					));
-			}
-		}
-
-		private void OpenHoliday()
-		{
-			
-		}
-
-		public ICommand TrainingCommand
-		{
-			get
-			{
-				return this.trainingCommand ?? (this.trainingCommand = new RelayCommand(
-					param => OpenTraining(),
-					param => CanOpenTraining()
-					));
-			}
-		}
-
-		private void OpenTraining()
-		{
-
-		}
-
-		private bool CanOpenTraining()
-		{
-			return false;
-		}
-
-		public ICommand VdsvCommand
-		{
-			get
-			{
-				return this.vdsvCommand ?? (this.vdsvCommand = new RelayCommand(
-					param => OpenVdsv(),
-					param => CanOpenVdsv()
-					));
-			}
-		}
-
-		private void OpenVdsv()
-		{
-
-		}
-
-		private bool CanOpenVdsv()
-		{
-			return false;
 		}
 	}
 }

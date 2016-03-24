@@ -1,5 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:local="clr-namespace:DartApp.Resources">
-    
+					xmlns:start="clr-namespace:DartApp">
+	<DataTemplate DataType="{x:Type start:HomeViewModel}">
+		<start:HomeUserControl />
+	</DataTemplate>
 </ResourceDictionary>
