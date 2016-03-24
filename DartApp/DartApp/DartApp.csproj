@@ -35,16 +35,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Base">
+    <Reference Include="Base, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>Resources\Base.dll</HintPath>
     </Reference>
-    <Reference Include="FileReader">
-      <HintPath>Resources\FileReader.dll</HintPath>
-    </Reference>
-    <Reference Include="FileWorker">
-      <HintPath>Resources\FileWorker.dll</HintPath>
-    </Reference>
-    <Reference Include="SQLite.NET">
+    <Reference Include="SQLite.NET, Version=0.21.1869.3794, Culture=neutral, PublicKeyToken=c273bd375e695f9c">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>Resources\SQLite.NET.dll</HintPath>
     </Reference>
     <Reference Include="System" />
@@ -61,9 +57,6 @@
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
-    <Reference Include="XMLReader">
-      <HintPath>Resources\XMLReader.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -118,6 +111,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DataBaseInitializer\DataBaseInitializer.csproj">
+      <Project>{42632621-0d74-4668-a943-adceab81600b}</Project>
+      <Name>DataBaseInitializer</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

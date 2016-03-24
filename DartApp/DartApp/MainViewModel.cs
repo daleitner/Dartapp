@@ -1,6 +1,8 @@
-﻿using System.Windows.Input;
+﻿using System;
+using System.IO;
+using System.Windows.Input;
 using Base;
-
+using DataBaseInitializer;
 namespace DartApp
 {
 	public class MainViewModel : ViewModelBase
@@ -11,6 +13,19 @@ namespace DartApp
 		private RelayCommand vdsvCommand;
 		public MainViewModel()
 		{
+			string setup = Directory.GetCurrentDirectory() + "\\database.xml";
+			string testValueFile = Directory.GetCurrentDirectory() + "\\dbtestvalues.txt";
+			string mappingPath = Directory.GetCurrentDirectory() + "\\mapping.xml";
+			try
+			{
+				var dbc = DataBaseCreator.GetInstance(setup, mappingPath, testValueFile);
+				this.State = "database ready";
+			}
+			catch (Exception e)
+			{
+				this.State = e.Message;
+			}
+			
 			
 		}
 
