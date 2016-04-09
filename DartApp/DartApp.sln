@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DartApp_UnitTests", "DartAp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataBaseInitializer", "DataBaseInitializer\DataBaseInitializer.csproj", "{42632621-0D74-4668-A943-ADCEAB81600B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DartApp.CommandServices", "DartApp.CommandServices\DartApp.CommandServices.csproj", "{800A89BF-C561-41A6-8F61-591AA5DF8449}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{42632621-0D74-4668-A943-ADCEAB81600B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{42632621-0D74-4668-A943-ADCEAB81600B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{42632621-0D74-4668-A943-ADCEAB81600B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{800A89BF-C561-41A6-8F61-591AA5DF8449}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{800A89BF-C561-41A6-8F61-591AA5DF8449}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{800A89BF-C561-41A6-8F61-591AA5DF8449}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{800A89BF-C561-41A6-8F61-591AA5DF8449}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

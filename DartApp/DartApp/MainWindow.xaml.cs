@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using DartApp.CommandServices;
 
 namespace DartApp
 {
@@ -22,7 +23,7 @@ namespace DartApp
 	{
 		public MainWindow()
 		{
-			var viewModel = new MainViewModel();
+			var viewModel = new MainViewModel(new DartAppCommandService());
 			this.DataContext = viewModel;
 			InitializeComponent();
 		}

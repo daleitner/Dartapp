@@ -121,6 +121,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DartApp.CommandServices\DartApp.CommandServices.csproj">
+      <Project>{800a89bf-c561-41a6-8f61-591aa5df8449}</Project>
+      <Name>DartApp.CommandServices</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DataBaseInitializer\DataBaseInitializer.csproj">
       <Project>{42632621-0d74-4668-a943-adceab81600b}</Project>
       <Name>DataBaseInitializer</Name>

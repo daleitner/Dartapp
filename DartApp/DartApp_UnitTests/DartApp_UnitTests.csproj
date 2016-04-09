@@ -35,6 +35,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Base">
+      <HintPath>..\DartApp\Resources\Base.dll</HintPath>
+    </Reference>
     <Reference Include="ExpectedObjects, Version=1.1.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ExpectedObjects.1.1.1\lib\net40\ExpectedObjects.dll</HintPath>
       <Private>True</Private>
@@ -86,11 +89,22 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="MainViewModelTests.cs" />
     <Compile Include="UnitTest1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DartApp.CommandServices\DartApp.CommandServices.csproj">
+      <Project>{800a89bf-c561-41a6-8f61-591aa5df8449}</Project>
+      <Name>DartApp.CommandServices</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DartApp\DartApp.csproj">
+      <Project>{1398f526-11a5-4b79-b069-bf0eee63c5be}</Project>
+      <Name>DartApp</Name>
+    </ProjectReference>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
