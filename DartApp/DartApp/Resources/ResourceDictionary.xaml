@@ -4,4 +4,7 @@
 	<DataTemplate DataType="{x:Type start:HomeViewModel}">
 		<start:HomeUserControl />
 	</DataTemplate>
+	<DataTemplate DataType="{x:Type start:DatabaseMainViewModel}">
+		<start:DatabaseMainUserControl />
+	</DataTemplate>
 </ResourceDictionary>

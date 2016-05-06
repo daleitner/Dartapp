@@ -63,6 +63,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ViewModelFactory.cs" />
+    <Page Include="DatabaseMainUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="HomeUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -75,6 +80,11 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="DatabaseMainViewModel.cs" />
+    <Compile Include="DatabaseMainUserControl.xaml.cs">
+      <DependentUpon>DatabaseMainUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DisplayEnum.cs" />
     <Compile Include="HomeUserControl.xaml.cs">
       <DependentUpon>HomeUserControl.xaml</DependentUpon>
     </Compile>

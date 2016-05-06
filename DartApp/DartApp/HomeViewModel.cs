@@ -14,6 +14,7 @@ namespace DartApp
 		private RelayCommand trainingCommand;
 		private RelayCommand vdsvCommand;
 		private RelayCommand dataBaseCommand;
+		public event EventHandler DisplayChangedEvent;
 
 		public HomeViewModel()
 		{
@@ -89,7 +90,7 @@ namespace DartApp
 
 		private void OpenDatabase()
 		{
-
+			this.DisplayChangedEvent?.Invoke(null, null);
 		}
 	}
 }
