@@ -5,8 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Base;
+using DartApp.Services;
 
-namespace DartApp
+namespace DartApp.Home
 {
 	public class HomeViewModel : ViewModelBase
 	{
@@ -14,11 +15,11 @@ namespace DartApp
 		private RelayCommand trainingCommand;
 		private RelayCommand vdsvCommand;
 		private RelayCommand dataBaseCommand;
-		public event EventHandler DisplayChangedEvent;
+        public IEventService eventService;
 
-		public HomeViewModel()
+		public HomeViewModel(IEventService eventService)
 		{
-			
+            this.eventService = eventService;
 		}
 
 		public ICommand HolidayCommand
@@ -90,7 +91,7 @@ namespace DartApp
 
 		private void OpenDatabase()
 		{
-			this.DisplayChangedEvent?.Invoke(null, null);
+            this.eventService.PublishDisplayChangedEvent(DisplayEnum.Database);
 		}
 	}
 }

@@ -59,7 +59,9 @@ namespace DataBaseInitializer
 				var dbTables = new List<DataBaseTable>();
 				var xml = XMLReader.ReadXMLFile(configFile);
 
-				var dataBaseNode = xml?.FirstOrDefault();
+				Node dataBaseNode = null;
+                if(xml != null)
+                   dataBaseNode = xml.FirstOrDefault();
 				if (dataBaseNode == null)
 					return null;
 

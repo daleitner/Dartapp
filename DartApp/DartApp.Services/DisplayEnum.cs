@@ -4,9 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DartApp
+namespace DartApp.Services
 {
-	public class DatabaseMainViewModel
+	public enum DisplayEnum
 	{
+		Home,
+		Database,
+
 	}
 }

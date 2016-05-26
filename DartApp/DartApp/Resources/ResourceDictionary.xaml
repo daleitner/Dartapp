@@ -1,10 +1,12 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-					xmlns:start="clr-namespace:DartApp">
-	<DataTemplate DataType="{x:Type start:HomeViewModel}">
-		<start:HomeUserControl />
+					xmlns:start="clr-namespace:DartApp"
+                    xmlns:home="clr-namespace:DartApp.Home"
+                    xmlns:db="clr-namespace:DartApp.Database;assembly=DartApp.Database">
+	<DataTemplate DataType="{x:Type home:HomeViewModel}">
+		<home:HomeUserControl />
 	</DataTemplate>
-	<DataTemplate DataType="{x:Type start:DatabaseMainViewModel}">
-		<start:DatabaseMainUserControl />
+	<DataTemplate DataType="{x:Type db:DatabaseMainViewModel}">
+		<db:DatabaseMainUserControl />
 	</DataTemplate>
 </ResourceDictionary>

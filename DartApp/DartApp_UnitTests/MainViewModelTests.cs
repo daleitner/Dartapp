@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DartApp;
+using DartApp.Home;
 using DartApp.CommandServices;
 using Moq;
 using NUnit.Framework;

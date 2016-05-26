@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace DartApp
+namespace DartApp.Database
 {
 	/// <summary>
-	/// Interaction logic for HomeUserControl.xaml
+	/// Interaction logic for DatabaseMainUserControl.xaml
 	/// </summary>
-	public partial class HomeUserControl : UserControl
+	public partial class DatabaseMainUserControl : UserControl
 	{
-		public HomeUserControl()
+		public DatabaseMainUserControl()
 		{
 			InitializeComponent();
 		}
