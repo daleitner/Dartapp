@@ -18,8 +18,8 @@ namespace DartApp.Database
 		private RelayCommand deleteCommand = null;
 		private RelayCommand homeCommand = null;
 		private RelayCommand searchCommand = null;
-		private NamedObject selectedItem = null;
-		private ObservableCollection<NamedObject> searchResult = null;
+		private ModelBase selectedItem = null;
+		private ObservableCollection<ModelBase> searchResult = null;
 		private string header = "";
 		private string search = "";
 		private ViewModelBase specificView = null;
@@ -99,7 +99,7 @@ namespace DartApp.Database
 				return this.searchCommand;
 			}
 		}
-		public NamedObject SelectedItem
+		public ModelBase SelectedItem
 		{
 			get
 			{
@@ -111,7 +111,7 @@ namespace DartApp.Database
 				OnPropertyChanged("SelectedItem");
 			}
 		}
-		public ObservableCollection<NamedObject> SearchResult
+		public ObservableCollection<ModelBase> SearchResult
 		{
 			get
 			{
