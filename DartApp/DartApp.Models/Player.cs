@@ -64,7 +64,16 @@ namespace DartApp.Models
 
 	    private void SetDisplayName()
 	    {
-		    this.DisplayName = this.NachName + " " + this.VorName;
+		    if (!string.IsNullOrEmpty(this.NachName))
+		    {
+			    this.DisplayName = this.NachName;
+			    if (!string.IsNullOrEmpty(this.VorName))
+				    this.DisplayName += " " + this.VorName;
+		    }
+		    else
+		    {
+			    this.DisplayName = this.VorName;
+		    }
 	    }
 
 		public static Player Copy(Player targetPlayer)

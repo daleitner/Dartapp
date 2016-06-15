@@ -27,6 +27,7 @@
 			<StackPanel Grid.Row="1" VerticalAlignment="Top" Margin="0,40,0,0">
 				<Button Name="Button1" Content="Spieler" Command="{Binding Path=PlayerCommand}" Margin="10" HorizontalAlignment="Center" Width="100" />
 				<Button Name="Button2" Content="Holiday Spieler" Command="{Binding Path=HolidayCommand}" Margin="10" HorizontalAlignment="Center" Width="100" />
+
 				<!--<Button Name="Button3" Content="Löschen" Command="{Binding Path=DeleteCommand}" Margin="10" HorizontalAlignment="Center" Width="100" />-->
 				<!--<Button Name="Button4" Content="Hauptmenü" Command="{Binding Path=HomeCommand}" Margin="10" HorizontalAlignment="Center" Width="100" />-->
 			</StackPanel>

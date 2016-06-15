@@ -58,6 +58,7 @@
     <Compile Include="EditDialogs\AddPlayerWindow.xaml.cs">
       <DependentUpon>AddPlayerWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ModelEnum.cs" />
     <Compile Include="ModelViews\PlayerUserControl.xaml.cs">
       <DependentUpon>PlayerUserControl.xaml</DependentUpon>
     </Compile>
@@ -90,10 +91,13 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+<<<<<<< HEAD
     <Page Include="EditDialogs\AddPlayerWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+=======
+>>>>>>> ac3d576ef9d429d3ce691c397fa098df4f7b4830
     <Page Include="ModelViews\PlayerUserControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

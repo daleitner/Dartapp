@@ -60,6 +60,7 @@ namespace DartApp.Database
 				return this.playerCommand;
 			}
 		}
+
 		public ICommand HolidayCommand
 		{
 			get
@@ -74,7 +75,6 @@ namespace DartApp.Database
 				return this.holidayCommand;
 			}
 		}
-
 
 		public ICommand NewCommand
 		{
@@ -276,6 +276,22 @@ namespace DartApp.Database
 		private bool CanSelectHoliday()
 		{
 			return this.modelEnum != ModelEnum.Holiday;
+		}
+
+		private void UpdateSpecificView(ModelEnum modelEnum)
+		{
+			this.modelEnum = modelEnum;
+			switch(modelEnum)
+			{
+				case ModelEnum.Player: 
+					this.SpecificView = new PlayerViewModel(new Player("Daniel", "Leitner", new DateTime(1991, 11, 29), "test.jpg")); 
+					break;
+			}
+		}
+
+		private bool CanSelectPlayer()
+		{
+			return this.modelEnum != ModelEnum.Player;
 		}
 
 		#endregion

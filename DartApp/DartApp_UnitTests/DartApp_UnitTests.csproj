@@ -36,8 +36,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Base">
-      <HintPath>..\DartApp\Resources\Base.dll</HintPath>
+    <Reference Include="Base, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Resources\Base.dll</HintPath>
     </Reference>
     <Reference Include="ExpectedObjects, Version=1.1.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ExpectedObjects.1.1.1\lib\net40\ExpectedObjects.dll</HintPath>
@@ -94,7 +95,7 @@
   <ItemGroup>
     <Compile Include="HomeViewModelTests.cs" />
     <Compile Include="MainViewModelTests.cs" />
-    <Compile Include="UnitTest1.cs" />
+    <Compile Include="ModelTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -104,6 +105,10 @@
     <ProjectReference Include="..\DartApp.CommandServices\DartApp.CommandServices.csproj">
       <Project>{800a89bf-c561-41a6-8f61-591aa5df8449}</Project>
       <Name>DartApp.CommandServices</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DartApp.Models\DartApp.Models.csproj">
+      <Project>{ae84b79d-90c8-42ec-a34b-e7cef891fd58}</Project>
+      <Name>DartApp.Models</Name>
     </ProjectReference>
     <ProjectReference Include="..\DartApp\DartApp.csproj">
       <Project>{1398f526-11a5-4b79-b069-bf0eee63c5be}</Project>
