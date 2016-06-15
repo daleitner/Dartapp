@@ -2,11 +2,15 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 					xmlns:start="clr-namespace:DartApp"
                     xmlns:home="clr-namespace:DartApp.Home"
-                    xmlns:db="clr-namespace:DartApp.Database;assembly=DartApp.Database">
+                    xmlns:db="clr-namespace:DartApp.Database;assembly=DartApp.Database"
+					xmlns:dbmv="clr-namespace:DartApp.Database.ModelViews;assembly=DartApp.Database">
 	<DataTemplate DataType="{x:Type home:HomeViewModel}">
 		<home:HomeUserControl />
 	</DataTemplate>
 	<DataTemplate DataType="{x:Type db:DatabaseMainViewModel}">
 		<db:DatabaseMainUserControl />
+	</DataTemplate>
+	<DataTemplate DataType="{x:Type dbmv:PlayerViewModel}">
+		<dbmv:PlayerUserControl />
 	</DataTemplate>
 </ResourceDictionary>

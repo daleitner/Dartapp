@@ -10,6 +10,7 @@ namespace DartApp.Factory
 {
     public interface IViewModelFactory
     {
+		MainViewModel GetMainViewModel();
         HomeViewModel GetHomeViewModel();
         DatabaseMainViewModel GetDatabaseMainViewModel();
     }

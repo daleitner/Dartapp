@@ -1,4 +1,4 @@
-<Database name="Retrieval">
+<Database name="Dartapp_prod">
 <Tables>
 	<Table name="Players">
 		<Column name="Pid" type="VARCHAR" primarykey="true" />

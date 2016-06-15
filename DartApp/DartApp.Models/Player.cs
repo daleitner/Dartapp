@@ -21,18 +21,7 @@ namespace DartApp.Models
 	        this.NachName = nname;
 	        this.Geb = geb;
 	        this.ImageName = imageName;
-			SetDisplayName();
         }
-
-   //     public Player(Player p)
-   //     {
-   //         this.Id = p.GetId();
-	  //      this.VorName = p.VorName;
-	  //      this.NachName = p.NachName;
-	  //      this.Geb = p.Geb;
-	  //      this.ImageName = p.ImageName;
-			//SetDisplayName();
-   //     }
 
         public Player(List<string> itemArray)
         {
@@ -41,7 +30,6 @@ namespace DartApp.Models
 	        this.NachName = itemArray[2];
 	        this.Geb = DateTime.Parse(itemArray[3]);
 	        this.ImageName = itemArray[4];
-			SetDisplayName();
         }
         #endregion
 
@@ -78,5 +66,16 @@ namespace DartApp.Models
 	    {
 		    this.DisplayName = this.NachName + " " + this.VorName;
 	    }
+
+		public static Player Copy(Player targetPlayer)
+		{
+			Player copy = new Player();
+			copy.Id = targetPlayer.GetId();
+			copy.VorName = targetPlayer.VorName;
+			copy.NachName = targetPlayer.NachName;
+			copy.Geb = targetPlayer.Geb;
+			copy.ImageName = targetPlayer.ImageName;
+			return copy;
+		}
     }
 }

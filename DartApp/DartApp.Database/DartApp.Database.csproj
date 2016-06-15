@@ -54,6 +54,14 @@
       <DependentUpon>DatabaseMainUserControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="DatabaseMainViewModel.cs" />
+    <Compile Include="EditDialogs\AddPlayerViewModel.cs" />
+    <Compile Include="EditDialogs\AddPlayerWindow.xaml.cs">
+      <DependentUpon>AddPlayerWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ModelViews\PlayerUserControl.xaml.cs">
+      <DependentUpon>PlayerUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ModelViews\PlayerViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -82,17 +90,34 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="EditDialogs\AddPlayerWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ModelViews\PlayerUserControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DartApp.CommandServices\DartApp.CommandServices.csproj">
+      <Project>{800a89bf-c561-41a6-8f61-591aa5df8449}</Project>
+      <Name>DartApp.CommandServices</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DartApp.Models\DartApp.Models.csproj">
       <Project>{ae84b79d-90c8-42ec-a34b-e7cef891fd58}</Project>
       <Name>DartApp.Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DartApp.QueryService\DartApp.QueryService.csproj">
+      <Project>{d2d66704-56a4-47c9-bc50-665d24d8c0cc}</Project>
+      <Name>DartApp.QueryService</Name>
     </ProjectReference>
     <ProjectReference Include="..\DartApp.Services\DartApp.Services.csproj">
       <Project>{60187009-d8a1-4d7a-b5b7-9c8bc92e1e4a}</Project>
       <Name>DartApp.Services</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

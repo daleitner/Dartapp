@@ -1,4 +1,6 @@
+using Base;
 using FileIO.XMLReader;
+using SQLDatabase;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -75,6 +77,35 @@ namespace DataBaseInitializer
 		public OREntry GetEntryByObject(string csObjectName)
 		{
 			return this.OREntries.Where(x => x.ObjectName == csObjectName).FirstOrDefault();
+		}
+
+		public DataBaseTable GetTableByObject(Type t)
+		{
+			var entry = this.OREntries.Where(x => x.ObjectName == t.Name).FirstOrDefault();
+			return new DataBaseTable(entry.RelationName, entry.Columns.Select(x => new DataBaseColumn(x.ColumnName, x.ColumnType)).ToList());
+		}
+
+		public DataBaseTable GetTableByRelation(string relationName)
+		{ 
+			var entry = this.OREntries.Where(x => x.RelationName == relationName).FirstOrDefault();
+			return new DataBaseTable(entry.RelationName, entry.Columns.Select(x => new DataBaseColumn(x.ColumnName, x.ColumnType)).ToList());
+		}
+
+		public Dictionary<DataBaseColumn, object> CreateDatabaseDictionary(DataBaseTable table, ModelBase model)
+		{
+			var ret = new Dictionary<DataBaseColumn, object>();
+			var entry = this.OREntries.Where(x => x.RelationName == table.Name).FirstOrDefault();
+			foreach (var col in entry.Columns)
+			{
+				var column = table.Columns[col.ColumnName];
+				object objectValue = null;
+				if (col.AttributeName == "Id")
+					objectValue = model.GetId();
+				else
+					objectValue = model.GetType().GetProperty(col.AttributeName).GetValue(model);
+				ret.Add(column, objectValue);
+			}
+			return ret;
 		}
 		#endregion
  }

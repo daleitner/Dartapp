@@ -1,5 +1,7 @@
-﻿using DartApp.Database;
+﻿using DartApp.CommandServices;
+using DartApp.Database;
 using DartApp.Home;
+using DartApp.QueryService;
 using DartApp.Services;
 using System;
 using System.Collections.Generic;
@@ -13,10 +15,14 @@ namespace DartApp.Factory
 	public class ViewModelFactory : IViewModelFactory
 	{
         private IEventService eventService;
+		private IDartAppQueryService dartAppQueryService;
+		private IDartAppCommandService dartAppCommandService;
 		private static ViewModelFactory factory;
 		private ViewModelFactory()
 		{
             this.eventService = (IEventService)EventService.GetInstance();
+			this.dartAppCommandService = new DartAppCommandService();
+			this.dartAppQueryService = new DartAppQueryService();
 		}
 
 		public static ViewModelFactory GetInstance()
@@ -32,7 +38,12 @@ namespace DartApp.Factory
 
         public DatabaseMainViewModel GetDatabaseMainViewModel()
         {
-            return new DatabaseMainViewModel(this.eventService);
+            return new DatabaseMainViewModel(this.eventService, this.dartAppQueryService, this.dartAppCommandService);
         }
-    }
+
+		public MainViewModel GetMainViewModel()
+		{
+			return new MainViewModel(this.dartAppCommandService);
+		}
+	}
 }

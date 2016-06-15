@@ -3,7 +3,7 @@
 		<Column name="Pid" attribute="Id" type="VARCHAR" />
 		<Column name="Name" attribute="VorName" type="VARCHAR" />
 		<Column name="Lastname" attribute="NachName" type="VARCHAR" />
-		<Column name="Birthdate" attribute="Birthdate" type="DATE" />
+		<Column name="Birthdate" attribute="Geb" type="DATE" />
 		<Column name="Imagename" attribute="ImageName" type="VARCHAR" />
 	</Table>
 	<Table name="Holiday" csobject="Holiday">

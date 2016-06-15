@@ -19,21 +19,10 @@ namespace DartApp
 		{
             this.eventService = EventService.GetInstance();
             this.eventService.DisplayChanged += eventService_DisplayChanged;
-            this.factory = ViewModelFactory.GetInstance();
 			this.commandService = commandService;
-            this.content = this.factory.GetHomeViewModel();
-			var setup = Directory.GetCurrentDirectory() + "\\database.xml";
-			var testValueFile = Directory.GetCurrentDirectory() + "\\dbtestvalues.txt";
-			var mappingPath = Directory.GetCurrentDirectory() + "\\mapping.xml";
-			try
-			{
-				this.commandService.InitializeDatabase(setup, mappingPath, testValueFile);
-				//var dbc = DataBaseCreator.GetInstance(setup, mappingPath, testValueFile);
-			}
-			catch (Exception e)
-			{
-				Console.WriteLine(e.Message);
-			}
+
+			this.factory = ViewModelFactory.GetInstance();
+			this.content = this.factory.GetHomeViewModel();
 		}
 
         void eventService_DisplayChanged(DisplayEnum displayEnum)

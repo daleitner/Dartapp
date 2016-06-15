@@ -13,6 +13,9 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using DartApp.CommandServices;
+using DartApp.Factory;
+using DataBaseInitializer;
+using System.IO;
 
 namespace DartApp
 {
@@ -23,7 +26,20 @@ namespace DartApp
 	{
 		public MainWindow()
 		{
-			var viewModel = new MainViewModel(new DartAppCommandService());
+			var setup = Directory.GetCurrentDirectory() + "\\database.xml";
+			var testValueFile = Directory.GetCurrentDirectory() + "\\dbtestvalues.txt";
+			var mappingPath = Directory.GetCurrentDirectory() + "\\mapping.xml";
+
+			try
+			{
+				var dbCreator = DataBaseCreator.GetInstance(setup, mappingPath, testValueFile);
+			}
+			catch (Exception e)
+			{
+				Console.WriteLine(e.Message);
+			}
+
+			var viewModel = ViewModelFactory.GetInstance().GetMainViewModel();
 			this.DataContext = viewModel;
 			InitializeComponent();
 		}

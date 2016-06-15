@@ -9,8 +9,9 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>DartApp.CommandServices</RootNamespace>
     <AssemblyName>DartApp.CommandServices</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -30,6 +31,13 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Base">
+      <HintPath>..\Resources\Base.dll</HintPath>
+    </Reference>
+    <Reference Include="SQLDatabase, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Resources\SQLDatabase.dll</HintPath>
+    </Reference>
     <Reference Include="SQLite.NET">
       <HintPath>..\DartApp\Resources\SQLite.NET.dll</HintPath>
     </Reference>
@@ -48,6 +56,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DartApp.Models\DartApp.Models.csproj">
+      <Project>{ae84b79d-90c8-42ec-a34b-e7cef891fd58}</Project>
+      <Name>DartApp.Models</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DataBaseInitializer\DataBaseInitializer.csproj">
       <Project>{42632621-0d74-4668-a943-adceab81600b}</Project>
       <Name>DataBaseInitializer</Name>

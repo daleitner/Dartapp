@@ -48,6 +48,11 @@ namespace DataBaseInitializer
 			return dbi ?? (dbi = new DataBaseCreator(configFile, mappingFile, initialValuesFile));
 		}
 
+		public static DataBaseCreator GetInstance()
+		{
+			return dbi;
+		}
+
 		#endregion
 
 		#region private methods

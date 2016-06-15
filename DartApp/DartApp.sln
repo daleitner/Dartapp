@@ -1,8 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
-MinimumVisualStudioVersion = 10.0.40219.1
+# Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DartApp", "DartApp\DartApp.csproj", "{1398F526-11A5-4B79-B069-BF0EEE63C5BE}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DartApp_UnitTests", "DartApp_UnitTests\DartApp_UnitTests.csproj", "{D0B9DBAC-2063-4D27-8033-F6201511275E}"
@@ -16,6 +14,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DartApp.Models", "DartApp.Models\DartApp.Models.csproj", "{AE84B79D-90C8-42EC-A34B-E7CEF891FD58}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DartApp.Database", "DartApp.Database\DartApp.Database.csproj", "{0F805B08-4626-4D8F-91E7-FC034F5F90DB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DartApp.QueryService", "DartApp.QueryService\DartApp.QueryService.csproj", "{D2D66704-56A4-47C9-BC50-665D24D8C0CC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +51,10 @@ Global
 		{0F805B08-4626-4D8F-91E7-FC034F5F90DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0F805B08-4626-4D8F-91E7-FC034F5F90DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0F805B08-4626-4D8F-91E7-FC034F5F90DB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D2D66704-56A4-47C9-BC50-665D24D8C0CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D2D66704-56A4-47C9-BC50-665D24D8C0CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D2D66704-56A4-47C9-BC50-665D24D8C0CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D2D66704-56A4-47C9-BC50-665D24D8C0CC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

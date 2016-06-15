@@ -1,17 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{42632621-0D74-4668-A943-ADCEAB81600B}</ProjectGuid>
+    <ProjectGuid>{D2D66704-56A4-47C9-BC50-665D24D8C0CC}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DataBaseInitializer</RootNamespace>
-    <AssemblyName>DataBaseInitializer</AssemblyName>
+    <RootNamespace>DartApp.QueryService</RootNamespace>
+    <AssemblyName>DartApp.QueryService</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -31,19 +30,11 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Base, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="Base">
       <HintPath>..\Resources\Base.dll</HintPath>
     </Reference>
-    <Reference Include="FileReader">
-      <HintPath>..\DartApp\Resources\FileReader.dll</HintPath>
-    </Reference>
     <Reference Include="SQLDatabase">
-      <HintPath>..\DartApp\Resources\SQLDatabase.dll</HintPath>
-    </Reference>
-    <Reference Include="SQLite.NET, Version=0.21.1869.3794, Culture=neutral, PublicKeyToken=c273bd375e695f9c">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\DartApp\Resources\SQLite.NET.dll</HintPath>
+      <HintPath>..\Resources\SQLDatabase.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -51,23 +42,21 @@
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
-    <Reference Include="XMLReader">
-      <HintPath>..\DartApp\Resources\XMLReader.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataBaseCreator.cs" />
-    <Compile Include="ORColumn.cs" />
-    <Compile Include="ORDictionary.cs" />
-    <Compile Include="OREntry.cs" />
+    <Compile Include="DartAppQueryService.cs" />
+    <Compile Include="IDartAppQueryService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DartApp.Models\DartApp.Models.csproj">
       <Project>{ae84b79d-90c8-42ec-a34b-e7cef891fd58}</Project>
       <Name>DartApp.Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DataBaseInitializer\DataBaseInitializer.csproj">
+      <Project>{42632621-0d74-4668-a943-adceab81600b}</Project>
+      <Name>DataBaseInitializer</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
