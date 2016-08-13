@@ -58,7 +58,10 @@
     <Compile Include="EditDialogs\AddPlayerWindow.xaml.cs">
       <DependentUpon>AddPlayerWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ModelEnum.cs" />
+    <Compile Include="EditDialogs\EditHolidayViewModel.cs" />
+    <Compile Include="EditDialogs\EditHolidayWindow.xaml.cs">
+      <DependentUpon>EditHolidayWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ModelViews\PlayerUserControl.xaml.cs">
       <DependentUpon>PlayerUserControl.xaml</DependentUpon>
     </Compile>
@@ -76,6 +79,10 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="Selection\ItemSelection.xaml.cs">
+      <DependentUpon>ItemSelection.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Selection\ItemSelectionViewModel.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -91,14 +98,19 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-<<<<<<< HEAD
     <Page Include="EditDialogs\AddPlayerWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-=======
->>>>>>> ac3d576ef9d429d3ce691c397fa098df4f7b4830
+    <Page Include="EditDialogs\EditHolidayWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="ModelViews\PlayerUserControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Selection\ItemSelection.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

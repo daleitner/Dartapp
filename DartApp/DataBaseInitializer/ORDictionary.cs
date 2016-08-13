@@ -102,7 +102,20 @@ namespace DataBaseInitializer
 				if (col.AttributeName == "Id")
 					objectValue = model.GetId();
 				else
-					objectValue = model.GetType().GetProperty(col.AttributeName).GetValue(model);
+				{
+					if (column.Type == ColumnType.VARCHAR && model.GetType().GetProperty(col.AttributeName).GetType() != typeof(string))
+					{
+						ModelBase help = model.GetType().GetProperty(col.AttributeName).GetValue(model) as ModelBase;
+						if (help != null)
+							objectValue = help.GetId();
+						else
+							throw new NotSupportedException("Attribut <" + col.AttributeName + "> ist kein gültiger Datentyp!");
+					}
+					else
+					{
+						objectValue = model.GetType().GetProperty(col.AttributeName).GetValue(model);
+					}
+				}
 				ret.Add(column, objectValue);
 			}
 			return ret;

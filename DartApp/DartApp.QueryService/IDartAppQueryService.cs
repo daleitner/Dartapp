@@ -11,5 +11,7 @@ namespace DartApp.QueryService
 	public interface IDartAppQueryService
 	{
 		List<ModelBase> GetSearchResult(string search, ModelEnum modelType);
+		List<Player> GetAllPlayers();
+		List<Player> GetAllHolidayPlayers();
 	}
 }

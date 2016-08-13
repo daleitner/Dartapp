@@ -11,6 +11,7 @@ using DartApp.Database.ModelViews;
 using DartApp.QueryService;
 using DartApp.Database.EditDialogs;
 using DartApp.CommandServices;
+using System.Windows;
 
 namespace DartApp.Database
 {
@@ -34,6 +35,7 @@ namespace DartApp.Database
 		private IDartAppQueryService queryService;
 		private IDartAppCommandService commandService;
 		private AddPlayerWindow addPlayerWindow;
+		private EditHolidayWindow editHolidayWindow;
 		#endregion
 
 		#region ctors
@@ -42,6 +44,8 @@ namespace DartApp.Database
 			this.queryService = queryService;
 			this.commandService = commandService;
             this.eventService = eventService;
+			this.modelEnum = ModelEnum.Player;
+			RefreshView(this.modelEnum);
 		}
 		#endregion
 
@@ -83,7 +87,8 @@ namespace DartApp.Database
 				if (this.newCommand == null)
 				{
 					this.newCommand = new RelayCommand(
-						param => New()
+						param => New(),
+						param => CanNew()
 					);
 				}
 				return this.newCommand;
@@ -96,7 +101,8 @@ namespace DartApp.Database
 				if (this.editCommand == null)
 				{
 					this.editCommand = new RelayCommand(
-						param => Edit()
+						param => Edit(),
+						param => CanEdit()
 					);
 				}
 				return this.editCommand;
@@ -109,7 +115,8 @@ namespace DartApp.Database
 				if (this.deleteCommand == null)
 				{
 					this.deleteCommand = new RelayCommand(
-						param => Delete()
+						param => Delete(),
+						param => CanDelete()
 					);
 				}
 				return this.deleteCommand;
@@ -211,7 +218,7 @@ namespace DartApp.Database
 			{
 				case ModelEnum.Player:
 					var pvm = new AddPlayerViewModel();
-					pvm.ButtonClicked += pvm_ButtonClicked;
+					pvm.ButtonClicked += E_SaveNewPlayer;
 					this.addPlayerWindow = new AddPlayerWindow();
 					this.addPlayerWindow.DataContext = pvm;
 					this.addPlayerWindow.ShowDialog();
@@ -219,7 +226,7 @@ namespace DartApp.Database
 			}
 		}
 
-		void pvm_ButtonClicked(Player newPlayer)
+		void E_SaveNewPlayer(Player newPlayer)
 		{
 			if (newPlayer != null)
 			{
@@ -227,14 +234,107 @@ namespace DartApp.Database
 				OnSearch();
 			}
 			this.addPlayerWindow.Close();
+			this.SelectedItem = newPlayer;
+		}
+
+		private bool CanNew()
+		{
+			return this.modelEnum != ModelEnum.Holiday;
 		}
 
 		private void Edit()
 		{
+			switch (this.modelEnum)
+			{
+				case ModelEnum.Player:
+					var pvm = new AddPlayerViewModel((Player)this.SelectedItem);
+					pvm.ButtonClicked += E_UpdatePlayer;
+					this.addPlayerWindow = new AddPlayerWindow();
+					this.addPlayerWindow.DataContext = pvm;
+					this.addPlayerWindow.ShowDialog();
+					break;
+				case ModelEnum.Holiday:
+					var evm = new EditHolidayViewModel(this.queryService);
+					evm.ButtonClicked += E_UpdateHolidayList;
+					this.editHolidayWindow = new EditHolidayWindow();
+					this.editHolidayWindow.DataContext = evm;
+					this.editHolidayWindow.ShowDialog();
+					break;
+			}
+		}
+
+		private bool CanEdit()
+		{
+			return this.SelectedItem != null || this.modelEnum == ModelEnum.Holiday;
+		}
+
+		void E_UpdatePlayer(Player newPlayer)
+		{
+			if (newPlayer != null)
+			{
+				this.commandService.UpdatePlayer(newPlayer);
+				OnSearch();
+			}
+			this.addPlayerWindow.Close();
+			this.SelectedItem = newPlayer;
+		}
+
+		void E_UpdateHolidayList(List<Player> newHolidayPlayers)
+		{
+			this.editHolidayWindow.Close();
+			if (newHolidayPlayers == null)
+				return;
+
+			var oldHolidayPlayers = this.queryService.GetAllHolidayPlayers();
+
+			List<Player> toAdd = new List<Player>();
+			foreach (var np in newHolidayPlayers)
+			{
+				var found = false;
+				foreach (var op in oldHolidayPlayers)
+				{
+					if (found) break;
+					if (op.GetId() == np.GetId())
+						found = true;
+				}
+				if (!found)
+					toAdd.Add(np);
+			}
+
+			List<Player> toRemove = new List<Player>();
+			foreach (var op in oldHolidayPlayers)
+			{
+				var found = false;
+				foreach (var np in newHolidayPlayers)
+				{
+					if (found) break;
+					if (op.GetId() == np.GetId())
+						found = true;
+				}
+				if (!found)
+					toRemove.Add(op);
+			}
+
+			toAdd.ForEach(x => this.commandService.AddToHoliday(x));
+			toRemove.ForEach(x => this.commandService.RemoveFromHoliday(x));
+			RefreshView(ModelEnum.Holiday);
 		}
 
 		private void Delete()
 		{
+			MessageBoxResult ret = MessageBox.Show("Willst du " + this.SelectedItem.ToString() + " wirklich löschen?", "Löschen", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+
+			if (ret == MessageBoxResult.Yes)
+			{
+				this.commandService.DeletePlayer((Player)this.SelectedItem);
+				this.SearchResult.Remove(this.SelectedItem);
+				this.SelectedItem = this.SearchResult.FirstOrDefault();
+			}
+		}
+
+		private bool CanDelete()
+		{
+			return this.SelectedItem != null && this.modelEnum != ModelEnum.Holiday;
 		}
 
 		private void Home()
@@ -266,6 +366,10 @@ namespace DartApp.Database
 						break;
 				}
 			}
+			else
+			{
+				this.SpecificView = null;
+			}
 		}
 
 		private bool CanSelectPlayer()
@@ -278,7 +382,7 @@ namespace DartApp.Database
 			return this.modelEnum != ModelEnum.Holiday;
 		}
 
-		private void UpdateSpecificView(ModelEnum modelEnum)
+		/*private void UpdateSpecificView(ModelEnum modelEnum)
 		{
 			this.modelEnum = modelEnum;
 			switch(modelEnum)
@@ -287,12 +391,7 @@ namespace DartApp.Database
 					this.SpecificView = new PlayerViewModel(new Player("Daniel", "Leitner", new DateTime(1991, 11, 29), "test.jpg")); 
 					break;
 			}
-		}
-
-		private bool CanSelectPlayer()
-		{
-			return this.modelEnum != ModelEnum.Player;
-		}
+		}*/
 
 		#endregion
 

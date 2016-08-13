@@ -50,6 +50,20 @@ namespace DartApp.QueryService
 					}
 					break;
 			}
+			return ret.OrderBy(x => x.DisplayName).ToList();
+		}
+
+		public List<Player> GetAllPlayers()
+		{
+			List<Player> ret = new List<Player>();
+			GetSearchResult("", ModelEnum.Player).ForEach(x => ret.Add((Player)x));
+			return ret;
+		}
+
+		public List<Player> GetAllHolidayPlayers()
+		{
+			List<Player> ret = new List<Player>();
+			GetSearchResult("", ModelEnum.Holiday).ForEach(x => ret.Add((Player)x));
 			return ret;
 		}
 	}

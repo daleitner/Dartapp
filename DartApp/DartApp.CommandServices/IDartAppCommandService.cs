@@ -11,5 +11,9 @@ namespace DartApp.CommandServices
     {
 	    void InitializeDatabase(string setup, string mappingPath, string testValueFile);
 		void InsertPlayer(Player newPlayer);
+		void UpdatePlayer(Player newPlayer);
+		void DeletePlayer(Player playerToDelete);
+		void AddToHoliday(Player newPlayer);
+		void RemoveFromHoliday(Player playerToRemove);
     }
 }
