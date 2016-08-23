@@ -66,5 +66,19 @@ namespace DartApp.QueryService
 			GetSearchResult("", ModelEnum.Holiday).ForEach(x => ret.Add((Player)x));
 			return ret;
 		}
+
+
+		public List<PlacementPoint> GetPlacementPoints()
+		{
+			List<PlacementPoint> ret = new List<PlacementPoint>();
+			var query = new DataBaseQuery(this.mapping.GetTableByObject(typeof(PlacementPoint)));
+			var result = this.connection.ExecuteQuery(query);
+			foreach (var res in result)
+			{
+				var pl = new PlacementPoint(res);
+				ret.Add(pl);
+			}
+			return ret;
+		}
 	}
 }

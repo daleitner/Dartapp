@@ -7,6 +7,7 @@ using System.Collections.ObjectModel;
 using Base;
 using DartApp.Services;
 using DartApp.QueryService;
+using DartApp.Models;
 
 namespace DartApp.Club.Menu
 {
@@ -18,7 +19,7 @@ namespace DartApp.Club.Menu
 		private RelayCommand printCommand = null;
 		private RelayCommand homeButtonCommand = null;
 		private ObservableCollection<DataViewModel> data = null;
-		private ObservableCollection<PointViewModel> points = null;
+		private List<PlacementPoint> points = null;
 		private ObservableCollection<string> saisons = null;
 		private string selectedSaison = "";
 		private string startText = "";
@@ -32,6 +33,7 @@ namespace DartApp.Club.Menu
 		{
 			this.eventService = eventService;
 			this.queryService = queryService;
+			this.points = this.queryService.GetPlacementPoints();
 		}
 		#endregion
 
@@ -100,7 +102,7 @@ namespace DartApp.Club.Menu
 				OnPropertyChanged("Data");
 			}
 		}
-		public ObservableCollection<PointViewModel> Points
+		public List<PlacementPoint> Points
 		{
 			get
 			{

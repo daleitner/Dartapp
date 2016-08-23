@@ -13,5 +13,6 @@ namespace DartApp.QueryService
 		List<ModelBase> GetSearchResult(string search, ModelEnum modelType);
 		List<Player> GetAllPlayers();
 		List<Player> GetAllHolidayPlayers();
+		List<PlacementPoint> GetPlacementPoints();
 	}
 }

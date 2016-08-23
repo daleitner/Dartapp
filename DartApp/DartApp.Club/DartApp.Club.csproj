@@ -55,7 +55,6 @@
     </Compile>
     <Compile Include="Menu\ClubMenuViewModel.cs" />
     <Compile Include="Menu\DataViewModel.cs" />
-    <Compile Include="Menu\PointViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -86,6 +85,10 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DartApp.Models\DartApp.Models.csproj">
+      <Project>{ae84b79d-90c8-42ec-a34b-e7cef891fd58}</Project>
+      <Name>DartApp.Models</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DartApp.QueryService\DartApp.QueryService.csproj">
       <Project>{d2d66704-56a4-47c9-bc50-665d24d8c0cc}</Project>
       <Name>DartApp.QueryService</Name>
