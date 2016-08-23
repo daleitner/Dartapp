@@ -35,6 +35,9 @@ namespace DartApp
                 case DisplayEnum.Database:
                     this.Content = this.factory.GetDatabaseMainViewModel();
                     break;
+				case DisplayEnum.Club:
+					this.Content = this.factory.GetClubMenuViewModel();
+					break;
             }
         }
 

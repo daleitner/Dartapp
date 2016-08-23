@@ -40,9 +40,12 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Resources\Base.dll</HintPath>
     </Reference>
-    <Reference Include="SQLite.NET, Version=0.21.1869.3794, Culture=neutral, PublicKeyToken=c273bd375e695f9c">
+    <Reference Include="SQLDatabase, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>Resources\SQLite.NET.dll</HintPath>
+      <HintPath>..\Resources\SQLDatabase.dll</HintPath>
+    </Reference>
+    <Reference Include="SQLite.NET">
+      <HintPath>..\Resources\SQLite.NET.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -124,6 +127,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DartApp.Club\DartApp.Club.csproj">
+      <Project>{380d2639-fec9-4dd9-92fa-4ad731bc2f52}</Project>
+      <Name>DartApp.Club</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DartApp.CommandServices\DartApp.CommandServices.csproj">
       <Project>{800a89bf-c561-41a6-8f61-591aa5df8449}</Project>
       <Name>DartApp.CommandServices</Name>

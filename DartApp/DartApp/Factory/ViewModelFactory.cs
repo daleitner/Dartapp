@@ -1,4 +1,5 @@
-﻿using DartApp.CommandServices;
+﻿using DartApp.Club.Menu;
+using DartApp.CommandServices;
 using DartApp.Database;
 using DartApp.Home;
 using DartApp.QueryService;
@@ -44,6 +45,11 @@ namespace DartApp.Factory
 		public MainViewModel GetMainViewModel()
 		{
 			return new MainViewModel(this.dartAppCommandService);
+		}
+
+		public ClubMenuViewModel GetClubMenuViewModel()
+		{
+			return new ClubMenuViewModel(this.dartAppQueryService, this.eventService);
 		}
 	}
 }

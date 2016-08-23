@@ -36,14 +36,13 @@
       <HintPath>..\Resources\Base.dll</HintPath>
     </Reference>
     <Reference Include="FileReader">
-      <HintPath>..\DartApp\Resources\FileReader.dll</HintPath>
+      <HintPath>..\Resources\FileReader.dll</HintPath>
     </Reference>
     <Reference Include="SQLDatabase">
-      <HintPath>..\DartApp\Resources\SQLDatabase.dll</HintPath>
+      <HintPath>..\Resources\SQLDatabase.dll</HintPath>
     </Reference>
-    <Reference Include="SQLite.NET, Version=0.21.1869.3794, Culture=neutral, PublicKeyToken=c273bd375e695f9c">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\DartApp\Resources\SQLite.NET.dll</HintPath>
+    <Reference Include="SQLite.NET">
+      <HintPath>..\Resources\SQLite.NET.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -54,7 +53,7 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
     <Reference Include="XMLReader">
-      <HintPath>..\DartApp\Resources\XMLReader.dll</HintPath>
+      <HintPath>..\Resources\XMLReader.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

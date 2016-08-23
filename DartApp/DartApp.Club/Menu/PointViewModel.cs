@@ -4,12 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DartApp.Services
+namespace DartApp.Club.Menu
 {
-	public enum DisplayEnum
+	public class PointViewModel
 	{
-		Home,
-		Database,
-		Club
 	}
 }

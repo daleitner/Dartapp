@@ -1,0 +1,28 @@
+﻿<UserControl x:Class="DartApp.Club.Menu.ClubMenuUserControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="600" d:DesignWidth="800">
+    <Grid>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="*" />
+			<ColumnDefinition Width="4*" />
+		</Grid.ColumnDefinitions>
+		<StackPanel Orientation="Vertical">
+			<Label Content="Saison:" Margin="5" />
+			<ComboBox ItemsSource="{Binding Path=Saisons}" SelectedItem="{Binding Path=SelectedSaison}" Width="100" Margin="5"/>
+			<Button Content="{Binding Path=StartText}" Command="{Binding Path=StartCommand}" Margin="5" Width="100" />
+			<Button Content="Statistiken" Command="{Binding Path=StatisticsCommand}" Margin="5" Width="100" />
+			<Button Content="Drucken" Command="{Binding Path=PrintCommand}" Margin="5" Width="100" />
+			<Button Content="Hauptmenü" Command="{Binding Path=HomeButtonCommand}" Margin="5" Width="100" />
+			<Rectangle Height="1" Fill="Black" Margin="0,10"/>
+			<Label Content="Legende:" Margin="0,0,0,5" />
+			<DataGrid Name="datagrid2" Margin="5" ItemsSource="{Binding Path=Points}" />
+		</StackPanel>
+		<Rectangle Fill="Black" Width="1" HorizontalAlignment="Left" Grid.Column="1" />
+		<Label Name="header" Content="{Binding Path=Header}" HorizontalAlignment="Center" VerticalAlignment="Top" Grid.Column="1" FontSize="30" Margin="0,10" />
+		<DataGrid Name="datagrid1" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10,50,10,10" ItemsSource="{Binding Path=Data}" />
+	</Grid>
+</UserControl>

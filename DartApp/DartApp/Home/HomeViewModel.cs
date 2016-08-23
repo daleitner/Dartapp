@@ -11,7 +11,7 @@ namespace DartApp.Home
 {
 	public class HomeViewModel : ViewModelBase
 	{
-		private RelayCommand holidayCommand;
+		private RelayCommand clubCommand;
 		private RelayCommand trainingCommand;
 		private RelayCommand vdsvCommand;
 		private RelayCommand dataBaseCommand;
@@ -22,19 +22,19 @@ namespace DartApp.Home
             this.eventService = eventService;
 		}
 
-		public ICommand HolidayCommand
+		public ICommand ClubCommand
 		{
 			get
 			{
-				return this.holidayCommand ?? (this.holidayCommand = new RelayCommand(
-					param => OpenHoliday()
+				return this.clubCommand ?? (this.clubCommand = new RelayCommand(
+					param => OpenClub()
 					));
 			}
 		}
 
-		private void OpenHoliday()
+		private void OpenClub()
 		{
-
+			this.eventService.PublishDisplayChangedEvent(DisplayEnum.Club);
 		}
 
 		public ICommand TrainingCommand

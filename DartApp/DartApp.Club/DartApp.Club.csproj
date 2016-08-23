@@ -1,14 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{0F805B08-4626-4D8F-91E7-FC034F5F90DB}</ProjectGuid>
+    <ProjectGuid>{380D2639-FEC9-4DD9-92FA-4AD731BC2F52}</ProjectGuid>
     <OutputType>library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DartApp.Database</RootNamespace>
-    <AssemblyName>DartApp.Database</AssemblyName>
+    <RootNamespace>DartApp.Club</RootNamespace>
+    <AssemblyName>DartApp.Club</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -33,7 +33,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Base">
-      <HintPath>..\Resources\Base.dll</HintPath>
+      <HintPath>..\..\..\dlls\Base.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -50,22 +50,12 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DatabaseMainUserControl.xaml.cs">
-      <DependentUpon>DatabaseMainUserControl.xaml</DependentUpon>
+    <Compile Include="Menu\ClubMenuUserControl.xaml.cs">
+      <DependentUpon>ClubMenuUserControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="DatabaseMainViewModel.cs" />
-    <Compile Include="EditDialogs\AddPlayerViewModel.cs" />
-    <Compile Include="EditDialogs\AddPlayerWindow.xaml.cs">
-      <DependentUpon>AddPlayerWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="EditDialogs\EditHolidayViewModel.cs" />
-    <Compile Include="EditDialogs\EditHolidayWindow.xaml.cs">
-      <DependentUpon>EditHolidayWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="ModelViews\PlayerUserControl.xaml.cs">
-      <DependentUpon>PlayerUserControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="ModelViews\PlayerViewModel.cs" />
+    <Compile Include="Menu\ClubMenuViewModel.cs" />
+    <Compile Include="Menu\DataViewModel.cs" />
+    <Compile Include="Menu\PointViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -79,10 +69,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="Selection\ItemSelection.xaml.cs">
-      <DependentUpon>ItemSelection.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Selection\ItemSelectionViewModel.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -94,36 +80,12 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="DatabaseMainUserControl.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="EditDialogs\AddPlayerWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="EditDialogs\EditHolidayWindow.xaml">
+    <Page Include="Menu\ClubMenuUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="ModelViews\PlayerUserControl.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Selection\ItemSelection.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DartApp.CommandServices\DartApp.CommandServices.csproj">
-      <Project>{800a89bf-c561-41a6-8f61-591aa5df8449}</Project>
-      <Name>DartApp.CommandServices</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\DartApp.Models\DartApp.Models.csproj">
-      <Project>{ae84b79d-90c8-42ec-a34b-e7cef891fd58}</Project>
-      <Name>DartApp.Models</Name>
-    </ProjectReference>
     <ProjectReference Include="..\DartApp.QueryService\DartApp.QueryService.csproj">
       <Project>{d2d66704-56a4-47c9-bc50-665d24d8c0cc}</Project>
       <Name>DartApp.QueryService</Name>
@@ -133,7 +95,6 @@
       <Name>DartApp.Services</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

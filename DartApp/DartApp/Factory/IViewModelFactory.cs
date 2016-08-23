@@ -1,4 +1,5 @@
-﻿using DartApp.Database;
+﻿using DartApp.Club.Menu;
+using DartApp.Database;
 using DartApp.Home;
 using System;
 using System.Collections.Generic;
@@ -13,5 +14,6 @@ namespace DartApp.Factory
 		MainViewModel GetMainViewModel();
         HomeViewModel GetHomeViewModel();
         DatabaseMainViewModel GetDatabaseMainViewModel();
+		ClubMenuViewModel GetClubMenuViewModel();
     }
 }

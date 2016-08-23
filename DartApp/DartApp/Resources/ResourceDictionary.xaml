@@ -3,6 +3,7 @@
 					xmlns:start="clr-namespace:DartApp"
                     xmlns:home="clr-namespace:DartApp.Home"
                     xmlns:db="clr-namespace:DartApp.Database;assembly=DartApp.Database"
+					xmlns:cm="clr-namespace:DartApp.Club.Menu;assembly=DartApp.Club"
 					xmlns:selection="clr-namespace:DartApp.Database.Selection;assembly=DartApp.Database"
 					xmlns:dbmv="clr-namespace:DartApp.Database.ModelViews;assembly=DartApp.Database">
 	<DataTemplate DataType="{x:Type home:HomeViewModel}">
@@ -16,5 +17,8 @@
 	</DataTemplate>
 	<DataTemplate DataType="{x:Type selection:ItemSelectionViewModel}">
 		<selection:ItemSelection />
+	</DataTemplate>
+	<DataTemplate DataType="{x:Type cm:ClubMenuViewModel}">
+		<cm:ClubMenuUserControl />
 	</DataTemplate>
 </ResourceDictionary>
