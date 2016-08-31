@@ -10,6 +10,7 @@ namespace DartApp.Models
 	{
 		Player,
 		Holiday,
-		Default
+		Default,
+		TournamentSeries
 	}
 }

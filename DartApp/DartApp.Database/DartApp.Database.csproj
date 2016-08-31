@@ -66,6 +66,10 @@
       <DependentUpon>PlayerUserControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="ModelViews\PlayerViewModel.cs" />
+    <Compile Include="ModelViews\TournamentSeriesUserControl.xaml.cs">
+      <DependentUpon>TournamentSeriesUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ModelViews\TournamentSeriesViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -109,6 +113,10 @@
     <Page Include="ModelViews\PlayerUserControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ModelViews\TournamentSeriesUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Selection\ItemSelection.xaml">
       <Generator>MSBuild:Compile</Generator>

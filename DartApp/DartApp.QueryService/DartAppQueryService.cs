@@ -80,5 +80,10 @@ namespace DartApp.QueryService
 			}
 			return ret;
 		}
+
+		public List<TournamentSeries> GetSaisons()
+		{
+			throw new NotImplementedException();
+		}
 	}
 }

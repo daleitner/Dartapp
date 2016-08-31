@@ -20,7 +20,7 @@ namespace DartApp.Club.Menu
 		private RelayCommand homeButtonCommand = null;
 		private ObservableCollection<DataViewModel> data = null;
 		private List<PlacementPoint> points = null;
-		private ObservableCollection<string> saisons = null;
+		private List<TournamentSeries> saisons = null;
 		private string selectedSaison = "";
 		private string startText = "";
 		private string header = "";
@@ -33,7 +33,7 @@ namespace DartApp.Club.Menu
 		{
 			this.eventService = eventService;
 			this.queryService = queryService;
-			this.points = this.queryService.GetPlacementPoints();
+			LoadData();
 		}
 		#endregion
 
@@ -114,7 +114,7 @@ namespace DartApp.Club.Menu
 				OnPropertyChanged("Points");
 			}
 		}
-		public ObservableCollection<string> Saisons
+		public List<TournamentSeries> Saisons
 		{
 			get
 			{
@@ -165,6 +165,13 @@ namespace DartApp.Club.Menu
 		#endregion
 
 		#region private methods
+
+		private void LoadData()
+		{
+			this.points = this.queryService.GetPlacementPoints();
+			this.saisons = this.queryService.GetSaisons();
+		}
+
 		private void Start()
 		{
 		}

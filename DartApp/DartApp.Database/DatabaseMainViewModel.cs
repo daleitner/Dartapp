@@ -20,6 +20,7 @@ namespace DartApp.Database
 		#region members
 		private RelayCommand playerCommand = null;
 		private RelayCommand holidayCommand = null;
+		private RelayCommand tournamentSerialCommand = null;
 		private RelayCommand newCommand = null;
 		private RelayCommand editCommand = null;
 		private RelayCommand deleteCommand = null;
@@ -77,6 +78,21 @@ namespace DartApp.Database
 					);
 				}
 				return this.holidayCommand;
+			}
+		}
+
+		public ICommand TournamentSerialCommand
+		{
+			get
+			{
+				if (this.tournamentSerialCommand == null)
+				{
+					this.tournamentSerialCommand = new RelayCommand(
+						param => RefreshView(ModelEnum.TournamentSeries),
+						param => CanSelectTournamentSeries()
+					);
+				}
+				return this.tournamentSerialCommand;
 			}
 		}
 
@@ -223,6 +239,9 @@ namespace DartApp.Database
 					this.addPlayerWindow.DataContext = pvm;
 					this.addPlayerWindow.ShowDialog();
 					break;
+				case ModelEnum.TournamentSeries:
+
+					break;
 			}
 		}
 
@@ -364,6 +383,9 @@ namespace DartApp.Database
 					case ModelEnum.Holiday:
 						this.SpecificView = new PlayerViewModel((Player)this.SelectedItem);
 						break;
+					case ModelEnum.TournamentSeries:
+						this.SpecificView = new TournamentSeriesViewModel((TournamentSeries) this.SelectedItem);
+						break;
 				}
 			}
 			else
@@ -382,16 +404,10 @@ namespace DartApp.Database
 			return this.modelEnum != ModelEnum.Holiday;
 		}
 
-		/*private void UpdateSpecificView(ModelEnum modelEnum)
+		private bool CanSelectTournamentSeries()
 		{
-			this.modelEnum = modelEnum;
-			switch(modelEnum)
-			{
-				case ModelEnum.Player: 
-					this.SpecificView = new PlayerViewModel(new Player("Daniel", "Leitner", new DateTime(1991, 11, 29), "test.jpg")); 
-					break;
-			}
-		}*/
+			return this.modelEnum != ModelEnum.TournamentSeries;
+		}
 
 		#endregion
 

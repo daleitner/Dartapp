@@ -2,6 +2,7 @@
 using DartApp.Models;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,5 +15,6 @@ namespace DartApp.QueryService
 		List<Player> GetAllPlayers();
 		List<Player> GetAllHolidayPlayers();
 		List<PlacementPoint> GetPlacementPoints();
+		List<TournamentSeries> GetSaisons();
 	}
 }
