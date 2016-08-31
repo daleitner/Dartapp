@@ -10,6 +10,10 @@
 		<Column name="Hid" attribute="Id" type="VARCHAR" />
 		<Column name="Pid" attribute="Player" type="VARCHAR" />
 	</Table>
+	<Table name="TournamentSerial" csobject="TournamentSeries">
+		<Column name="Tid" attribute="Id" type="VARCHAR" />
+		<Column name="Name" attribute="Name" type="VARCHAR" />
+	</Table>
 	<Table name="Tournaments" csobject="Tournament">
 		<Column name="Tid" attribute="Id" type="VARCHAR" />
 		<Column name="Tournamentdate" type="DATE" />

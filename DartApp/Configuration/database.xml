@@ -11,9 +11,14 @@
 		<Column name="Hid" type="VARCHAR" primarykey="true" />
 		<Column name="Pid" type="VARCHAR" foreignkey="Pid" reference="Players" />
 	</Table>
+	<Table name="TournamentSerial">
+		<Column name="Tid" type="VARCHAR" primarykey="true" />
+		<Column name="Name" type="VARCHAR" />
+	</Table>
 	<Table name="Tournaments">
 		<Column name="Tid" type="VARCHAR" primarykey="true" />
 		<Column name="Tournamentdate" type="DATE" />
+		<Column name="TournamentSeries" type="VARCHAR" foreignkey="Tid" reference="TournamentSerial" />
 	</Table>
 	<Table name="Matches">
 		<Column name="Mid" type="VARCHAR" primarykey="true" />
