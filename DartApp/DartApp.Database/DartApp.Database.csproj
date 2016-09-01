@@ -58,6 +58,10 @@
     <Compile Include="EditDialogs\AddPlayerWindow.xaml.cs">
       <DependentUpon>AddPlayerWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="EditDialogs\AddTournamentSeriesViewModel.cs" />
+    <Compile Include="EditDialogs\AddTournamentSeriesWindow.xaml.cs">
+      <DependentUpon>AddTournamentSeriesWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="EditDialogs\EditHolidayViewModel.cs" />
     <Compile Include="EditDialogs\EditHolidayWindow.xaml.cs">
       <DependentUpon>EditHolidayWindow.xaml</DependentUpon>
@@ -105,6 +109,10 @@
     <Page Include="EditDialogs\AddPlayerWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="EditDialogs\AddTournamentSeriesWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="EditDialogs\EditHolidayWindow.xaml">
       <SubType>Designer</SubType>

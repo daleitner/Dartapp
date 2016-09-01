@@ -37,6 +37,7 @@ namespace DartApp.Database
 		private IDartAppCommandService commandService;
 		private AddPlayerWindow addPlayerWindow;
 		private EditHolidayWindow editHolidayWindow;
+		private AddTournamentSeriesWindow addTournamentSeriesWindow;
 		#endregion
 
 		#region ctors
@@ -240,9 +241,18 @@ namespace DartApp.Database
 					this.addPlayerWindow.ShowDialog();
 					break;
 				case ModelEnum.TournamentSeries:
-
+					var tvm = new AddTournamentSeriesViewModel();
+					tvm.ButtonClicked += E_SaveNewTournamentSeries;
+					this.addTournamentSeriesWindow = new AddTournamentSeriesWindow();
+					this.addTournamentSeriesWindow.DataContext = tvm;
+					this.addTournamentSeriesWindow.ShowDialog();
 					break;
 			}
+		}
+
+		private void E_SaveNewTournamentSeries(string newTournamentSeriesName)
+		{
+			throw new NotImplementedException();
 		}
 
 		void E_SaveNewPlayer(Player newPlayer)
