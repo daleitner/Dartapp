@@ -13,6 +13,7 @@ namespace DartApp.Models
 		public TournamentSeries()
 			:base()
 		{
+			this.Tournaments = new List<Tournament>();
 		}
 
 		public TournamentSeries(List<string> itemArray)
@@ -33,5 +34,7 @@ namespace DartApp.Models
 				this.DisplayName = this.name;
 			}
 		}
+
+		public List<Tournament> Tournaments;
 	}
 }

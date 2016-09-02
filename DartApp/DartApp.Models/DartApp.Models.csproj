@@ -47,6 +47,7 @@
     <Compile Include="PlacementPoint.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Tournament.cs" />
     <Compile Include="TournamentSeries.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

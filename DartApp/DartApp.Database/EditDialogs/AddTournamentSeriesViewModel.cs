@@ -1,5 +1,8 @@
+using System;
+using System.Collections.Generic;
 using System.Windows.Input;
 using Base;
+using DartApp.Models;
 
 namespace DartApp.Database.EditDialogs
 {
@@ -9,7 +12,7 @@ namespace DartApp.Database.EditDialogs
 		private RelayCommand cancelCommand = null;
 		private RelayCommand saveCommand = null;
 		private string name = "";
-		public delegate void ButtonClickedEventHandler(string newTournamentSeriesName);
+		public delegate void ButtonClickedEventHandler(TournamentSeries newTournamentSeries);
 		public event ButtonClickedEventHandler ButtonClicked = null;
 		#endregion
 
@@ -65,7 +68,7 @@ namespace DartApp.Database.EditDialogs
 		{
 			if (ButtonClicked != null)
 			{
-				ButtonClicked(string.Empty);
+				ButtonClicked(null);
 			}
 		}
 
@@ -73,7 +76,13 @@ namespace DartApp.Database.EditDialogs
 		{
 			if (ButtonClicked != null)
 			{
-				ButtonClicked(this.Name);
+				var tournamentSeries = new TournamentSeries {Name = this.Name};
+				for (var i = 1; i<=12; i++)
+				{
+					var tournament = new Tournament {Date = new DateTime(DateTime.Today.Year, i, 1)};
+					tournamentSeries.Tournaments.Add(tournament);
+				}
+				ButtonClicked(tournamentSeries);
 			}
 		}
 

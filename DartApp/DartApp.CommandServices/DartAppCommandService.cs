@@ -68,5 +68,10 @@ namespace DartApp.CommandServices
 			var condition = new Condition().Add(new PropertyExpression(table.Columns["Pid"], CompareEnum.Equals, playerToRemove.GetId()));
 			DataBaseCreator.GetInstance().DataBaseConnection.DeleteElement(new SQLDatabase.ElementDelete(table, condition));
 		}
+
+		public void InsertTournamentSeries(TournamentSeries newTournamentSeries)
+		{
+			throw new NotImplementedException();
+		}
 	}
 }

@@ -15,5 +15,6 @@ namespace DartApp.CommandServices
 		void DeletePlayer(Player playerToDelete);
 		void AddToHoliday(Player newPlayer);
 		void RemoveFromHoliday(Player playerToRemove);
+	    void InsertTournamentSeries(TournamentSeries newTournamentSeries);
     }
 }

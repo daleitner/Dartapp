@@ -243,16 +243,17 @@ namespace DartApp.Database
 				case ModelEnum.TournamentSeries:
 					var tvm = new AddTournamentSeriesViewModel();
 					tvm.ButtonClicked += E_SaveNewTournamentSeries;
-					this.addTournamentSeriesWindow = new AddTournamentSeriesWindow();
-					this.addTournamentSeriesWindow.DataContext = tvm;
+					this.addTournamentSeriesWindow = new AddTournamentSeriesWindow {DataContext = tvm};
 					this.addTournamentSeriesWindow.ShowDialog();
 					break;
 			}
 		}
 
-		private void E_SaveNewTournamentSeries(string newTournamentSeriesName)
+		private void E_SaveNewTournamentSeries(TournamentSeries newTournamentSeries)
 		{
-			throw new NotImplementedException();
+			if (newTournamentSeries == null)
+				return;
+			this.commandService.InsertTournamentSeries(newTournamentSeries);
 		}
 
 		void E_SaveNewPlayer(Player newPlayer)
