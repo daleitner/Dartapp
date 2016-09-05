@@ -71,30 +71,30 @@ namespace DataBaseInitializer
 		#region public methods
 		public OREntry GetEntryByTable(string tableName)
 		{
-			return this.OREntries.Where(x => x.RelationName == tableName).FirstOrDefault();
+			return this.OREntries.FirstOrDefault(x => x.RelationName == tableName);
 		}
 
 		public OREntry GetEntryByObject(string csObjectName)
 		{
-			return this.OREntries.Where(x => x.ObjectName == csObjectName).FirstOrDefault();
+			return this.OREntries.FirstOrDefault(x => x.ObjectName == csObjectName);
 		}
 
 		public DataBaseTable GetTableByObject(Type t)
 		{
-			var entry = this.OREntries.Where(x => x.ObjectName == t.Name).FirstOrDefault();
+			var entry = this.OREntries.FirstOrDefault(x => x.ObjectName == t.Name);
 			return new DataBaseTable(entry.RelationName, entry.Columns.Select(x => new DataBaseColumn(x.ColumnName, x.ColumnType)).ToList());
 		}
 
 		public DataBaseTable GetTableByRelation(string relationName)
 		{ 
-			var entry = this.OREntries.Where(x => x.RelationName == relationName).FirstOrDefault();
+			var entry = this.OREntries.FirstOrDefault(x => x.RelationName == relationName);
 			return new DataBaseTable(entry.RelationName, entry.Columns.Select(x => new DataBaseColumn(x.ColumnName, x.ColumnType)).ToList());
 		}
 
 		public Dictionary<DataBaseColumn, object> CreateDatabaseDictionary(DataBaseTable table, ModelBase model)
 		{
 			var ret = new Dictionary<DataBaseColumn, object>();
-			var entry = this.OREntries.Where(x => x.RelationName == table.Name).FirstOrDefault();
+			var entry = this.OREntries.FirstOrDefault(x => x.RelationName == table.Name);
 			foreach (var col in entry.Columns)
 			{
 				var column = table.Columns[col.ColumnName];

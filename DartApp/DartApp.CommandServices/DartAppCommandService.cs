@@ -71,7 +71,9 @@ namespace DartApp.CommandServices
 
 		public void InsertTournamentSeries(TournamentSeries newTournamentSeries)
 		{
-			throw new NotImplementedException();
+			var table = this.mapping.GetTableByObject(typeof(TournamentSeries));
+			var dictionary = this.mapping.CreateDatabaseDictionary(table, newTournamentSeries);
+			DataBaseCreator.GetInstance().DataBaseConnection.InsertElement(new SQLDatabase.ElementInsert(table, dictionary));
 		}
 	}
 }
