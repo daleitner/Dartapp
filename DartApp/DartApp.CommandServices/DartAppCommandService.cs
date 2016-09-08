@@ -6,36 +6,39 @@ using System.Threading.Tasks;
 using DataBaseInitializer;
 using DartApp.Models;
 using SQLDatabase;
+using Base;
 
 namespace DartApp.CommandServices
 {
 	public class DartAppCommandService : IDartAppCommandService
 	{
+		private DataBaseManager dbManager;
 		private ORDictionary mapping;
 		private DataBaseConnection connection;
 
 		public DartAppCommandService()
 		{
-			var dbCreator = DataBaseCreator.GetInstance();
-			if (dbCreator != null)
+			this.dbManager = DataBaseManager.GetInstance();
+			if (this.dbManager != null)
 			{
-				this.mapping = dbCreator.Mapping;
-				this.connection = dbCreator.DataBaseConnection;
+				this.mapping = this.dbManager.Mapping;
+				this.connection = this.dbManager.DataBaseConnection;
 			}
 		}
 
 		public void InitializeDatabase(string setup, string mappingPath, string testValueFile)
 		{
-			var dbCreator = DataBaseCreator.GetInstance(setup, mappingPath, testValueFile);
-			this.mapping = dbCreator.Mapping;
-			this.connection = dbCreator.DataBaseConnection;
+			//this.dbManager = DataBaseManager.GetInstance(setup, mappingPath, testValueFile);
+			//this.mapping = this.dbManager.Mapping;
+			//this.connection = this.dbManager.DataBaseConnection;
 		}
 
 		public void InsertPlayer(Player newPlayer)
 		{
-			var table = this.mapping.GetTableByObject(typeof(Player));
-			var dictionary = this.mapping.CreateDatabaseDictionary(table, newPlayer);
-			DataBaseCreator.GetInstance().DataBaseConnection.InsertElement(new SQLDatabase.ElementInsert(table, dictionary));
+			this.dbManager.Insert(newPlayer);
+			//var table = this.mapping.GetTableByObject(typeof(Player));
+			//var dictionary = this.mapping.CreateDatabaseDictionary(table, newPlayer);
+			//DataBaseManager.GetInstance().DataBaseConnection.InsertElement(new SQLDatabase.ElementInsert(table, dictionary));
 		}
 
 		public void UpdatePlayer(Player newPlayer)
@@ -43,14 +46,14 @@ namespace DartApp.CommandServices
 			var table = this.mapping.GetTableByObject(typeof(Player));
 			var dictionary = this.mapping.CreateDatabaseDictionary(table, newPlayer);
 			var condition = new Condition().Add(new PropertyExpression(table.Columns["Pid"], CompareEnum.Equals, newPlayer.GetId()));
-			DataBaseCreator.GetInstance().DataBaseConnection.UpdateElement(new SQLDatabase.ElementUpdate(table, dictionary, condition));
+			DataBaseManager.GetInstance().DataBaseConnection.UpdateElement(new SQLDatabase.ElementUpdate(table, dictionary, condition));
 		}
 
 		public void DeletePlayer(Player playerToDelete)
 		{
 			var table = this.mapping.GetTableByObject(typeof(Player));
 			var condition = new Condition().Add(new PropertyExpression(table.Columns["Pid"], CompareEnum.Equals, playerToDelete.GetId()));
-			DataBaseCreator.GetInstance().DataBaseConnection.DeleteElement(new SQLDatabase.ElementDelete(table, condition));
+			DataBaseManager.GetInstance().DataBaseConnection.DeleteElement(new SQLDatabase.ElementDelete(table, condition));
 		}
 
 
@@ -59,21 +62,23 @@ namespace DartApp.CommandServices
 			var table = this.mapping.GetTableByObject(typeof(Holiday));
 			var holiday = new Holiday(newPlayer);
 			var dictionary = this.mapping.CreateDatabaseDictionary(table, holiday);
-			DataBaseCreator.GetInstance().DataBaseConnection.InsertElement(new SQLDatabase.ElementInsert(table, dictionary));
+			DataBaseManager.GetInstance().DataBaseConnection.InsertElement(new SQLDatabase.ElementInsert(table, dictionary));
 		}
 
 		public void RemoveFromHoliday(Player playerToRemove)
 		{
 			var table = this.mapping.GetTableByObject(typeof(Holiday));
 			var condition = new Condition().Add(new PropertyExpression(table.Columns["Pid"], CompareEnum.Equals, playerToRemove.GetId()));
-			DataBaseCreator.GetInstance().DataBaseConnection.DeleteElement(new SQLDatabase.ElementDelete(table, condition));
+			DataBaseManager.GetInstance().DataBaseConnection.DeleteElement(new SQLDatabase.ElementDelete(table, condition));
 		}
 
 		public void InsertTournamentSeries(TournamentSeries newTournamentSeries)
 		{
-			var table = this.mapping.GetTableByObject(typeof(TournamentSeries));
-			var dictionary = this.mapping.CreateDatabaseDictionary(table, newTournamentSeries);
-			DataBaseCreator.GetInstance().DataBaseConnection.InsertElement(new SQLDatabase.ElementInsert(table, dictionary));
+			var children = new List<ModelBase>();
+			newTournamentSeries.Tournaments.ForEach(x => children.Add(x));
+			var tree = new ModelBaseTree(newTournamentSeries, children);
+
+			this.dbManager.Insert(tree, null);
 		}
 	}
 }

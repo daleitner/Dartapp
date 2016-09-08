@@ -251,9 +251,11 @@ namespace DartApp.Database
 
 		private void E_SaveNewTournamentSeries(TournamentSeries newTournamentSeries)
 		{
-			if (newTournamentSeries == null)
-				return;
-			this.commandService.InsertTournamentSeries(newTournamentSeries);
+			if (newTournamentSeries != null)
+			{
+				this.commandService.InsertTournamentSeries(newTournamentSeries);
+			}
+			this.addTournamentSeriesWindow.Close();
 		}
 
 		void E_SaveNewPlayer(Player newPlayer)
@@ -262,9 +264,9 @@ namespace DartApp.Database
 			{
 				this.commandService.InsertPlayer(newPlayer);
 				OnSearch();
+				this.SelectedItem = newPlayer;
 			}
 			this.addPlayerWindow.Close();
-			this.SelectedItem = newPlayer;
 		}
 
 		private bool CanNew()

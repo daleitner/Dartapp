@@ -10,9 +10,6 @@ namespace DataBaseInitializer
 {
 	public class ORDictionary
 	{
-		#region members
-		#endregion
-
 		#region ctors
 		public ORDictionary(string orMappingFilePath)
 		{
@@ -93,6 +90,11 @@ namespace DataBaseInitializer
 
 		public Dictionary<DataBaseColumn, object> CreateDatabaseDictionary(DataBaseTable table, ModelBase model)
 		{
+			return CreateDatabaseDictionary(table, model, null);
+		}
+
+		public Dictionary<DataBaseColumn, object> CreateDatabaseDictionary(DataBaseTable table, ModelBase model, ModelBase parentModel)
+		{
 			var ret = new Dictionary<DataBaseColumn, object>();
 			var entry = this.OREntries.FirstOrDefault(x => x.RelationName == table.Name);
 			foreach (var col in entry.Columns)
@@ -101,9 +103,11 @@ namespace DataBaseInitializer
 				object objectValue = null;
 				if (col.AttributeName == "Id")
 					objectValue = model.GetId();
+				else if (col.AttributeName == "ParentId")
+					objectValue = parentModel.GetId();
 				else
 				{
-					if (column.Type == ColumnType.VARCHAR && model.GetType().GetProperty(col.AttributeName).GetType() != typeof(string))
+					if (column.Type == ColumnType.VARCHAR && model.GetType().GetProperty(col.AttributeName).PropertyType != typeof(string))
 					{
 						ModelBase help = model.GetType().GetProperty(col.AttributeName).GetValue(model) as ModelBase;
 						if (help != null)

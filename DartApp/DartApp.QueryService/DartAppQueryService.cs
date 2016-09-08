@@ -16,8 +16,8 @@ namespace DartApp.QueryService
 		private ORDictionary mapping;
 		public DartAppQueryService()
 		{
-			this.connection = DataBaseCreator.GetInstance().DataBaseConnection;
-			this.mapping = DataBaseCreator.GetInstance().Mapping;
+			this.connection = DataBaseManager.GetInstance().DataBaseConnection;
+			this.mapping = DataBaseManager.GetInstance().Mapping;
 		}
 
 		public List<ModelBase> GetSearchResult(string search, ModelEnum modelType)

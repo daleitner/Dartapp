@@ -6,20 +6,21 @@ using System.Linq;
 using FileIO.FileReader;
 using FileIO.XMLReader;
 using SQLDatabase;
+using Base;
 
 namespace DataBaseInitializer
 {
-	public class DataBaseCreator
+	public class DataBaseManager
 	{
 		#region members
-		private static DataBaseCreator dbi;
-		private readonly string setup = Directory.GetCurrentDirectory() + "\\database.xml";
-		private readonly string testValueFile = Directory.GetCurrentDirectory() + "\\dbtestvalues.txt";
-		private readonly string mappingPath = Directory.GetCurrentDirectory() + "\\mapping.xml";
+		private static DataBaseManager dbi;
+		private readonly string setup = "";
+		private readonly string testValueFile = "";
+		private readonly string mappingPath = "";
 		#endregion
 
 		#region ctor
-		private DataBaseCreator(string configFile, string mappingFile, string initialValuesFile)
+		private DataBaseManager(string configFile, string mappingFile, string initialValuesFile)
 		{
 			this.setup = configFile;
 			this.testValueFile = initialValuesFile;
@@ -43,12 +44,12 @@ namespace DataBaseInitializer
 		#endregion
 
 		#region static methods
-		public static DataBaseCreator GetInstance(string configFile, string mappingFile, string initialValuesFile)
+		public static DataBaseManager GetInstance(string configFile, string mappingFile, string initialValuesFile)
 		{
-			return dbi ?? (dbi = new DataBaseCreator(configFile, mappingFile, initialValuesFile));
+			return dbi ?? (dbi = new DataBaseManager(configFile, mappingFile, initialValuesFile));
 		}
 
-		public static DataBaseCreator GetInstance()
+		public static DataBaseManager GetInstance()
 		{
 			return dbi;
 		}
@@ -137,6 +138,32 @@ namespace DataBaseInitializer
 				return new DataBaseTable(node.Attributes["name"], columns, fcolumns);
 			}
 			return null;
+		}
+		#endregion
+
+		#region public methods
+		public void Insert(ModelBase newModel)
+		{
+			Insert(newModel, null);
+		}
+
+		public void Insert(ModelBase newModel, ModelBase parentModel)
+		{
+			var table = this.Mapping.GetTableByObject(newModel.GetType());
+			var dictionary = this.Mapping.CreateDatabaseDictionary(table, newModel, parentModel);
+			this.DataBaseConnection.InsertElement(new SQLDatabase.ElementInsert(table, dictionary));
+		}
+
+		public void Insert(ModelBaseTree newModelTree, ModelBase parentModel)
+		{
+			Insert(newModelTree.Model, parentModel);
+			foreach (var modelList in newModelTree.Children)
+			{
+				foreach (var child in modelList)
+				{
+					Insert(child, newModelTree.Model);
+				}
+			}
 		}
 		#endregion
 	}

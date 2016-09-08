@@ -32,7 +32,7 @@ namespace DartApp
 
 			try
 			{
-				var dbCreator = DataBaseCreator.GetInstance(setup, mappingPath, testValueFile);
+				var dbCreator = DataBaseManager.GetInstance(setup, mappingPath, testValueFile);
 			}
 			catch (Exception e)
 			{

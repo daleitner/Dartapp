@@ -7,9 +7,6 @@ namespace DataBaseInitializer
 {
 	public class OREntry
 	{
-		#region members
-		#endregion
-
 		#region ctors
 		public OREntry()
 		{
@@ -30,12 +27,6 @@ namespace DataBaseInitializer
 		public string RelationName { get; set; }
 		public List<ORColumn> Columns { get; set; }
 		public string ObjectName { get; set; }
-		#endregion
-
-		#region private methods
-		#endregion
-
-		#region public methods
 		#endregion
  }
 }
