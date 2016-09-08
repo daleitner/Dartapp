@@ -87,8 +87,5 @@ namespace DartApp.Database.EditDialogs
 		}
 
 		#endregion
-
-		#region public methods
-		#endregion
 	}
 }

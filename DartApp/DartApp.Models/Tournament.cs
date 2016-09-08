@@ -20,5 +20,7 @@ namespace DartApp.Models
 		}
 
 		public DateTime Date { get; set; }
+
+		public List<Match> Matches { get; set; }
 	}
 }

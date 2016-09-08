@@ -49,6 +49,26 @@ namespace DartApp.QueryService
 							ret.Add(pl);
 					}
 					break;
+				case ModelEnum.TournamentSeries:
+					var tournamentQuery = new DataBaseQuery(this.mapping.GetTableByObject(typeof(TournamentSeries)));
+					var tournamentResult = this.connection.ExecuteQuery(tournamentQuery);
+					foreach (var res in tournamentResult)
+					{
+						var ts = new TournamentSeries(res);
+						if (String.IsNullOrEmpty(search) || ts.DisplayName.Contains(search))
+						{
+							var ttable = this.mapping.GetTableByObject(typeof(Tournament));
+							var tcondition = new Condition().Add(new PropertyExpression(ttable.Columns["TournamentSeries"], CompareEnum.Equals, ts.GetId()));
+							var tQuery = new DataBaseQuery(ttable, tcondition);
+							var tRes = this.connection.ExecuteQuery(tQuery);
+							foreach (var tournament in tRes)
+							{
+								ts.Tournaments.Add(new Tournament(tournament));
+							}
+							ret.Add(ts);
+						}
+					}
+					break;
 			}
 			return ret.OrderBy(x => x.DisplayName).ToList();
 		}
@@ -81,9 +101,27 @@ namespace DartApp.QueryService
 			return ret;
 		}
 
-		public List<TournamentSeries> GetSaisons()
+		public List<TournamentSeries> GetTournamentSeries()
 		{
-			throw new NotImplementedException();
+			var ret = new List<TournamentSeries>();
+			var tournamentQuery = new DataBaseQuery(this.mapping.GetTableByObject(typeof(TournamentSeries)));
+			var tournamentResult = this.connection.ExecuteQuery(tournamentQuery);
+			foreach (var res in tournamentResult)
+			{
+				var ts = new TournamentSeries(res);
+					var ttable = this.mapping.GetTableByObject(typeof(Tournament));
+					var tcondition = new Condition().Add(new PropertyExpression(ttable.Columns["TournamentSeries"], CompareEnum.Equals, ts.GetId()));
+					var sortDict = new Dictionary<DataBaseColumn, SortEnum>();
+					sortDict.Add(ttable.Columns["Tournamentdate"], SortEnum.ASC);
+					var tQuery = new DataBaseQuery(ttable.Columns.Values.ToList(), ttable, tcondition, sortDict);
+					var tRes = this.connection.ExecuteQuery(tQuery);
+					foreach (var tournament in tRes)
+					{
+						ts.Tournaments.Add(new Tournament(tournament));
+					}
+					ret.Add(ts);
+			}
+			return ret.OrderByDescending(x => x.CreatedAt).ToList();
 		}
 	}
 }

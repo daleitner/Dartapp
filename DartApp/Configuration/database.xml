@@ -14,6 +14,7 @@
 	<Table name="TournamentSerial">
 		<Column name="Tid" type="VARCHAR" primarykey="true" />
 		<Column name="Name" type="VARCHAR" />
+		<Column name="CreatedAt" type="DATE" />
 	</Table>
 	<Table name="Tournaments">
 		<Column name="Tid" type="VARCHAR" primarykey="true" />

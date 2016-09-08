@@ -13,6 +13,7 @@
 	<Table name="TournamentSerial" csobject="TournamentSeries">
 		<Column name="Tid" attribute="Id" type="VARCHAR" />
 		<Column name="Name" attribute="Name" type="VARCHAR" />
+		<Column name="CreatedAt" attribute="CreatedAt" type="DATE" />
 	</Table>
 	<Table name="Tournaments" csobject="Tournament">
 		<Column name="Tid" attribute="Id" type="VARCHAR" />
@@ -21,7 +22,7 @@
 	</Table>
 	<Table name="Matches" csobject="Match">
 		<Column name="Mid" attribute="Id" type="VARCHAR" />
-		<Column name="Tid" attribute="Tournament" type="VARCHAR" />
+		<Column name="Tid" attribute="ParentId" type="VARCHAR" />
 		<Column name="Player1" attribute="Player1" type="VARCHAR" />
 		<Column name="Player2" attribute="Player2" type="VARCHAR" />
 		<Column name="Positionkey" attribute="PositionKey" type="INTEGER" />

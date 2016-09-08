@@ -13,6 +13,7 @@ namespace DartApp.Models
 		public TournamentSeries()
 			:base()
 		{
+			this.CreatedAt = DateTime.Now;
 			this.Tournaments = new List<Tournament>();
 		}
 
@@ -20,6 +21,8 @@ namespace DartApp.Models
 		{
 			this.Id = itemArray[0];
 			this.Name = itemArray[1];
+			this.CreatedAt = DateTime.Parse(itemArray[2]);
+			this.Tournaments = new List<Tournament>();
 		}
 
 		public string Name
@@ -34,6 +37,8 @@ namespace DartApp.Models
 				this.DisplayName = this.name;
 			}
 		}
+
+		public DateTime CreatedAt { get; set; }
 
 		public List<Tournament> Tournaments;
 	}

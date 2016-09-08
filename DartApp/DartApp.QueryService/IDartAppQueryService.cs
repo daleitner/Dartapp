@@ -15,6 +15,6 @@ namespace DartApp.QueryService
 		List<Player> GetAllPlayers();
 		List<Player> GetAllHolidayPlayers();
 		List<PlacementPoint> GetPlacementPoints();
-		List<TournamentSeries> GetSaisons();
+		List<TournamentSeries> GetTournamentSeries();
 	}
 }

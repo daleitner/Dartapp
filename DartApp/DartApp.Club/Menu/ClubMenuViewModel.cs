@@ -21,7 +21,7 @@ namespace DartApp.Club.Menu
 		private ObservableCollection<DataViewModel> data = null;
 		private List<PlacementPoint> points = null;
 		private List<TournamentSeries> saisons = null;
-		private string selectedSaison = "";
+		private TournamentSeries selectedSaison = null;
 		private string startText = "";
 		private string header = "";
 		private IEventService eventService;
@@ -126,7 +126,7 @@ namespace DartApp.Club.Menu
 				OnPropertyChanged("Saisons");
 			}
 		}
-		public string SelectedSaison
+		public TournamentSeries SelectedSaison
 		{
 			get
 			{
@@ -169,7 +169,8 @@ namespace DartApp.Club.Menu
 		private void LoadData()
 		{
 			this.points = this.queryService.GetPlacementPoints();
-			this.saisons = this.queryService.GetSaisons();
+			this.saisons = this.queryService.GetTournamentSeries();
+			this.selectedSaison = this.saisons.FirstOrDefault();
 		}
 
 		private void Start()

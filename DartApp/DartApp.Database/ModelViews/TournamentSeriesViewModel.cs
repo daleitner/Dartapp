@@ -11,18 +11,18 @@ namespace DartApp.Database.ModelViews
 	public class TournamentSeriesViewModel : ViewModelBase
 	{
 		#region members
-		private ObservableCollection<string> tournaments = null;
+		private List<Tournament> tournaments = null;
 		#endregion
 
 		#region ctors
 		public TournamentSeriesViewModel(TournamentSeries tournamentSeries)
 		{
-			//this.tournaments = tournamentSeries.Tournaments;
+			this.tournaments = tournamentSeries.Tournaments;
 		}
 		#endregion
 
 		#region properties
-		public ObservableCollection<string> Tournaments
+		public List<Tournament> Tournaments
 		{
 			get
 			{

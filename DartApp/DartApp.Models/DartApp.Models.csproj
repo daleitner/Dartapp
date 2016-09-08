@@ -43,6 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Holiday.cs" />
+    <Compile Include="Match.cs" />
     <Compile Include="ModelEnum.cs" />
     <Compile Include="PlacementPoint.cs" />
     <Compile Include="Player.cs" />
