@@ -18,6 +18,7 @@
 	<Table name="Tournaments" csobject="Tournament">
 		<Column name="Tid" attribute="Id" type="VARCHAR" />
 		<Column name="Tournamentdate" attribute="Date" type="DATE" />
+		<Column name="State" attribute="State" type="VARCHAR" />
 		<Column name="TournamentSeries" attribute="ParentId" type="VARCHAR" />
 	</Table>
 	<Table name="Matches" csobject="Match">

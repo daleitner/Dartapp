@@ -24,6 +24,7 @@ namespace DartApp.Club.Menu
 		private TournamentSeries selectedSaison = null;
 		private string startText = "";
 		private string header = "";
+		private int actualTournamentIndex = -1;
 		private IEventService eventService;
 		private IDartAppQueryService queryService;
 		#endregion
@@ -45,7 +46,8 @@ namespace DartApp.Club.Menu
 				if (this.startCommand == null)
 				{
 					this.startCommand = new RelayCommand(
-						param => Start()
+						param => Start(),
+						param => CanStart()
 					);
 				}
 				return this.startCommand;
@@ -171,10 +173,31 @@ namespace DartApp.Club.Menu
 			this.points = this.queryService.GetPlacementPoints();
 			this.saisons = this.queryService.GetTournamentSeries();
 			this.selectedSaison = this.saisons.FirstOrDefault();
+			if (this.selectedSaison != null)
+			{
+				var months = new List<string>() { "Jänner", "Feber", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember" };
+				for (int i = 0; i < this.selectedSaison.Tournaments.Count; i++)
+				{
+					if (this.selectedSaison.Tournaments[i].State != TournamentState.Closed)
+					{
+						this.actualTournamentIndex = i;
+						break;
+					}
+				}
+
+				if (this.actualTournamentIndex >= 0)
+					this.startText = months[this.actualTournamentIndex] + "-\nTurnier starten";
+			}
 		}
 
 		private void Start()
 		{
+			this.eventService.PublishDisplayChangedEvent(DisplayEnum.PlayerSelection, new List<object>() { this.selectedSaison.Tournaments[this.actualTournamentIndex] } );
+		}
+
+		private bool CanStart()
+		{
+			return !string.IsNullOrEmpty(this.StartText);
 		}
 
 		private void Statistics()

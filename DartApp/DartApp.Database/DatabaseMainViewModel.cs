@@ -366,7 +366,7 @@ namespace DartApp.Database
 
 		private bool CanDelete()
 		{
-			return this.SelectedItem != null && this.modelEnum != ModelEnum.Holiday;
+			return this.SelectedItem != null && this.modelEnum != ModelEnum.Holiday && this.modelEnum != ModelEnum.TournamentSeries;
 		}
 
 		private void Home()

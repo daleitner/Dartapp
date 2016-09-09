@@ -5,10 +5,9 @@ using System.Text;
 using System.Windows.Input;
 using System.Windows;
 using System.Collections.ObjectModel;
-using DartApp.Models;
 using Base;
 
-namespace DartApp.Database.Selection
+namespace DartApp.Controls
 {
     public class ItemSelectionViewModel : ViewModelBase
     {
@@ -21,6 +20,9 @@ namespace DartApp.Database.Selection
         private string selectedHeader = "";
         private RelayCommand selectCommand = null;
         private RelayCommand deselectCommand = null;
+		public delegate void ItemSelectedEventHandler(object selectedItem, List<object> selectedItems);
+		public event ItemSelectedEventHandler ItemSelected = null;
+		public event ItemSelectedEventHandler ItemDeselected = null;
         #endregion
 
         #region ctors
@@ -159,6 +161,8 @@ namespace DartApp.Database.Selection
             {
                 SelectedObjects.Add(AllObjectsSelection);
                 AllObjects.Remove(AllObjectsSelection);
+				if (ItemSelected != null)
+					ItemSelected(this.AllObjectsSelection, this.SelectedObjects.ToList());
                 if (AllObjects.Count > 0)
                     AllObjectsSelection = AllObjects[0];
             }
@@ -172,6 +176,9 @@ namespace DartApp.Database.Selection
                 AllObjects = new ObservableCollection<object>(AllObjects.OrderBy(x => x.ToString()));
 
                 SelectedObjects.Remove(SelectedObjectsSelection);
+
+				if (ItemDeselected != null)
+					ItemDeselected(this.SelectedObjectsSelection, this.AllObjects.ToList());
 
                 if (SelectedObjects.Count > 0)
                     SelectedObjectsSelection = SelectedObjects[0];

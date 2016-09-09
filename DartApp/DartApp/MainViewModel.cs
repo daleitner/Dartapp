@@ -7,6 +7,8 @@ using DataBaseInitializer;
 using DartApp.Home;
 using DartApp.Factory;
 using DartApp.Services;
+using System.Collections.Generic;
+using DartApp.Models;
 namespace DartApp
 {
 	public class MainViewModel : ViewModelBase
@@ -25,7 +27,7 @@ namespace DartApp
 			this.content = this.factory.GetHomeViewModel();
 		}
 
-        void eventService_DisplayChanged(DisplayEnum displayEnum)
+        void eventService_DisplayChanged(DisplayEnum displayEnum, List<object> eventArgs)
         {
             switch (displayEnum)
             {
@@ -37,6 +39,9 @@ namespace DartApp
                     break;
 				case DisplayEnum.Club:
 					this.Content = this.factory.GetClubMenuViewModel();
+					break;
+				case DisplayEnum.PlayerSelection:
+					this.Content = this.factory.GetPlayerSelectionViewModel((Tournament)eventArgs[0]);
 					break;
             }
         }

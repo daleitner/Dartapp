@@ -109,11 +109,16 @@ namespace DataBaseInitializer
 				{
 					if (column.Type == ColumnType.VARCHAR && model.GetType().GetProperty(col.AttributeName).PropertyType != typeof(string))
 					{
-						ModelBase help = model.GetType().GetProperty(col.AttributeName).GetValue(model) as ModelBase;
-						if (help != null)
-							objectValue = help.GetId();
+						if (model.GetType().GetProperty(col.AttributeName).PropertyType.IsEnum)
+							objectValue = model.GetType().GetProperty(col.AttributeName).GetValue(model);
 						else
-							throw new NotSupportedException("Attribut <" + col.AttributeName + "> ist kein gültiger Datentyp!");
+						{
+							ModelBase help = model.GetType().GetProperty(col.AttributeName).GetValue(model) as ModelBase;
+							if (help != null)
+								objectValue = help.GetId();
+							else
+								throw new NotSupportedException("Attribut <" + col.AttributeName + "> ist kein gültiger Datentyp!");
+						}
 					}
 					else
 					{

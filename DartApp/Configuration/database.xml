@@ -19,6 +19,7 @@
 	<Table name="Tournaments">
 		<Column name="Tid" type="VARCHAR" primarykey="true" />
 		<Column name="Tournamentdate" type="DATE" />
+		<Column name="State" type="VARCHAR" />
 		<Column name="TournamentSeries" type="VARCHAR" foreignkey="Tid" reference="TournamentSerial" />
 	</Table>
 	<Table name="Matches">

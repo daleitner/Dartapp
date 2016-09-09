@@ -1,7 +1,7 @@
 ﻿<Window x:Class="DartApp.Database.EditDialogs.EditHolidayWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-		xmlns:select="clr-namespace:DartApp.Database.Selection"
+		xmlns:select="clr-namespace:DartApp.Controls;assembly=DartApp.Controls"
         Title="EditHolidayWindow" Height="400" Width="600">
     <Grid>
 		<select:ItemSelection DataContext="{Binding Path=ItemSelection}" Margin="0,0,0,35"/>

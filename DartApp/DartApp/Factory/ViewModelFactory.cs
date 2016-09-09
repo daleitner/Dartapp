@@ -1,7 +1,9 @@
 ﻿using DartApp.Club.Menu;
+using DartApp.Club.Tournament;
 using DartApp.CommandServices;
 using DartApp.Database;
 using DartApp.Home;
+using DartApp.Models;
 using DartApp.QueryService;
 using DartApp.Services;
 using System;
@@ -50,6 +52,12 @@ namespace DartApp.Factory
 		public ClubMenuViewModel GetClubMenuViewModel()
 		{
 			return new ClubMenuViewModel(this.dartAppQueryService, this.eventService);
+		}
+
+
+		public PlayerSelectionViewModel GetPlayerSelectionViewModel(Tournament tournament)
+		{
+			return new PlayerSelectionViewModel(tournament, this.dartAppQueryService, this.eventService);
 		}
 	}
 }

@@ -9,5 +9,6 @@ namespace DartApp.Services
     public interface IEventService
     {
         void PublishDisplayChangedEvent(DisplayEnum displayEnum);
+		void PublishDisplayChangedEvent(DisplayEnum displayEnum, List<object> eventArgs);
     }
 }

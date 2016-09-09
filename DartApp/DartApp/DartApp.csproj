@@ -135,6 +135,10 @@
       <Project>{800a89bf-c561-41a6-8f61-591aa5df8449}</Project>
       <Name>DartApp.CommandServices</Name>
     </ProjectReference>
+    <ProjectReference Include="..\DartApp.Controls\DartApp.Controls.csproj">
+      <Project>{05e94030-0317-48aa-8b4e-50b894a30573}</Project>
+      <Name>DartApp.Controls</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DartApp.Database\DartApp.Database.csproj">
       <Project>{0f805b08-4626-4d8f-91e7-fc034f5f90db}</Project>
       <Name>DartApp.Database</Name>

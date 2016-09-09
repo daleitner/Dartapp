@@ -7,6 +7,13 @@ using Base;
 
 namespace DartApp.Models
 {
+	public enum TournamentState
+	{
+		Open,
+		Ongoing,
+		Closed
+	}
+
 	public class Tournament : ModelBase
 	{
 		public Tournament()
@@ -17,9 +24,12 @@ namespace DartApp.Models
 		{
 			this.Id = itemArray[0];
 			this.Date = DateTime.Parse(itemArray[1]);
+			this.State = (TournamentState)Enum.Parse(typeof(TournamentState), itemArray[2]);
 		}
 
 		public DateTime Date { get; set; }
+
+		public TournamentState State { get; set; }
 
 		public List<Match> Matches { get; set; }
 	}

@@ -79,7 +79,7 @@ namespace DartApp.Database.EditDialogs
 				var tournamentSeries = new TournamentSeries {Name = this.Name};
 				for (var i = 1; i<=12; i++)
 				{
-					var tournament = new Tournament {Date = new DateTime(DateTime.Today.Year, i, 1)};
+					var tournament = new Tournament {Date = new DateTime(DateTime.Today.Year, i, 1), State=TournamentState.Open};
 					tournamentSeries.Tournaments.Add(tournament);
 				}
 				ButtonClicked(tournamentSeries);

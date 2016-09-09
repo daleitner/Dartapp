@@ -8,7 +8,7 @@ namespace DartApp.Services
 {
     public class EventService : IEventService
     {
-        public delegate void DisplayChangedEventHandler(DisplayEnum displayEnum);
+        public delegate void DisplayChangedEventHandler(DisplayEnum displayEnum, List<object> eventArgs);
         public event DisplayChangedEventHandler DisplayChanged = null;
 
         #region singelton
@@ -28,8 +28,15 @@ namespace DartApp.Services
         public void PublishDisplayChangedEvent(DisplayEnum displayEnum)
         {
             if (this.DisplayChanged != null)
-                this.DisplayChanged(displayEnum);
+                this.DisplayChanged(displayEnum, null);
         }
 
-    }
+
+
+		public void PublishDisplayChangedEvent(DisplayEnum displayEnum, List<object> eventArgs)
+		{
+			if (this.DisplayChanged != null)
+				this.DisplayChanged(displayEnum, eventArgs);
+		}
+	}
 }

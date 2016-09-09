@@ -10,6 +10,7 @@ namespace DartApp.Services
 	{
 		Home,
 		Database,
-		Club
+		Club,
+		PlayerSelection
 	}
 }
