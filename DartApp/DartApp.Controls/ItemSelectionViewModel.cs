@@ -5,6 +5,7 @@ using System.Text;
 using System.Windows.Input;
 using System.Windows;
 using System.Collections.ObjectModel;
+using System.Windows.Controls;
 using Base;
 
 namespace DartApp.Controls
@@ -132,7 +133,8 @@ namespace DartApp.Controls
                 if (this.selectCommand == null)
                 {
                     this.selectCommand = new RelayCommand(
-                        param => Select()
+                        param => Select(),
+						param => CanSelect()
                             );
                 }
                 return this.selectCommand;
@@ -146,7 +148,8 @@ namespace DartApp.Controls
                 if (this.deselectCommand == null)
                 {
                     this.deselectCommand = new RelayCommand(
-                        param => Deselect()
+                        param => Deselect(),
+						param => CanDeselect()
                             );
                 }
                 return this.deselectCommand;
@@ -157,33 +160,43 @@ namespace DartApp.Controls
         #region buttonhandler
         public void Select()
         {
-            if (AllObjectsSelection != null)
-            {
-                SelectedObjects.Add(AllObjectsSelection);
-                AllObjects.Remove(AllObjectsSelection);
-				if (ItemSelected != null)
-					ItemSelected(this.AllObjectsSelection, this.SelectedObjects.ToList());
-                if (AllObjects.Count > 0)
-                    AllObjectsSelection = AllObjects[0];
-            }
+	        if (this.AllObjectsSelection == null)
+				return;
+
+	        this.SelectedObjects.Add(this.AllObjectsSelection);
+	        this.AllObjects.Remove(this.AllObjectsSelection);
+
+	        ItemSelected?.Invoke(this.AllObjectsSelection, this.SelectedObjects.ToList());
+
+	        if (this.AllObjects.Count > 0)
+		        this.AllObjectsSelection = this.AllObjects[0];
         }
+
+	    private bool CanSelect()
+	    {
+		    return this.AllObjectsSelection != null;
+	    }
 
         public void Deselect()
         {
-            if (SelectedObjectsSelection != null)
-            {
-                AllObjects.Add(SelectedObjectsSelection);
-                AllObjects = new ObservableCollection<object>(AllObjects.OrderBy(x => x.ToString()));
+	        if (this.SelectedObjectsSelection == null)
+				return;
 
-                SelectedObjects.Remove(SelectedObjectsSelection);
+	        this.AllObjects.Add(this.SelectedObjectsSelection);
+	        this.AllObjects = new ObservableCollection<object>(this.AllObjects.OrderBy(x => x.ToString()));
 
-				if (ItemDeselected != null)
-					ItemDeselected(this.SelectedObjectsSelection, this.AllObjects.ToList());
+	        this.SelectedObjects.Remove(this.SelectedObjectsSelection);
 
-                if (SelectedObjects.Count > 0)
-                    SelectedObjectsSelection = SelectedObjects[0];
-            }
+	        ItemDeselected?.Invoke(this.SelectedObjectsSelection, this.AllObjects.ToList());
+
+	        if (this.SelectedObjects.Count > 0)
+		        this.SelectedObjectsSelection = this.SelectedObjects[0];
         }
+
+	    private bool CanDeselect()
+	    {
+			return this.SelectedObjectsSelection != null;
+	    }
         #endregion
     }
 }

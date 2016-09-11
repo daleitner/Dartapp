@@ -13,7 +13,7 @@
 		</Grid.RowDefinitions>
 		<select:ItemSelection DataContext="{Binding Path=ItemSelection}" Grid.Row="0" Margin="5" />
 		<Label Content="Datum:" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5,6,0,0"  />
-		<DatePicker Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="53,8,0,0" Text="{Binding Path=Date}" />
+		<DatePicker Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="53,8,0,0" SelectedDate="{Binding Path=Date}" />
 		<Label Content="Anzahl Freilose:" Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,6,25,0"  />
 		<TextBox Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Top" Text="{Binding Path=FLCount}" Width="20" Margin="0,10,5,0" IsEnabled="False" />
 		<Label Content="Spieler setzen:" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="309,10,0,0"  />
