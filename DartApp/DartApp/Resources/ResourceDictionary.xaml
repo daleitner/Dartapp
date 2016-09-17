@@ -37,4 +37,7 @@
 	<DataTemplate DataType="{x:Type tournament:MatchViewModel}">
 		<tournament:MatchUserControl />
 	</DataTemplate>
+	<DataTemplate DataType="{x:Type tournament:ResultViewModel}">
+		<tournament:ResultUserControl />
+	</DataTemplate>
 </ResourceDictionary>

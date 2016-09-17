@@ -24,7 +24,27 @@ namespace DartApp.Club.Tournament
 		public TournamentViewModel(Models.Tournament tournament, IEventService eventService)
 		{
 			this.tournament = tournament;
+			this.tournamentPlan = new TournamentPlanViewModel(this.tournament);
+			this.matches = new ObservableCollection<MatchViewModel>();
+			this.tournament.Matches.ForEach(x => 
+				{
+					var m = new MatchViewModel(x);
+					m.MatchChanged +=m_MatchChanged;
+					this.matches.Add(m);
+				});
 			this.eventService = eventService;
+		}
+
+		void m_MatchChanged(Models.Match match)
+		{
+			this.TournamentPlan.Results.Where(x => x.GetMatchKey() == match.PositionKey).First().Refresh();
+			var toRefresh = TournamentController.EndMatch(match, this.tournament);
+			toRefresh.ForEach(i =>
+				{ 
+					this.TournamentPlan.Results.Where(x => x.GetMatchKey() == i).First().Refresh();
+					this.Matches[i].Refresh();
+				});
+
 		}
 		#endregion
 

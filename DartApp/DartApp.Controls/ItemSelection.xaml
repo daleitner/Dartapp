@@ -16,6 +16,9 @@
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         <ListBox Margin="0,0,83,0" Name="listBox1" Grid.Row="1" Grid.RowSpan="2" ItemsSource="{Binding Path=AllObjects}" SelectedItem="{Binding Path=AllObjectsSelection}">
+			<ListBox.InputBindings>
+				<KeyBinding Key="Enter" Command="{Binding Path=SelectCommand}" />
+			</ListBox.InputBindings>
 			<ListBox.ItemTemplate>
 				<DataTemplate>
 					<TextBlock Text="{Binding Path=DisplayName}">

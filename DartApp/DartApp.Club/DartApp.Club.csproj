@@ -76,6 +76,11 @@
       <DependentUpon>PlayerSelectionUserControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Tournament\PlayerSelectionViewModel.cs" />
+    <Compile Include="Tournament\RankingViewModel.cs" />
+    <Compile Include="Tournament\ResultUserControl.xaml.cs">
+      <DependentUpon>ResultUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Tournament\ResultViewModel.cs" />
     <Compile Include="Tournament\TournamentController.cs" />
     <Compile Include="Tournament\TournamentPlanUserControl.xaml.cs">
       <DependentUpon>TournamentPlanUserControl.xaml</DependentUpon>
@@ -105,6 +110,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Tournament\PlayerSelectionUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Tournament\ResultUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
