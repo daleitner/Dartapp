@@ -36,6 +36,19 @@ namespace DartApp.Club.Tournament
 			}
 		}
 
+		public Player Player
+		{
+			get
+			{
+				return this.player;
+			}
+			set
+			{
+				this.player = value;
+				OnPropertyChanged("Player");
+			}
+		}
+
 		public string Name
 		{
 			get

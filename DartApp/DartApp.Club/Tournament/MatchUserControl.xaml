@@ -5,7 +5,9 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
              d:DesignHeight="100" d:DesignWidth="200">
-	<StackPanel Orientation="Horizontal">
+	<Grid>
+	<Rectangle Fill="Black" Height="2" VerticalAlignment="Top" />
+	<StackPanel Orientation="Horizontal" Margin="0,2,0,0">
 		<StackPanel Orientation="Vertical" VerticalAlignment="Center" Margin="2">
 			<Image Source="{Binding Path=Player1Image}" Width="60" Height="60" />
 			<Label Content="{Binding Path=Player1}" HorizontalAlignment="Center" />
@@ -24,4 +26,5 @@
 			<Label Content="{Binding Path=Player2}" HorizontalAlignment="Center"/>
 		</StackPanel>
 	</StackPanel>
+	</Grid>
 </UserControl>

@@ -58,18 +58,15 @@ namespace DartApp.Club.Tournament
 
 		private static List<Models.Player> ShufflePlayers(List<Models.Player> players)
 		{
-			List<int> indicess = new List<int>();
-			for (int i = 0; i < players.Count; i++)
-			{
-				indicess.Add(i);
-			}
-
 			List<int> shuffledIndicess = new List<int>();
-			while (indicess.Count > 0)
+			var rnd = new Random();
+			while (shuffledIndicess.Count < players.Count)
 			{
-				var rnd = new Random().Next(indicess.Count);
-				shuffledIndicess.Add(indicess[rnd]);
-				indicess.RemoveAt(rnd);
+				var idx = rnd.Next(0, players.Count);
+				if (!shuffledIndicess.Contains(idx))
+				{
+					shuffledIndicess.Add(idx);
+				}
 			}
 			List<Models.Player> ret = new List<Models.Player>();
 			for (int i = 0; i < shuffledIndicess.Count; i++)
@@ -114,11 +111,15 @@ namespace DartApp.Club.Tournament
 			var numberOfPlayers = tournament.Matches.Count / 2 + 1;
 			int winPositionKey = -1;
 			int losePositionKey = -1;
+			bool isWinnerPlayer1 = true; //is winner of this match Player1 of his next match
+			bool isLoserPlayer1 = true; //is loser of this match Player1 of his next match
 			if (match.PositionKey < numberOfPlayers / 2) //first round
 			{
 				winPositionKey = (match.PositionKey + numberOfPlayers) / 2; //S1 -> S2
+				isWinnerPlayer1 = match.PositionKey % 2 == 0;
 
 				losePositionKey = match.PositionKey / 2 + numberOfPlayers * 3 / 4; //S1 -> V1
+				isLoserPlayer1 = match.PositionKey % 2 == 0;
 
 			}
 			else if(IsWinnerSide(match.PositionKey, numberOfPlayers)) // winner side
@@ -134,27 +135,75 @@ namespace DartApp.Club.Tournament
 				}
 			
 				winPositionKey = (match.PositionKey - start) / 2  + start + 3 * areaSize; //Sx -> Sx+1
+				isWinnerPlayer1 = match.PositionKey % 2 == 0;
+
 				if (isDesc)
 					losePositionKey = start + 2 * areaSize + (start + areaSize - match.PositionKey - 1);
 				else
 					losePositionKey = match.PositionKey + 2 * areaSize;
+				isLoserPlayer1 = false;
+			}
+			else if (IsLoserAgainstLoser(match.PositionKey, numberOfPlayers)) //V(2x+1) -> V(2x+2)
+			{
+				var start = numberOfPlayers * 3 / 4;
+				var areaSize = numberOfPlayers / 4;
+				while (!(match.PositionKey >= start && match.PositionKey < start + areaSize))
+				{
+					start = start + 2 * areaSize;
+					areaSize = areaSize / 2;
+					start = start + areaSize;
+				}
+
+				winPositionKey = match.PositionKey + areaSize;
+				isWinnerPlayer1 = true;
+			}
+			else //V(2x) -> V(2x+1)
+			{
+				var start = numberOfPlayers;
+				var areaSize = numberOfPlayers / 4;
+				while (!(match.PositionKey >= start && match.PositionKey < start + areaSize) && areaSize > 0)
+				{
+					start = start + 2 * areaSize;
+					areaSize = areaSize / 2;
+				}
+				if (areaSize == 0)
+					return ret;
+				winPositionKey = start + areaSize + areaSize / 2 + (match.PositionKey - start) / 2;
+				isWinnerPlayer1 = match.PositionKey % 2 == 0;
+				if (match.PositionKey == numberOfMatches - 2)
+					isWinnerPlayer1 = false;
 			}
 
-			if (match.PositionKey % 2 == 0) //set winner
+			if (isWinnerPlayer1) //set winner
 				tournament.Matches[winPositionKey].Player1 = match.GetWinner();
 			else
 				tournament.Matches[winPositionKey].Player2 = match.GetWinner();
 			ret.Add(winPositionKey);
 
 			if (losePositionKey >= 0) //set loser
-			{ //wrong!!!!
-				if (match.PositionKey % 2 == 0)
+			{
+				if (isLoserPlayer1)
 					tournament.Matches[losePositionKey].Player1 = match.GetLoser();
 				else
 					tournament.Matches[losePositionKey].Player2 = match.GetLoser();
 				ret.Add(losePositionKey);
 			}
 			return ret;
+		}
+
+		private static bool IsLoserAgainstLoser(int positionKey, int numberOfPlayers)
+		{
+			var start = numberOfPlayers * 3 / 4;
+			var area = numberOfPlayers / 4;
+			do
+			{
+				if (positionKey >= start && positionKey < start + area)
+					return true;
+				start = start + 2 * area;
+				area = area / 2;
+				start = start + area;
+			} while (area > 0);
+			return false;
 		}
 
 		private static bool IsWinnerSide(int positionKey, int numberOfPlayers)
@@ -169,6 +218,37 @@ namespace DartApp.Club.Tournament
 				areaSize = areaSize / 2;
 			} while (areaSize > 0);
 			return false;
+		}
+
+		internal static int GetRanking(Models.Match match, Models.Tournament tournament)
+		{
+			var numberOfPlayers = tournament.Matches.Count / 2 + 1;
+			var start = numberOfPlayers * 3 / 4;
+			var area = numberOfPlayers / 4;
+			var actRanking = numberOfPlayers - area + 1;
+			while (area > 0)
+			{
+				if (match.PositionKey >= start && match.PositionKey < start + area)
+				{
+					actRanking = actRanking + match.PositionKey - start;
+					return actRanking;
+				}
+
+				actRanking = actRanking - area;
+				start = start + area;
+
+				if (match.PositionKey >= start && match.PositionKey < start + area)
+				{
+					actRanking = actRanking + match.PositionKey - start;
+					return actRanking;
+				}
+				area = area / 2;
+				actRanking = actRanking - area;
+				start = start + 3 * area;
+			}
+			if (match.PositionKey == tournament.Matches.Count - 1)
+				return 1;
+			return 0;
 		}
 	}
 }

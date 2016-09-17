@@ -34,18 +34,6 @@ namespace DartApp.Club.Tournament
 				});
 			this.eventService = eventService;
 		}
-
-		void m_MatchChanged(Models.Match match)
-		{
-			this.TournamentPlan.Results.Where(x => x.GetMatchKey() == match.PositionKey).First().Refresh();
-			var toRefresh = TournamentController.EndMatch(match, this.tournament);
-			toRefresh.ForEach(i =>
-				{ 
-					this.TournamentPlan.Results.Where(x => x.GetMatchKey() == i).First().Refresh();
-					this.Matches[i].Refresh();
-				});
-
-		}
 		#endregion
 
 		#region properties
@@ -115,6 +103,31 @@ namespace DartApp.Club.Tournament
 		#endregion
 
 		#region public methods
+		void m_MatchChanged(Models.Match match)
+		{
+			this.TournamentPlan.Results.Where(x => x.GetMatchKey() == match.PositionKey).First().Refresh();
+			var toRefresh = TournamentController.EndMatch(match, this.tournament);
+			toRefresh.ForEach(i =>
+			{
+				this.TournamentPlan.Results.Where(x => x.GetMatchKey() == i).First().Refresh();
+				this.Matches[i].Refresh();
+			});
+			var ranking = TournamentController.GetRanking(match, this.tournament);
+			if (ranking > 0)
+			{
+				if (ranking == 1)
+				{
+					this.TournamentPlan.Rankings.Where(x => x.Ranking == ranking).First().Player = match.GetWinner();
+					this.TournamentPlan.Rankings.Where(x => x.Ranking == ranking+1).First().Player = match.GetLoser();
+				}
+				else
+				{
+
+					this.TournamentPlan.Rankings.Where(x => x.Ranking == ranking).First().Player = match.GetLoser();
+				}
+				this.TournamentPlan.Refresh();
+			}
+		}
 		#endregion
 	}
 }

@@ -1,6 +1,7 @@
 ﻿using Base;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,7 +12,7 @@ namespace DartApp.Club.Tournament
 	{
 		private Models.Tournament tournament = null;
 		private string title = null;
-		private List<RankingViewModel> rankings = null;
+		private ObservableCollection<RankingViewModel> rankings = null;
 		private List<ResultViewModel> results = null;
 		public TournamentPlanViewModel(Models.Tournament tournament)
 		{
@@ -19,7 +20,7 @@ namespace DartApp.Club.Tournament
 			this.title = this.tournament.DisplayName;
 			this.results = new List<ResultViewModel>();
 			this.tournament.Matches.ForEach(x => this.results.Add(new ResultViewModel(x)));
-			this.rankings = new List<RankingViewModel>();
+			this.rankings = new ObservableCollection<RankingViewModel>();
 			var numberOfPlayers = this.tournament.Matches.Count / 2 + 1;
 			for (int i = 1; i <= numberOfPlayers; i++)
 			{
@@ -40,7 +41,7 @@ namespace DartApp.Club.Tournament
 			}
 		}
 
-		public List<RankingViewModel> Rankings
+		public ObservableCollection<RankingViewModel> Rankings
 		{
 			get
 			{
@@ -64,6 +65,12 @@ namespace DartApp.Club.Tournament
 				this.results = value;
 				OnPropertyChanged("Results");
 			}
+		}
+
+		internal void Refresh()
+		{
+			var help = new ObservableCollection<RankingViewModel>(this.Rankings);
+			this.Rankings = new ObservableCollection<RankingViewModel>(help);
 		}
 	}
 }
