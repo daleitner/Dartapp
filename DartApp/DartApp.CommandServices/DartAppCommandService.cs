@@ -26,13 +26,6 @@ namespace DartApp.CommandServices
 			}
 		}
 
-		public void InitializeDatabase(string setup, string mappingPath, string testValueFile)
-		{
-			//this.dbManager = DataBaseManager.GetInstance(setup, mappingPath, testValueFile);
-			//this.mapping = this.dbManager.Mapping;
-			//this.connection = this.dbManager.DataBaseConnection;
-		}
-
 		public void InsertPlayer(Player newPlayer)
 		{
 			this.dbManager.Insert(newPlayer);
@@ -79,6 +72,12 @@ namespace DartApp.CommandServices
 			var tree = new ModelBaseTree(newTournamentSeries, children);
 
 			this.dbManager.Insert(tree, null);
+		}
+
+
+		public void InsertStatistic(Statistic stat)
+		{
+			this.dbManager.Insert(stat);
 		}
 	}
 }

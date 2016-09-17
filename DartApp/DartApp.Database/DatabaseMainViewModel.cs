@@ -254,6 +254,12 @@ namespace DartApp.Database
 			if (newTournamentSeries != null)
 			{
 				this.commandService.InsertTournamentSeries(newTournamentSeries);
+				var players = this.queryService.GetAllHolidayPlayers();
+				foreach (var player in players)
+				{
+					var stat = new Statistic(player, newTournamentSeries);
+					this.commandService.InsertStatistic(stat);
+				}
 			}
 			this.addTournamentSeriesWindow.Close();
 		}

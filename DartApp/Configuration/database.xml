@@ -45,7 +45,7 @@
 	<Table name="Statistics">
 		<Column name="Sid" type="VARCHAR" primarykey="true" />
 		<Column name="Player" type="VARCHAR" foreignkey="Pid" reference="Players" />
-		<Column name="Year" type="INTEGER" />
+		<Column name="TournamentSeries" type="VARCHAR" foreignkey="Tid" reference="TournamentSerial" />
 		<Column name="Wonsets" type="INTEGER" />
 		<Column name="Lostsets" type="INTEGER" />
 		<Column name="Wonlegs" type="INTEGER" />

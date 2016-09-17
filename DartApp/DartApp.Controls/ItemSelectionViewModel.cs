@@ -166,7 +166,8 @@ namespace DartApp.Controls
 	        this.SelectedObjects.Add(this.AllObjectsSelection);
 	        this.AllObjects.Remove(this.AllObjectsSelection);
 
-	        ItemSelected?.Invoke(this.AllObjectsSelection, this.SelectedObjects.ToList());
+	        if(ItemSelected != null)
+				ItemSelected(this.AllObjectsSelection, this.SelectedObjects.ToList());
 
 	        if (this.AllObjects.Count > 0)
 		        this.AllObjectsSelection = this.AllObjects[0];
@@ -187,7 +188,8 @@ namespace DartApp.Controls
 
 	        this.SelectedObjects.Remove(this.SelectedObjectsSelection);
 
-	        ItemDeselected?.Invoke(this.SelectedObjectsSelection, this.AllObjects.ToList());
+	        if(ItemDeselected != null)
+				ItemDeselected(this.SelectedObjectsSelection, this.AllObjects.ToList());
 
 	        if (this.SelectedObjects.Count > 0)
 		        this.SelectedObjectsSelection = this.SelectedObjects[0];

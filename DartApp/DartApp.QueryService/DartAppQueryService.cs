@@ -123,5 +123,46 @@ namespace DartApp.QueryService
 			}
 			return ret.OrderByDescending(x => x.CreatedAt).ToList();
 		}
+
+
+		public List<Player> GetSelectedPlayersOrderedByStatistics(List<Player> selectedPlayers, TournamentSeries series)
+		{
+			List<Statistic> statistics = new List<Statistic>();
+			foreach (var player in selectedPlayers)
+			{
+				var table = this.mapping.GetTableByObject(typeof(Statistic));
+				var condition = new Condition()
+					.Add(new LogicalExpression(LogicalEnum.AND)
+						.Add(new PropertyExpression(table.Columns["Player"], CompareEnum.Equals, player.GetId()))
+						.Add(new PropertyExpression(table.Columns["TournamentSeries"], CompareEnum.Equals, series.GetId())));
+				var query = new DataBaseQuery(table, condition);
+				var res = this.connection.ExecuteQuery(query);
+				if (res.Count > 0)
+				{
+					var statistic = new Statistic(res[0]);
+					statistic.Player = player;
+					statistic.TournamentSeries = series;
+					statistics.Add(statistic);
+				}
+			}
+			statistics = statistics.OrderByDescending(x => x.Points).ThenByDescending(x => (x.WonSets - x.LostSets)).ThenByDescending(x => (x.WonLegs - x.LostLegs)).ToList();
+			return statistics.Select(x => x.Player).ToList();
+		}
+
+
+		public TournamentSeries GetTournamentSeriesOfTournament(Tournament tournament)
+		{
+			var ttable = this.mapping.GetTableByObject(typeof(Tournament));
+			var tstable = this.mapping.GetTableByObject(typeof(TournamentSeries));
+			var subCondition = new Condition().Add(new PropertyExpression(ttable.Columns["Tid"], CompareEnum.Equals, tournament.GetId()));
+			var subQuery = new DataBaseQuery(new List<DataBaseColumn>() { ttable.Columns["TournamentSeries"] }, ttable, subCondition);
+			var condition = new Condition().Add(new PropertyExpression(tstable.Columns["Tid"], CompareEnum.In, subQuery));
+			var query = new DataBaseQuery(tstable, condition);
+			var res = this.connection.ExecuteQuery(query);
+			if (res.Count <= 0)
+				return null;
+			var ret = new TournamentSeries(res.First());
+			return ret;
+		}
 	}
 }

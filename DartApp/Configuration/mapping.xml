@@ -44,7 +44,7 @@
 	<Table name="Statistics" csobject="Statistic">
 		<Column name="Sid" attribute="Id" type="VARCHAR" />
 		<Column name="Player" attribute="Player" type="VARCHAR" />
-		<Column name="Year" attribute="Year" type="INTEGER" />
+		<Column name="TournamentSeries" attribute="TournamentSeries" type="VARCHAR" />
 		<Column name="Wonsets" attribute="WonSets" type="INTEGER" />
 		<Column name="Lostsets" attribute="LostSets" type="INTEGER" />
 		<Column name="Wonlegs" attribute="WonLegs" type="INTEGER" />

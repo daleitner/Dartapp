@@ -14,6 +14,11 @@ namespace DartApp.Models
         {
         }
 
+		public Player(string vname)
+			: this(vname, "", DateTime.Today, "")
+		{
+		}
+
         public Player(string vname, string nname, DateTime geb, string imageName)
 			:base()
         {
@@ -64,6 +69,8 @@ namespace DartApp.Models
 
 	    private void SetDisplayName()
 	    {
+			if (this.VorName == "FL")
+				this.DisplayName = "Freilos";
 		    if (!string.IsNullOrEmpty(this.NachName))
 		    {
 			    this.DisplayName = this.NachName;

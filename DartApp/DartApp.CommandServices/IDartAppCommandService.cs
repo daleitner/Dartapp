@@ -9,12 +9,12 @@ namespace DartApp.CommandServices
 {
     public interface IDartAppCommandService
     {
-	    void InitializeDatabase(string setup, string mappingPath, string testValueFile);
 		void InsertPlayer(Player newPlayer);
 		void UpdatePlayer(Player newPlayer);
 		void DeletePlayer(Player playerToDelete);
 		void AddToHoliday(Player newPlayer);
 		void RemoveFromHoliday(Player playerToRemove);
 	    void InsertTournamentSeries(TournamentSeries newTournamentSeries);
-    }
+		void InsertStatistic(Statistic stat);
+	}
 }
