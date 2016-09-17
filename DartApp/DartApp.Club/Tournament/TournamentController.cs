@@ -12,6 +12,12 @@ namespace DartApp.Club.Tournament
 		public static Models.Tournament DrawMatches(Models.Tournament tournament, List<Models.Player> players, string setOption, IDartAppQueryService queryService)
 		{
 			var orderedPlayers = GetOrderedPlayers(tournament, players, setOption, queryService);
+			var order = GetOrderForMatches(orderedPlayers.Count);
+			for (int i = 0; i < orderedPlayers.Count; i = i + 2)
+			{
+				var match = new Models.Match(i/2+1, orderedPlayers[order[i]], orderedPlayers[order[i + 1]]);
+				tournament.Matches.Add(match);
+			}
 			return tournament;
 		}
 
@@ -64,6 +70,24 @@ namespace DartApp.Club.Tournament
 				ret.Add(players[shuffledIndicess[i]]);
 			}
 			return ret;
+		}
+
+		private static List<int> GetOrderForMatches(int playerCount)
+		{
+			var order = new List<int>(){0,1};
+			var actCnt = 2;
+			while (actCnt < playerCount)
+			{
+				actCnt = actCnt * 2;
+				for (int i = 0; i < actCnt / 4; i++)
+				{
+					int pos = 4 * i + 1;
+					order.Insert(pos, actCnt - order[pos - 1] - 1);
+					order.Insert(pos + 1, actCnt - order[pos + 1] - 1);
+				}
+
+			}
+			return order;
 		}
 
 		public static int GetTournamentSize(int players)

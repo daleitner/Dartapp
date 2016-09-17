@@ -15,6 +15,14 @@ namespace DartApp.Models
 		{
 		}
 
+		public Match(int positionKey, Player player1, Player player2)
+			:base()
+		{
+			this.PositionKey = positionKey;
+			this.Player1 = player1;
+			this.Player2 = player2;
+		}
+
 		public Match(List<string> itemArray)
 		{
 			this.Id = itemArray[0];

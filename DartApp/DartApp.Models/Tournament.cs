@@ -17,10 +17,13 @@ namespace DartApp.Models
 	public class Tournament : ModelBase
 	{
 		public Tournament()
+			:base()
 		{
+			this.Matches = new List<Match>();
 		}
 
 		public Tournament(List<string> itemArray)
+			:this()
 		{
 			this.Id = itemArray[0];
 			this.Date = DateTime.Parse(itemArray[1]);
