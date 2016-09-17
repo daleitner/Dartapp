@@ -59,5 +59,17 @@ namespace DartApp.Factory
 		{
 			return new PlayerSelectionViewModel(tournament, this.dartAppQueryService, this.eventService);
 		}
+
+
+		public TournamentViewModel GetTournamentViewModel(Tournament tournament)
+		{
+			return new TournamentViewModel(tournament, this.eventService);
+		}
+
+
+		public IDartAppQueryService GetQueryService()
+		{
+			return this.dartAppQueryService;
+		}
 	}
 }

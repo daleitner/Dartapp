@@ -68,10 +68,23 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="Tournament\MatchUserControl.xaml.cs">
+      <DependentUpon>MatchUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Tournament\MatchViewModel.cs" />
     <Compile Include="Tournament\PlayerSelectionUserControl.xaml.cs">
       <DependentUpon>PlayerSelectionUserControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Tournament\PlayerSelectionViewModel.cs" />
+    <Compile Include="Tournament\TournamentController.cs" />
+    <Compile Include="Tournament\TournamentPlanUserControl.xaml.cs">
+      <DependentUpon>TournamentPlanUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Tournament\TournamentPlanViewModel.cs" />
+    <Compile Include="Tournament\TournamentUserControl.xaml.cs">
+      <DependentUpon>TournamentUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Tournament\TournamentViewModel.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -87,7 +100,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Tournament\MatchUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Tournament\PlayerSelectionUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Tournament\TournamentPlanUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Tournament\TournamentUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

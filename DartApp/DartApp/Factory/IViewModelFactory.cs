@@ -3,6 +3,7 @@ using DartApp.Club.Tournament;
 using DartApp.Database;
 using DartApp.Home;
 using DartApp.Models;
+using DartApp.QueryService;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,5 +19,7 @@ namespace DartApp.Factory
         DatabaseMainViewModel GetDatabaseMainViewModel();
 		ClubMenuViewModel GetClubMenuViewModel();
 		PlayerSelectionViewModel GetPlayerSelectionViewModel(Tournament tournament);
-    }
+		TournamentViewModel GetTournamentViewModel(Tournament tournament);
+		IDartAppQueryService GetQueryService();
+	}
 }

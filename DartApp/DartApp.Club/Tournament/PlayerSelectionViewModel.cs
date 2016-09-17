@@ -154,6 +154,10 @@ namespace DartApp.Club.Tournament
 
 		private void Start()
 		{
+			var players = new List<Models.Player>();
+			this.ItemSelection.SelectedObjects.ToList().ForEach(x => players.Add((Models.Player)x));
+			var eventArgs = new List<object>(){this.tournament, players, this.SelectedSetting};
+			this.eventService.PublishDisplayChangedEvent(DisplayEnum.Tournament, eventArgs);
 		}
 
 		private bool CanStart()
@@ -163,19 +167,9 @@ namespace DartApp.Club.Tournament
 
 		private void UpdateValues()
 		{
-			this.tournamentCount = GetTournamentSize(this.playerCount);
+			this.tournamentCount = TournamentController.GetTournamentSize(this.playerCount);
 			this.FLCount = this.tournamentCount > 0 ? this.tournamentCount - this.playerCount : 0;
 			this.SettingSelection = GetSettingSelection();
-		}
-
-		private int GetTournamentSize(int players)
-		{
-			int ret = 8;
-			if (players == 0)
-				return 0;
-			while (ret < players)
-				ret = ret * 2;
-			return ret;
 		}
 
 		private ObservableCollection<string> GetSettingSelection()

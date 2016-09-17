@@ -9,6 +9,7 @@ using DartApp.Factory;
 using DartApp.Services;
 using System.Collections.Generic;
 using DartApp.Models;
+using DartApp.Club.Tournament;
 namespace DartApp
 {
 	public class MainViewModel : ViewModelBase
@@ -42,6 +43,10 @@ namespace DartApp
 					break;
 				case DisplayEnum.PlayerSelection:
 					this.Content = this.factory.GetPlayerSelectionViewModel((Tournament)eventArgs[0]);
+					break;
+				case DisplayEnum.Tournament:
+					var tournament = TournamentController.DrawMatches((Tournament)eventArgs[0], (List<Player>)eventArgs[1], eventArgs[2].ToString(), this.factory.GetQueryService());
+					this.Content = this.factory.GetTournamentViewModel(tournament);
 					break;
             }
         }

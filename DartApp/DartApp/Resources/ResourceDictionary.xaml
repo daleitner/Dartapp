@@ -28,4 +28,13 @@
 	<DataTemplate DataType="{x:Type tournament:PlayerSelectionViewModel}">
 		<tournament:PlayerSelectionUserControl />
 	</DataTemplate>
+	<DataTemplate DataType="{x:Type tournament:TournamentViewModel}">
+		<tournament:TournamentUserControl />
+	</DataTemplate>
+	<DataTemplate DataType="{x:Type tournament:TournamentPlanViewModel}">
+		<tournament:TournamentPlanUserControl />
+	</DataTemplate>
+	<DataTemplate DataType="{x:Type tournament:MatchViewModel}">
+		<tournament:MatchUserControl />
+	</DataTemplate>
 </ResourceDictionary>
