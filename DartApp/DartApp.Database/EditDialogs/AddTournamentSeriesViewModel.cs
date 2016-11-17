@@ -3,12 +3,17 @@ using System.Collections.Generic;
 using System.Windows.Input;
 using Base;
 using DartApp.Models;
+using DartApp.Controls;
+using DartApp.QueryService;
+using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace DartApp.Database.EditDialogs
 {
 	public class AddTournamentSeriesViewModel : ViewModelBase
 	{
 		#region members
+		private ItemSelectionViewModel itemSelection;
 		private RelayCommand cancelCommand = null;
 		private RelayCommand saveCommand = null;
 		private string name = "";
@@ -17,12 +22,45 @@ namespace DartApp.Database.EditDialogs
 		#endregion
 
 		#region ctors
-		public AddTournamentSeriesViewModel()
+		public AddTournamentSeriesViewModel(IDartAppQueryService queryService)
 		{
+			List<Player> allPlayers = queryService.GetAllPlayers();
+			List<Player> selectedPlayers = new List<Player>();// queryService.GetAllHolidayPlayers();
+			ObservableCollection<object> selectedObjects = new ObservableCollection<object>();
+			ObservableCollection<object> allObjects = new ObservableCollection<object>();
+
+			foreach (var x in allPlayers)
+			{
+				bool check = false;
+				foreach (var y in selectedPlayers)
+				{
+					if (x.GetId() == y.GetId())
+						check = true;
+				}
+				if (!check)
+					allObjects.Add(x);
+			}
+
+			selectedPlayers.ForEach(x => selectedObjects.Add(x));
+
+			this.itemSelection = new ItemSelectionViewModel(allObjects, selectedObjects, "Alle Spieler:", "Zulässige Spieler:");
 		}
 		#endregion
 
 		#region properties
+		public ItemSelectionViewModel ItemSelection
+		{
+			get
+			{
+				return this.itemSelection;
+			}
+			set
+			{
+				this.itemSelection = value;
+				OnPropertyChanged("ItemSelection");
+			}
+		}
+
 		public ICommand CancelCommand
 		{
 			get
@@ -76,7 +114,9 @@ namespace DartApp.Database.EditDialogs
 		{
 			if (ButtonClicked != null)
 			{
-				var tournamentSeries = new TournamentSeries {Name = this.Name};
+				List<Player> players = new List<Player>();
+				this.ItemSelection.SelectedObjects.ToList().ForEach(x => players.Add((Player)x));
+				var tournamentSeries = new TournamentSeries {Name = this.Name, AllowedPlayers = players};
 				for (var i = 1; i<=12; i++)
 				{
 					var tournament = new Tournament {Date = new DateTime(DateTime.Today.Year, i, 1), State=TournamentState.Open};
