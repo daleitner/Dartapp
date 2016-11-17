@@ -36,16 +36,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Base, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Resources\Base.dll</HintPath>
-    </Reference>
-    <Reference Include="SQLDatabase, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Resources\SQLDatabase.dll</HintPath>
-    </Reference>
-    <Reference Include="SQLite.NET">
-      <HintPath>..\Resources\SQLite.NET.dll</HintPath>
+    <Reference Include="Base">
+      <HintPath>..\References\Base.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
