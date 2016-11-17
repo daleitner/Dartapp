@@ -31,18 +31,17 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Base, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Resources\Base.dll</HintPath>
+    <Reference Include="Base">
+      <HintPath>..\References\Base.dll</HintPath>
     </Reference>
     <Reference Include="FileReader">
-      <HintPath>..\Resources\FileReader.dll</HintPath>
+      <HintPath>..\References\FileReader.dll</HintPath>
     </Reference>
     <Reference Include="SQLDatabase">
-      <HintPath>..\Resources\SQLDatabase.dll</HintPath>
+      <HintPath>..\References\SQLDatabase.dll</HintPath>
     </Reference>
     <Reference Include="SQLite.NET">
-      <HintPath>..\Resources\SQLite.NET.dll</HintPath>
+      <HintPath>..\References\SQLite.NET.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -53,7 +52,7 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
     <Reference Include="XMLReader">
-      <HintPath>..\Resources\XMLReader.dll</HintPath>
+      <HintPath>..\References\XMLReader.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

@@ -241,7 +241,7 @@ namespace DartApp.Database
 					this.addPlayerWindow.ShowDialog();
 					break;
 				case ModelEnum.TournamentSeries:
-					var tvm = new AddTournamentSeriesViewModel();
+					var tvm = new AddTournamentSeriesViewModel(this.queryService);
 					tvm.ButtonClicked += E_SaveNewTournamentSeries;
 					this.addTournamentSeriesWindow = new AddTournamentSeriesWindow {DataContext = tvm};
 					this.addTournamentSeriesWindow.ShowDialog();

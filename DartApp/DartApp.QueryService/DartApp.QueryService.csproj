@@ -31,10 +31,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Base">
-      <HintPath>..\Resources\Base.dll</HintPath>
+      <HintPath>..\References\Base.dll</HintPath>
     </Reference>
     <Reference Include="SQLDatabase">
-      <HintPath>..\Resources\SQLDatabase.dll</HintPath>
+      <HintPath>..\References\SQLDatabase.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />

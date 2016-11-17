@@ -4,12 +4,14 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DartApp.Database.EditDialogs"
+        xmlns:select="clr-namespace:DartApp.Controls;assembly=DartApp.Controls"
         mc:Ignorable="d"
         Title="AddTournamentSeriesWindow" Height="400" Width="600">
     <Grid>
         <Label Content="Name:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="30,30,0,0"></Label>
 		<TextBox Text="{Binding Path=Name}" Width="120" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="80,35,0,0"></TextBox>
-		<Button Content="Abbrechen" Height="25" Name="Button1" HorizontalAlignment="Right" Margin="0,0,110,5" VerticalAlignment="Bottom" Width="90" Command="{Binding Path=CancelCommand}" FontSize="14" TabIndex="1" />
+        <select:ItemSelection DataContext="{Binding Path=ItemSelection}" Margin="0,60,0,35"/>
+        <Button Content="Abbrechen" Height="25" Name="Button1" HorizontalAlignment="Right" Margin="0,0,110,5" VerticalAlignment="Bottom" Width="90" Command="{Binding Path=CancelCommand}" FontSize="14" TabIndex="1" />
 		<Button Content="Speichern" Height="25" HorizontalAlignment="Right" Margin="0,0,10,5" Name="button2" VerticalAlignment="Bottom" Width="90" Command="{Binding Path=SaveCommand}" FontSize="14" TabIndex="2" />
 	</Grid>
 </Window>

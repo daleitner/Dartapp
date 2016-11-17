@@ -11,6 +11,11 @@
 		<Column name="Hid" type="VARCHAR" primarykey="true" />
 		<Column name="Pid" type="VARCHAR" foreignkey="Pid" reference="Players" />
 	</Table>
+  <Table name="AllowedPlayersInSerial">
+    <Column name="Aid" type="VARCHAR" primarykey="true" />
+    <Column name="Tid" type="VARCHAR" foreignkey="Tid" reference="TournamentSerial" />
+    <Column name="Pid" type="VARCHAR" foreignkey="Pid" reference="Players" />
+  </Table>
 	<Table name="TournamentSerial">
 		<Column name="Tid" type="VARCHAR" primarykey="true" />
 		<Column name="Name" type="VARCHAR" />
