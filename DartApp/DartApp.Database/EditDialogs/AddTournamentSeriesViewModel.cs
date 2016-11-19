@@ -17,6 +17,7 @@ namespace DartApp.Database.EditDialogs
 		private RelayCommand cancelCommand = null;
 		private RelayCommand saveCommand = null;
 		private string name = "";
+		private int amountTournament = 1;
 		public delegate void ButtonClickedEventHandler(TournamentSeries newTournamentSeries);
 		public event ButtonClickedEventHandler ButtonClicked = null;
 		#endregion
@@ -25,7 +26,7 @@ namespace DartApp.Database.EditDialogs
 		public AddTournamentSeriesViewModel(IDartAppQueryService queryService)
 		{
 			List<Player> allPlayers = queryService.GetAllPlayers();
-			List<Player> selectedPlayers = new List<Player>();// queryService.GetAllHolidayPlayers();
+			List<Player> selectedPlayers = new List<Player>();
 			ObservableCollection<object> selectedObjects = new ObservableCollection<object>();
 			ObservableCollection<object> allObjects = new ObservableCollection<object>();
 
@@ -81,7 +82,8 @@ namespace DartApp.Database.EditDialogs
 				if (this.saveCommand == null)
 				{
 					this.saveCommand = new RelayCommand(
-						param => Save()
+						param => Save(),
+						param => CanSave()
 					);
 				}
 				return this.saveCommand;
@@ -97,6 +99,20 @@ namespace DartApp.Database.EditDialogs
 			{
 				this.name = value;
 				OnPropertyChanged("Name");
+			}
+		}
+
+		public string AmountTournament
+		{
+			get
+			{
+				return this.amountTournament.ToString();
+			}
+			set
+			{
+				if (!Int32.TryParse(value, out this.amountTournament))
+					this.amountTournament = 0;
+				OnPropertyChanged("AmountTournament");
 			}
 		}
 		#endregion
@@ -115,15 +131,19 @@ namespace DartApp.Database.EditDialogs
 			if (ButtonClicked != null)
 			{
 				var tournamentSeries = new TournamentSeries {Name = this.Name};
-				for (var i = 1; i<=12; i++)
+				for (var i = 1; i<=this.amountTournament; i++)
 				{
-					var tournament = new Tournament {Date = new DateTime(DateTime.Today.Year, i, 1), State=TournamentState.Open};
+					var tournament = new Tournament {Date = DateTime.Today, State=TournamentState.Open};
 					tournamentSeries.Tournaments.Add(tournament);
 				}
 				ButtonClicked(tournamentSeries);
 			}
 		}
 
+		private bool CanSave()
+		{
+			return this.amountTournament > 0;
+		}
 		#endregion
 	}
 }

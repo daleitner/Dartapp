@@ -175,7 +175,6 @@ namespace DartApp.Club.Menu
 			this.selectedSaison = this.saisons.FirstOrDefault();
 			if (this.selectedSaison != null)
 			{
-				var months = new List<string>() { "Jänner", "Feber", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember" };
 				for (int i = 0; i < this.selectedSaison.Tournaments.Count; i++)
 				{
 					if (this.selectedSaison.Tournaments[i].State != TournamentState.Closed)
@@ -186,7 +185,7 @@ namespace DartApp.Club.Menu
 				}
 
 				if (this.actualTournamentIndex >= 0)
-					this.startText = months[this.actualTournamentIndex] + "-\nTurnier starten";
+					this.startText = "Turnier " + this.actualTournamentIndex + " starten";
 			}
 		}
 
@@ -213,9 +212,6 @@ namespace DartApp.Club.Menu
 			eventService.PublishDisplayChangedEvent(DisplayEnum.Home);
 		}
 
-		#endregion
-
-		#region public methods
 		#endregion
 	}
 }

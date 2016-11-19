@@ -19,7 +19,6 @@ namespace DartApp.Database
 	{
 		#region members
 		private RelayCommand playerCommand = null;
-		//private RelayCommand holidayCommand = null;
 		private RelayCommand tournamentSerialCommand = null;
 		private RelayCommand newCommand = null;
 		private RelayCommand editCommand = null;
@@ -36,7 +35,6 @@ namespace DartApp.Database
 		private IDartAppQueryService queryService;
 		private IDartAppCommandService commandService;
 		private AddPlayerWindow addPlayerWindow;
-		//private EditHolidayWindow editHolidayWindow;
 		private AddTournamentSeriesWindow addTournamentSeriesWindow;
 		#endregion
 
@@ -66,21 +64,6 @@ namespace DartApp.Database
 				return this.playerCommand;
 			}
 		}
-
-		/*public ICommand HolidayCommand
-		{
-			get
-			{
-				if (this.holidayCommand == null)
-				{
-					this.holidayCommand = new RelayCommand(
-						param => RefreshView(ModelEnum.Holiday),
-						param => CanSelectHoliday()
-					);
-				}
-				return this.holidayCommand;
-			}
-		}*/
 
 		public ICommand TournamentSerialCommand
 		{
@@ -254,12 +237,8 @@ namespace DartApp.Database
 			if (newTournamentSeries != null)
 			{
 				this.commandService.InsertTournamentSeries(newTournamentSeries);
-				/*var players = this.queryService.GetAllHolidayPlayers();
-				foreach (var player in players)
-				{
-					var stat = new Statistic(player, newTournamentSeries);
-					this.commandService.InsertStatistic(stat);
-				}*/
+				OnSearch();
+				this.SelectedItem = newTournamentSeries;
 			}
 			this.addTournamentSeriesWindow.Close();
 		}
@@ -277,7 +256,7 @@ namespace DartApp.Database
 
 		private bool CanNew()
 		{
-			return true; //this.modelEnum != ModelEnum.Holiday;
+			return true;
 		}
 
 		private void Edit()
