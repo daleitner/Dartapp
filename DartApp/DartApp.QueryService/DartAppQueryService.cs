@@ -35,7 +35,7 @@ namespace DartApp.QueryService
 							ret.Add(pl);
 					}
 					break;
-				case ModelEnum.Holiday:
+				/*case ModelEnum.Holiday:
 					var playertable = this.mapping.GetTableByObject(typeof(Player));
 					var holidayTable = this.mapping.GetTableByRelation("Holiday");
 					var condition = new Condition()
@@ -48,7 +48,7 @@ namespace DartApp.QueryService
 						if (String.IsNullOrEmpty(search) || pl.DisplayName.Contains(search))
 							ret.Add(pl);
 					}
-					break;
+					break;*/
 				case ModelEnum.TournamentSeries:
 					var tournamentQuery = new DataBaseQuery(this.mapping.GetTableByObject(typeof(TournamentSeries)));
 					var tournamentResult = this.connection.ExecuteQuery(tournamentQuery);
@@ -82,9 +82,10 @@ namespace DartApp.QueryService
 
 		public List<Player> GetAllHolidayPlayers()
 		{
-			List<Player> ret = new List<Player>();
+		/*	List<Player> ret = new List<Player>();
 			GetSearchResult("", ModelEnum.Holiday).ForEach(x => ret.Add((Player)x));
-			return ret;
+			return ret;*/
+			return null;
 		}
 
 

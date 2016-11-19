@@ -13,7 +13,7 @@ namespace DartApp.QueryService
 	{
 		List<ModelBase> GetSearchResult(string search, ModelEnum modelType);
 		List<Player> GetAllPlayers();
-		List<Player> GetAllHolidayPlayers();
+		//List<Player> GetAllHolidayPlayers();
 		List<PlacementPoint> GetPlacementPoints();
 		List<TournamentSeries> GetTournamentSeries();
 		List<Player> GetSelectedPlayersOrderedByStatistics(List<Player> selectedPlayers, TournamentSeries series);

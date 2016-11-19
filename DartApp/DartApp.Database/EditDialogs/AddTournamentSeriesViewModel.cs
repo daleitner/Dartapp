@@ -114,9 +114,7 @@ namespace DartApp.Database.EditDialogs
 		{
 			if (ButtonClicked != null)
 			{
-				List<Player> players = new List<Player>();
-				this.ItemSelection.SelectedObjects.ToList().ForEach(x => players.Add((Player)x));
-				var tournamentSeries = new TournamentSeries {Name = this.Name, AllowedPlayers = players};
+				var tournamentSeries = new TournamentSeries {Name = this.Name};
 				for (var i = 1; i<=12; i++)
 				{
 					var tournament = new Tournament {Date = new DateTime(DateTime.Today.Year, i, 1), State=TournamentState.Open};

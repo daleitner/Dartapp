@@ -15,7 +15,6 @@ namespace DartApp.Models
 		{
 			this.CreatedAt = DateTime.Now;
 			this.Tournaments = new List<Tournament>();
-			this.AllowedPlayers = new List<Player>();
 		}
 
 		public TournamentSeries(List<string> itemArray)
@@ -24,7 +23,6 @@ namespace DartApp.Models
 			this.Name = itemArray[1];
 			this.CreatedAt = DateTime.Parse(itemArray[2]);
 			this.Tournaments = new List<Tournament>();
-			this.AllowedPlayers = new List<Player>();
 		}
 
 		public string Name
@@ -39,8 +37,6 @@ namespace DartApp.Models
 				this.DisplayName = this.name;
 			}
 		}
-
-		public List<Player> AllowedPlayers { get; set; }
 
 		public DateTime CreatedAt { get; set; }
 

@@ -9,7 +9,7 @@ namespace DartApp.Models
 	public enum ModelEnum
 	{
 		Player,
-		Holiday,
+		//Holiday,
 		Default,
 		TournamentSeries
 	}

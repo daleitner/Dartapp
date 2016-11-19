@@ -52,24 +52,24 @@ namespace DartApp.CommandServices
 
 		public void AddToHoliday(Player newPlayer)
 		{
-			var table = this.mapping.GetTableByObject(typeof(Holiday));
+			/*var table = this.mapping.GetTableByObject(typeof(Holiday));
 			var holiday = new Holiday(newPlayer);
 			var dictionary = this.mapping.CreateDatabaseDictionary(table, holiday);
-			DataBaseManager.GetInstance().DataBaseConnection.InsertElement(new SQLDatabase.ElementInsert(table, dictionary));
+			DataBaseManager.GetInstance().DataBaseConnection.InsertElement(new SQLDatabase.ElementInsert(table, dictionary));*/
 		}
 
 		public void RemoveFromHoliday(Player playerToRemove)
 		{
-			var table = this.mapping.GetTableByObject(typeof(Holiday));
+			/*var table = this.mapping.GetTableByObject(typeof(Holiday));
 			var condition = new Condition().Add(new PropertyExpression(table.Columns["Pid"], CompareEnum.Equals, playerToRemove.GetId()));
-			DataBaseManager.GetInstance().DataBaseConnection.DeleteElement(new SQLDatabase.ElementDelete(table, condition));
+			DataBaseManager.GetInstance().DataBaseConnection.DeleteElement(new SQLDatabase.ElementDelete(table, condition));*/
 		}
 
 		public void InsertTournamentSeries(TournamentSeries newTournamentSeries)
 		{
-			var children = new List<ModelBase>();
-			newTournamentSeries.Tournaments.ForEach(x => children.Add(x));
-			var tree = new ModelBaseTree(newTournamentSeries, children);
+			var tournaments = new List<ModelBase>();
+			newTournamentSeries.Tournaments.ForEach(x => tournaments.Add(x));
+			var tree = new ModelBaseTree(newTournamentSeries, tournaments);
 
 			this.dbManager.Insert(tree, null);
 		}

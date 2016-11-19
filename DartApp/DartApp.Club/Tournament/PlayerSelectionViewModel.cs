@@ -32,9 +32,9 @@ namespace DartApp.Club.Tournament
 			this.tournament = tournament;
 			this.tournament.Date = DateTime.Today;
 			this.eventService = eventService;
-			var holidayPlayers = queryService.GetAllHolidayPlayers();
+			var players = queryService.GetAllPlayers();
 			var allPlayers = new List<object>();
-			holidayPlayers.ForEach(x => allPlayers.Add(x));
+			players.ForEach(x => allPlayers.Add(x));
 			this.itemSelection = new ItemSelectionViewModel(new ObservableCollection<object>(allPlayers), new ObservableCollection<object>(), "Alle Spieler", "Ausgewählte Spieler");
 			this.itemSelection.ItemSelected += PlayerCountIncreased;
 			this.itemSelection.ItemDeselected += PlayerCountDecreased;

@@ -19,7 +19,7 @@ namespace DartApp.Database
 	{
 		#region members
 		private RelayCommand playerCommand = null;
-		private RelayCommand holidayCommand = null;
+		//private RelayCommand holidayCommand = null;
 		private RelayCommand tournamentSerialCommand = null;
 		private RelayCommand newCommand = null;
 		private RelayCommand editCommand = null;
@@ -36,7 +36,7 @@ namespace DartApp.Database
 		private IDartAppQueryService queryService;
 		private IDartAppCommandService commandService;
 		private AddPlayerWindow addPlayerWindow;
-		private EditHolidayWindow editHolidayWindow;
+		//private EditHolidayWindow editHolidayWindow;
 		private AddTournamentSeriesWindow addTournamentSeriesWindow;
 		#endregion
 
@@ -67,7 +67,7 @@ namespace DartApp.Database
 			}
 		}
 
-		public ICommand HolidayCommand
+		/*public ICommand HolidayCommand
 		{
 			get
 			{
@@ -80,7 +80,7 @@ namespace DartApp.Database
 				}
 				return this.holidayCommand;
 			}
-		}
+		}*/
 
 		public ICommand TournamentSerialCommand
 		{
@@ -254,12 +254,12 @@ namespace DartApp.Database
 			if (newTournamentSeries != null)
 			{
 				this.commandService.InsertTournamentSeries(newTournamentSeries);
-				var players = this.queryService.GetAllHolidayPlayers();
+				/*var players = this.queryService.GetAllHolidayPlayers();
 				foreach (var player in players)
 				{
 					var stat = new Statistic(player, newTournamentSeries);
 					this.commandService.InsertStatistic(stat);
-				}
+				}*/
 			}
 			this.addTournamentSeriesWindow.Close();
 		}
@@ -277,7 +277,7 @@ namespace DartApp.Database
 
 		private bool CanNew()
 		{
-			return this.modelEnum != ModelEnum.Holiday;
+			return true; //this.modelEnum != ModelEnum.Holiday;
 		}
 
 		private void Edit()
@@ -291,19 +291,19 @@ namespace DartApp.Database
 					this.addPlayerWindow.DataContext = pvm;
 					this.addPlayerWindow.ShowDialog();
 					break;
-				case ModelEnum.Holiday:
+			/*	case ModelEnum.Holiday:
 					var evm = new EditHolidayViewModel(this.queryService);
 					evm.ButtonClicked += E_UpdateHolidayList;
 					this.editHolidayWindow = new EditHolidayWindow();
 					this.editHolidayWindow.DataContext = evm;
 					this.editHolidayWindow.ShowDialog();
-					break;
+					break;*/
 			}
 		}
 
 		private bool CanEdit()
 		{
-			return this.SelectedItem != null || this.modelEnum == ModelEnum.Holiday;
+			return this.SelectedItem != null;// || this.modelEnum == ModelEnum.Holiday;
 		}
 
 		void E_UpdatePlayer(Player newPlayer)
@@ -317,7 +317,7 @@ namespace DartApp.Database
 			this.SelectedItem = newPlayer;
 		}
 
-		void E_UpdateHolidayList(List<Player> newHolidayPlayers)
+		/*void E_UpdateHolidayList(List<Player> newHolidayPlayers)
 		{
 			this.editHolidayWindow.Close();
 			if (newHolidayPlayers == null)
@@ -356,7 +356,7 @@ namespace DartApp.Database
 			toAdd.ForEach(x => this.commandService.AddToHoliday(x));
 			toRemove.ForEach(x => this.commandService.RemoveFromHoliday(x));
 			RefreshView(ModelEnum.Holiday);
-		}
+		}*/
 
 		private void Delete()
 		{
@@ -372,7 +372,7 @@ namespace DartApp.Database
 
 		private bool CanDelete()
 		{
-			return this.SelectedItem != null && this.modelEnum != ModelEnum.Holiday && this.modelEnum != ModelEnum.TournamentSeries;
+			return this.SelectedItem != null && this.modelEnum != ModelEnum.TournamentSeries;
 		}
 
 		private void Home()
@@ -399,7 +399,6 @@ namespace DartApp.Database
 				switch (this.modelEnum)
 				{
 					case ModelEnum.Player:
-					case ModelEnum.Holiday:
 						this.SpecificView = new PlayerViewModel((Player)this.SelectedItem);
 						break;
 					case ModelEnum.TournamentSeries:
@@ -418,10 +417,10 @@ namespace DartApp.Database
 			return this.modelEnum != ModelEnum.Player;
 		}
 
-		private bool CanSelectHoliday()
+		/*private bool CanSelectHoliday()
 		{
 			return this.modelEnum != ModelEnum.Holiday;
-		}
+		}*/
 
 		private bool CanSelectTournamentSeries()
 		{
