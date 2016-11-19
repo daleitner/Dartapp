@@ -23,6 +23,19 @@ namespace DartApp.Club.Menu
 		public ClubMenuUserControl()
 		{
 			InitializeComponent();
+			this.datagrid1.Loaded += Datagrid1_Loaded;
+		}
+
+		private void Datagrid1_Loaded(object sender, RoutedEventArgs e)
+		{
+			var vm = (ClubMenuViewModel) this.DataContext;
+			if (vm != null)
+			{
+				var tournamentSeries = vm.SelectedSeries;
+				this.datagrid1.Columns.Add(new DataGridTextColumn() {Header = "Name"});
+				tournamentSeries.Tournaments.ForEach(x => this.datagrid1.Columns.Add(new DataGridTextColumn() {Header = x.Date.ToString("dd.MM.yyyy")}));
+				this.datagrid1.Columns.Add(new DataGridTextColumn() { Header = "Gesamt" });
+			}
 		}
 	}
 }

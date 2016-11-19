@@ -20,8 +20,8 @@ namespace DartApp.Club.Menu
 		private RelayCommand homeButtonCommand = null;
 		private ObservableCollection<DataViewModel> data = null;
 		private List<PlacementPoint> points = null;
-		private List<TournamentSeries> saisons = null;
-		private TournamentSeries selectedSaison = null;
+		private List<TournamentSeries> series = null;
+		private TournamentSeries selectedSeries = null;
 		private string startText = "";
 		private string header = "";
 		private int actualTournamentIndex = -1;
@@ -116,28 +116,28 @@ namespace DartApp.Club.Menu
 				OnPropertyChanged("Points");
 			}
 		}
-		public List<TournamentSeries> Saisons
+		public List<TournamentSeries> Series
 		{
 			get
 			{
-				return this.saisons;
+				return this.series;
 			}
 			set
 			{
-				this.saisons = value;
-				OnPropertyChanged("Saisons");
+				this.series = value;
+				OnPropertyChanged("Series");
 			}
 		}
-		public TournamentSeries SelectedSaison
+		public TournamentSeries SelectedSeries
 		{
 			get
 			{
-				return this.selectedSaison;
+				return this.selectedSeries;
 			}
 			set
 			{
-				this.selectedSaison = value;
-				OnPropertyChanged("SelectedSaison");
+				this.selectedSeries = value;
+				OnPropertyChanged("SelectedSeries");
 			}
 		}
 		public string StartText
@@ -171,13 +171,13 @@ namespace DartApp.Club.Menu
 		private void LoadData()
 		{
 			this.points = this.queryService.GetPlacementPoints();
-			this.saisons = this.queryService.GetTournamentSeries();
-			this.selectedSaison = this.saisons.FirstOrDefault();
-			if (this.selectedSaison != null)
+			this.series = this.queryService.GetTournamentSeries();
+			this.selectedSeries = this.series.FirstOrDefault();
+			if (this.selectedSeries != null)
 			{
-				for (int i = 0; i < this.selectedSaison.Tournaments.Count; i++)
+				for (int i = 0; i < this.selectedSeries.Tournaments.Count; i++)
 				{
-					if (this.selectedSaison.Tournaments[i].State != TournamentState.Closed)
+					if (this.selectedSeries.Tournaments[i].State != TournamentState.Closed)
 					{
 						this.actualTournamentIndex = i;
 						break;
@@ -185,13 +185,13 @@ namespace DartApp.Club.Menu
 				}
 
 				if (this.actualTournamentIndex >= 0)
-					this.startText = "Turnier " + this.actualTournamentIndex + " starten";
+					this.startText = "Turnier " + this.selectedSeries.Tournaments[this.actualTournamentIndex].Key + " starten";
 			}
 		}
 
 		private void Start()
 		{
-			this.eventService.PublishDisplayChangedEvent(DisplayEnum.PlayerSelection, new List<object>() { this.selectedSaison.Tournaments[this.actualTournamentIndex] } );
+			this.eventService.PublishDisplayChangedEvent(DisplayEnum.PlayerSelection, new List<object>() { this.selectedSeries.Tournaments[this.actualTournamentIndex] } );
 		}
 
 		private bool CanStart()

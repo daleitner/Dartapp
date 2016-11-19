@@ -26,9 +26,12 @@ namespace DartApp.Models
 			:this()
 		{
 			this.Id = itemArray[0];
-			this.Date = DateTime.Parse(itemArray[1]);
-			this.State = (TournamentState)Enum.Parse(typeof(TournamentState), itemArray[2]);
+			this.Key = Int32.Parse(itemArray[1]);
+			this.Date = DateTime.Parse(itemArray[2]);
+			this.State = (TournamentState)Enum.Parse(typeof(TournamentState), itemArray[3]);
 		}
+
+		public int Key { get; set; }
 
 		public DateTime Date { get; set; }
 

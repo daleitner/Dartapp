@@ -110,17 +110,18 @@ namespace DartApp.QueryService
 			foreach (var res in tournamentResult)
 			{
 				var ts = new TournamentSeries(res);
-					var ttable = this.mapping.GetTableByObject(typeof(Tournament));
-					var tcondition = new Condition().Add(new PropertyExpression(ttable.Columns["TournamentSeries"], CompareEnum.Equals, ts.GetId()));
-					var sortDict = new Dictionary<DataBaseColumn, SortEnum>();
-					sortDict.Add(ttable.Columns["Tournamentdate"], SortEnum.ASC);
-					var tQuery = new DataBaseQuery(ttable.Columns.Values.ToList(), ttable, tcondition, sortDict);
-					var tRes = this.connection.ExecuteQuery(tQuery);
-					foreach (var tournament in tRes)
-					{
-						ts.Tournaments.Add(new Tournament(tournament));
-					}
-					ret.Add(ts);
+				var ttable = this.mapping.GetTableByObject(typeof(Tournament));
+				var tcondition = new Condition().Add(new PropertyExpression(ttable.Columns["TournamentSeries"], CompareEnum.Equals, ts.GetId()));
+				var sortDict = new Dictionary<DataBaseColumn, SortEnum>();
+				sortDict.Add(ttable.Columns["Tournamentdate"], SortEnum.ASC);
+				var tQuery = new DataBaseQuery(ttable.Columns.Values.ToList(), ttable, tcondition, sortDict);
+				var tRes = this.connection.ExecuteQuery(tQuery);
+				foreach (var tournament in tRes)
+				{
+					ts.Tournaments.Add(new Tournament(tournament));
+				}
+				ts.Tournaments = ts.Tournaments.OrderBy(x => x.Key).ToList();
+				ret.Add(ts);
 			}
 			return ret.OrderByDescending(x => x.CreatedAt).ToList();
 		}

@@ -12,7 +12,7 @@
 		</Grid.ColumnDefinitions>
 		<StackPanel Orientation="Vertical">
 			<Label Content="Saison:" Margin="5" />
-			<ComboBox ItemsSource="{Binding Path=Saisons}" SelectedItem="{Binding Path=SelectedSaison}" Width="100" Margin="5"/>
+			<ComboBox ItemsSource="{Binding Path=Series}" SelectedItem="{Binding Path=SelectedSeries}" Width="100" Margin="5"/>
 			<Button Content="{Binding Path=StartText}" Command="{Binding Path=StartCommand}" Margin="5" Width="100" />
 			<Button Content="Statistiken" Command="{Binding Path=StatisticsCommand}" Margin="5" Width="100" />
 			<Button Content="Drucken" Command="{Binding Path=PrintCommand}" Margin="5" Width="100" />
@@ -29,25 +29,6 @@
 		</StackPanel>
 		<Rectangle Fill="Black" Width="1" HorizontalAlignment="Left" Grid.Column="1" />
 		<Label Name="header" Content="{Binding Path=Header}" HorizontalAlignment="Center" VerticalAlignment="Top" Grid.Column="1" FontSize="30" Margin="344,10,326,0" Height="10" Width="10" />
-		<DataGrid Name="datagrid1" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10,50,10,10" ItemsSource="{Binding Path=Data}"
-				  CanUserAddRows="False" CanUserDeleteRows="False" CanUserReorderColumns="False">
-			<DataGrid.Columns>
-				<DataGridTextColumn Header="Platz" Binding="{Binding Placement}" Width="*" IsReadOnly="True" />
-				<DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="2*" IsReadOnly="True"/>
-				<DataGridTextColumn Header="JAN" Binding="{Binding Placement}" Width="*" IsReadOnly="True"/>
-				<DataGridTextColumn Header="FEB" Binding="{Binding Placement}" Width="*" IsReadOnly="True"/>
-				<DataGridTextColumn Header="MAR" Binding="{Binding Placement}" Width="*" IsReadOnly="True"/>
-				<DataGridTextColumn Header="APR" Binding="{Binding Placement}" Width="*" IsReadOnly="True"/>
-				<DataGridTextColumn Header="MAI" Binding="{Binding Placement}" Width="*" IsReadOnly="True"/>
-				<DataGridTextColumn Header="JUN" Binding="{Binding Placement}" Width="*" IsReadOnly="True"/>
-				<DataGridTextColumn Header="JUL" Binding="{Binding Placement}" Width="*" IsReadOnly="True"/>
-				<DataGridTextColumn Header="AUG" Binding="{Binding Placement}" Width="*" IsReadOnly="True"/>
-				<DataGridTextColumn Header="SEP" Binding="{Binding Placement}" Width="*" IsReadOnly="True"/>
-				<DataGridTextColumn Header="OKT" Binding="{Binding Placement}" Width="*" IsReadOnly="True"/>
-				<DataGridTextColumn Header="NOV" Binding="{Binding Placement}" Width="*" IsReadOnly="True"/>
-				<DataGridTextColumn Header="DEZ" Binding="{Binding Placement}" Width="*" IsReadOnly="True"/>
-				<DataGridTextColumn Header="Gesamt" Binding="{Binding Placement}" Width="2*" IsReadOnly="True"/>
-			</DataGrid.Columns>
-		</DataGrid>
+		<DataGrid Name="datagrid1" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10,50,10,10" CanUserAddRows="False" CanUserDeleteRows="False" CanUserReorderColumns="False"></DataGrid>
 	</Grid>
 </UserControl>

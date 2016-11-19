@@ -13,6 +13,7 @@
 	</Table>
 	<Table name="Tournaments" csobject="Tournament">
 		<Column name="Tid" attribute="Id" type="VARCHAR" />
+		<Column name="Key" attribute="Key" type="INTEGER" />
 		<Column name="Tournamentdate" attribute="Date" type="DATE" />
 		<Column name="State" attribute="State" type="VARCHAR" />
 		<Column name="TournamentSeries" attribute="ParentId" type="VARCHAR" />
