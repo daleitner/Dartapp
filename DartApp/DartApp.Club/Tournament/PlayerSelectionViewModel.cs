@@ -155,7 +155,7 @@ namespace DartApp.Club.Tournament
 		private void Start()
 		{
 			var players = new List<Models.Player>();
-			this.ItemSelection.SelectedObjects.ToList().ForEach(x => players.Add((Models.Player)x));
+			this.ItemSelection.GetAllSelectedObjects().ForEach(x => players.Add((Models.Player)x));
 			var eventArgs = new List<object>(){this.tournament, players, this.SelectedSetting};
 			this.eventService.PublishDisplayChangedEvent(DisplayEnum.Tournament, eventArgs);
 		}

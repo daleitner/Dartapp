@@ -15,10 +15,14 @@ namespace DartApp.Controls
         #region members
         private ObservableCollection<object> allObjects = null;
         private ObservableCollection<object> selectedObjects = null;
+	    private ObservableCollection<object> allSearchObjects = null;
+	    private ObservableCollection<object> selectedSearchObjects = null;  
         private object allObjectsSelection = null;
         private object selectedObjectsSelection = null;
         private string allHeader = "";
         private string selectedHeader = "";
+	    private string allSearch = "";
+	    private string selectedSearch = "";
         private RelayCommand selectCommand = null;
         private RelayCommand deselectCommand = null;
 		public delegate void ItemSelectedEventHandler(object selectedItem, List<object> selectedItems);
@@ -33,6 +37,8 @@ namespace DartApp.Controls
             this.selectedObjects = selectedObjects;
             this.allHeader = allheader;
             this.selectedHeader = selectedheader;
+			UpdateAllSearch();
+			UpdateSelectedSearch();
         }
 
         public ItemSelectionViewModel(ItemSelectionViewModel item)
@@ -43,6 +49,8 @@ namespace DartApp.Controls
 				this.selectedObjects = new ObservableCollection<object>(item.SelectedObjects);
 				this.allHeader = item.AllHeader;
 				this.selectedHeader = item.SelectedHeader;
+				UpdateAllSearch();
+				UpdateSelectedSearch();
 			}
         }
         #endregion
@@ -52,11 +60,11 @@ namespace DartApp.Controls
         {
             get
             {
-                return this.allObjects;
+                return this.allSearchObjects;
             }
             set
             {
-                this.allObjects = value;
+                this.allSearchObjects = value;
                 OnPropertyChanged("AllObjects");
             }
         }
@@ -65,11 +73,11 @@ namespace DartApp.Controls
         {
             get
             {
-                return this.selectedObjects;
+                return this.selectedSearchObjects;
             }
             set
             {
-                this.selectedObjects = value;
+                this.selectedSearchObjects = value;
                 OnPropertyChanged("SelectedObjects");
             }
         }
@@ -126,7 +134,35 @@ namespace DartApp.Controls
             }
         }
 
-        public ICommand SelectCommand
+		public string AllSearch
+		{
+			get
+			{
+				return this.allSearch;
+			}
+			set
+			{
+				this.allSearch = value;
+				OnPropertyChanged("AllSearch");
+				UpdateAllSearch();
+			}
+		}
+
+		public string SelectedSearch
+		{
+			get
+			{
+				return this.selectedSearch;
+			}
+			set
+			{
+				this.selectedSearch = value;
+				OnPropertyChanged("SelectedSearch");
+				UpdateSelectedSearch();
+			}
+		}
+
+		public ICommand SelectCommand
         {
             get
             {
@@ -155,22 +191,82 @@ namespace DartApp.Controls
                 return this.deselectCommand;
             }
         }
-        #endregion
+		#endregion
 
-        #region buttonhandler
-        public void Select()
+		#region public methods
+
+	    public List<object> GetAllSelectedObjects()
+	    {
+		    return this.selectedObjects.ToList();
+	    } 
+		#endregion
+
+		#region private methods
+
+		private void UpdateAllSearch()
+	    {
+		    if (string.IsNullOrEmpty(this.AllSearch))
+		    {
+			    this.AllObjects = new ObservableCollection<object>(this.allObjects);
+			    return;
+		    }
+			this.AllObjects = new ObservableCollection<object>();
+			foreach (var obj in this.allObjects)
+		    {
+			    if (obj.GetType() == typeof (ModelBase))
+			    {
+				    var element = (ModelBase) obj;
+				    if (element.DisplayName.ToUpper().Contains(this.AllSearch.ToUpper()))
+					    this.AllObjects.Add(obj);
+			    }
+			    else
+			    {
+					if (obj.ToString().ToUpper().Contains(this.AllSearch.ToUpper()))
+						this.AllObjects.Add(obj);
+				}
+		    }
+	    }
+
+		private void UpdateSelectedSearch()
+		{
+			if (string.IsNullOrEmpty(this.SelectedSearch))
+			{
+				this.SelectedObjects = new ObservableCollection<object>(this.selectedObjects);
+				return;
+			}
+			this.SelectedObjects = new ObservableCollection<object>();
+			foreach (var obj in this.selectedObjects)
+			{
+				if (obj.GetType() == typeof(ModelBase))
+				{
+					var element = (ModelBase)obj;
+					if (element.DisplayName.ToUpper().Contains(this.SelectedSearch.ToUpper()))
+						this.SelectedObjects.Add(obj);
+				}
+				else
+				{
+					if (obj.ToString().ToUpper().Contains(this.SelectedSearch.ToUpper()))
+						this.SelectedObjects.Add(obj);
+				}
+			}
+		}
+		#endregion
+		#region buttonhandler
+		public void Select()
         {
 	        if (this.AllObjectsSelection == null)
 				return;
-
-	        this.SelectedObjects.Add(this.AllObjectsSelection);
-	        this.AllObjects.Remove(this.AllObjectsSelection);
+			
+			this.selectedObjects.Add(this.AllObjectsSelection);
+	        this.allObjects.Remove(this.AllObjectsSelection);
+			this.AllObjects.Remove(this.AllObjectsSelection);
 
 	        if(ItemSelected != null)
-				ItemSelected(this.AllObjectsSelection, this.SelectedObjects.ToList());
+				ItemSelected(this.AllObjectsSelection, this.selectedObjects.ToList());
 
 	        if (this.AllObjects.Count > 0)
 		        this.AllObjectsSelection = this.AllObjects[0];
+			this.SelectedSearch = "";
         }
 
 	    private bool CanSelect()
@@ -182,17 +278,18 @@ namespace DartApp.Controls
         {
 	        if (this.SelectedObjectsSelection == null)
 				return;
+			
+			this.allObjects.Add(this.SelectedObjectsSelection);
 
-	        this.AllObjects.Add(this.SelectedObjectsSelection);
-	        this.AllObjects = new ObservableCollection<object>(this.AllObjects.OrderBy(x => x.ToString()));
-
+	        this.selectedObjects.Remove(this.SelectedObjectsSelection);
 	        this.SelectedObjects.Remove(this.SelectedObjectsSelection);
 
 	        if(ItemDeselected != null)
-				ItemDeselected(this.SelectedObjectsSelection, this.AllObjects.ToList());
+				ItemDeselected(this.SelectedObjectsSelection, this.allObjects.ToList());
 
 	        if (this.SelectedObjects.Count > 0)
 		        this.SelectedObjectsSelection = this.SelectedObjects[0];
+	        this.AllSearch = "";
         }
 
 	    private bool CanDeselect()
