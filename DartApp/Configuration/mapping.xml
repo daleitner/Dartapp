@@ -29,7 +29,7 @@
 	</Table>
 	<Table name="Placements" csobject="Placement">
 		<Column name="Pid" attribute="Id" type="VARCHAR" />
-		<Column name="Tid" attribute="Tournament" type="VARCHAR" />
+		<Column name="Tid" attribute="ParentId" type="VARCHAR" />
 		<Column name="Player" attribute="Player" type="VARCHAR" />
 		<Column name="Position" attribute="Position" type="INTEGER" />
 	</Table>

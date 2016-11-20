@@ -29,9 +29,6 @@ namespace DartApp.CommandServices
 		public void InsertPlayer(Player newPlayer)
 		{
 			this.dbManager.Insert(newPlayer);
-			//var table = this.mapping.GetTableByObject(typeof(Player));
-			//var dictionary = this.mapping.CreateDatabaseDictionary(table, newPlayer);
-			//DataBaseManager.GetInstance().DataBaseConnection.InsertElement(new SQLDatabase.ElementInsert(table, dictionary));
 		}
 
 		public void UpdatePlayer(Player newPlayer)
@@ -39,30 +36,14 @@ namespace DartApp.CommandServices
 			var table = this.mapping.GetTableByObject(typeof(Player));
 			var dictionary = this.mapping.CreateDatabaseDictionary(table, newPlayer);
 			var condition = new Condition().Add(new PropertyExpression(table.Columns["Pid"], CompareEnum.Equals, newPlayer.GetId()));
-			DataBaseManager.GetInstance().DataBaseConnection.UpdateElement(new SQLDatabase.ElementUpdate(table, dictionary, condition));
+			this.dbManager.DataBaseConnection.UpdateElement(new SQLDatabase.ElementUpdate(table, dictionary, condition));
 		}
 
 		public void DeletePlayer(Player playerToDelete)
 		{
 			var table = this.mapping.GetTableByObject(typeof(Player));
 			var condition = new Condition().Add(new PropertyExpression(table.Columns["Pid"], CompareEnum.Equals, playerToDelete.GetId()));
-			DataBaseManager.GetInstance().DataBaseConnection.DeleteElement(new SQLDatabase.ElementDelete(table, condition));
-		}
-
-
-		public void AddToHoliday(Player newPlayer)
-		{
-			/*var table = this.mapping.GetTableByObject(typeof(Holiday));
-			var holiday = new Holiday(newPlayer);
-			var dictionary = this.mapping.CreateDatabaseDictionary(table, holiday);
-			DataBaseManager.GetInstance().DataBaseConnection.InsertElement(new SQLDatabase.ElementInsert(table, dictionary));*/
-		}
-
-		public void RemoveFromHoliday(Player playerToRemove)
-		{
-			/*var table = this.mapping.GetTableByObject(typeof(Holiday));
-			var condition = new Condition().Add(new PropertyExpression(table.Columns["Pid"], CompareEnum.Equals, playerToRemove.GetId()));
-			DataBaseManager.GetInstance().DataBaseConnection.DeleteElement(new SQLDatabase.ElementDelete(table, condition));*/
+			this.dbManager.DataBaseConnection.DeleteElement(new SQLDatabase.ElementDelete(table, condition));
 		}
 
 		public void InsertTournamentSeries(TournamentSeries newTournamentSeries)
@@ -78,6 +59,22 @@ namespace DartApp.CommandServices
 		public void InsertStatistic(Statistic stat)
 		{
 			this.dbManager.Insert(stat);
+		}
+
+		public void SaveTournament(Tournament tournament, TournamentSeries series)
+		{
+			UpdateTourmanent(tournament, series);
+			tournament.Matches.ForEach(match => this.dbManager.Insert(match, tournament));
+			tournament.Placements.Where(x => x.Player.VorName != "FL").ToList()
+				.ForEach(x => this.dbManager.Insert(x, tournament));
+		}
+
+		private void UpdateTourmanent(Tournament tournament, TournamentSeries series)
+		{
+			var table = this.mapping.GetTableByObject(typeof(Tournament));
+			var dictionary = this.mapping.CreateDatabaseDictionary(table, tournament, series);
+			var condition = new Condition().Add(new PropertyExpression(table.Columns["Tid"], CompareEnum.Equals, tournament.GetId()));
+			this.dbManager.DataBaseConnection.UpdateElement(new SQLDatabase.ElementUpdate(table, dictionary, condition));
 		}
 	}
 }

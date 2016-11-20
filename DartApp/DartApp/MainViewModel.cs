@@ -42,11 +42,11 @@ namespace DartApp
 					this.Content = this.factory.GetClubMenuViewModel();
 					break;
 				case DisplayEnum.PlayerSelection:
-					this.Content = this.factory.GetPlayerSelectionViewModel((Tournament)eventArgs[0]);
+					this.Content = this.factory.GetPlayerSelectionViewModel((Tournament)eventArgs[0], (TournamentSeries)eventArgs[1]);
 					break;
 				case DisplayEnum.Tournament:
 					var tournament = TournamentController.DrawMatches((Tournament)eventArgs[0], (List<Player>)eventArgs[1], eventArgs[2].ToString(), this.factory.GetQueryService());
-					this.Content = this.factory.GetTournamentViewModel(tournament);
+					this.Content = this.factory.GetTournamentViewModel(tournament, (TournamentSeries)eventArgs[3]);
 					break;
             }
         }

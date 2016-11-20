@@ -6,6 +6,7 @@ using System.Windows.Input;
 using System.Collections.ObjectModel;
 using Base;
 using DartApp.Controls;
+using DartApp.Models;
 using DartApp.QueryService;
 using DartApp.Services;
 
@@ -23,12 +24,14 @@ namespace DartApp.Club.Tournament
 		private ItemSelectionViewModel itemSelection = null;
 		private ObservableCollection<string> settingSelection = null;
 		private string selectedSetting = "";
-		private IEventService eventService;
+		private readonly IEventService eventService;
+		private readonly TournamentSeries series;
 		#endregion
 
 		#region ctors
-		public PlayerSelectionViewModel(Models.Tournament tournament, IDartAppQueryService queryService, IEventService eventService)
+		public PlayerSelectionViewModel(Models.Tournament tournament, TournamentSeries series, IDartAppQueryService queryService, IEventService eventService)
 		{
+			this.series = series;
 			this.tournament = tournament;
 			this.tournament.Date = DateTime.Today;
 			this.eventService = eventService;
@@ -156,7 +159,7 @@ namespace DartApp.Club.Tournament
 		{
 			var players = new List<Models.Player>();
 			this.ItemSelection.GetAllSelectedObjects().ForEach(x => players.Add((Models.Player)x));
-			var eventArgs = new List<object>(){this.tournament, players, this.SelectedSetting};
+			var eventArgs = new List<object>(){this.tournament, players, this.SelectedSetting, this.series};
 			this.eventService.PublishDisplayChangedEvent(DisplayEnum.Tournament, eventArgs);
 		}
 

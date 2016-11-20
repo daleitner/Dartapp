@@ -18,8 +18,8 @@ namespace DartApp.Factory
         HomeViewModel GetHomeViewModel();
         DatabaseMainViewModel GetDatabaseMainViewModel();
 		ClubMenuViewModel GetClubMenuViewModel();
-		PlayerSelectionViewModel GetPlayerSelectionViewModel(Tournament tournament);
-		TournamentViewModel GetTournamentViewModel(Tournament tournament);
+		PlayerSelectionViewModel GetPlayerSelectionViewModel(Tournament tournament, TournamentSeries series);
+		TournamentViewModel GetTournamentViewModel(Tournament tournament, TournamentSeries series);
 		IDartAppQueryService GetQueryService();
 	}
 }

@@ -12,9 +12,8 @@ namespace DartApp.CommandServices
 		void InsertPlayer(Player newPlayer);
 		void UpdatePlayer(Player newPlayer);
 		void DeletePlayer(Player playerToDelete);
-		/*void AddToHoliday(Player newPlayer);
-		void RemoveFromHoliday(Player playerToRemove);*/
 		void InsertTournamentSeries(TournamentSeries newTournamentSeries);
 		void InsertStatistic(Statistic stat);
-	}
+	    void SaveTournament(Tournament tournament, TournamentSeries series);
+    }
 }

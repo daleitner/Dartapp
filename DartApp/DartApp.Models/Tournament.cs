@@ -20,6 +20,7 @@ namespace DartApp.Models
 			:base()
 		{
 			this.Matches = new List<Match>();
+			this.Placements = new List<Placement>();
 		}
 
 		public Tournament(List<string> itemArray)
@@ -29,6 +30,8 @@ namespace DartApp.Models
 			this.Key = Int32.Parse(itemArray[1]);
 			this.Date = DateTime.Parse(itemArray[2]);
 			this.State = (TournamentState)Enum.Parse(typeof(TournamentState), itemArray[3]);
+			this.Matches = new List<Match>();
+			this.Placements = new List<Placement>();
 		}
 
 		public int Key { get; set; }
@@ -38,5 +41,7 @@ namespace DartApp.Models
 		public TournamentState State { get; set; }
 
 		public List<Match> Matches { get; set; }
+
+		public List<Placement> Placements { get; set; } 
 	}
 }

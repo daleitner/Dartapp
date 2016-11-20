@@ -2,6 +2,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Input;
 using Base;
+using DartApp.CommandServices;
 using DartApp.Models;
 using DartApp.Services;
 
@@ -17,11 +18,15 @@ namespace DartApp.Club.Tournament
 		private ObservableCollection<MatchViewModel> playableMatches; 
 		private TournamentPlanViewModel tournamentPlan;
 		private readonly IEventService eventService;
+		private readonly IDartAppCommandService commandService;
+		private readonly TournamentSeries series;
 		#endregion
 
 		#region ctors
-		public TournamentViewModel(Models.Tournament tournament, IEventService eventService)
+		public TournamentViewModel(Models.Tournament tournament, TournamentSeries series, IEventService eventService, IDartAppCommandService commandService)
 		{
+			this.series = series;
+			this.commandService = commandService;
 			this.tournament = tournament;
 			this.tournamentPlan = new TournamentPlanViewModel(this.tournament);
 			this.matches = new ObservableCollection<MatchViewModel>();
@@ -98,6 +103,9 @@ namespace DartApp.Club.Tournament
 
 		private void Save()
 		{
+			this.tournament.State = TournamentState.Closed;
+			this.tournamentPlan.Rankings.ToList().ForEach(x => this.tournament.Placements.Add(new Placement(x.Ranking, x.Player)));
+			this.commandService.SaveTournament(this.tournament, this.series);
 			this.eventService.PublishDisplayChangedEvent(DisplayEnum.Club);
 		}
 

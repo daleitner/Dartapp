@@ -191,7 +191,7 @@ namespace DartApp.Club.Menu
 
 		private void Start()
 		{
-			this.eventService.PublishDisplayChangedEvent(DisplayEnum.PlayerSelection, new List<object>() { this.selectedSeries.Tournaments[this.actualTournamentIndex] } );
+			this.eventService.PublishDisplayChangedEvent(DisplayEnum.PlayerSelection, new List<object>() { this.selectedSeries.Tournaments[this.actualTournamentIndex], this.selectedSeries } );
 		}
 
 		private bool CanStart()
