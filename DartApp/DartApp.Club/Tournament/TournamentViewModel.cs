@@ -1,10 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Windows.Input;
 using System.Collections.ObjectModel;
+using System.Linq;
+using System.Windows.Input;
 using Base;
+using DartApp.Models;
 using DartApp.Services;
 
 namespace DartApp.Club.Tournament
@@ -12,12 +10,13 @@ namespace DartApp.Club.Tournament
 	public class TournamentViewModel : ViewModelBase
 	{
 		#region members
-		private Models.Tournament tournament = null;
-		private RelayCommand cancelCommand = null;
-		private RelayCommand saveCommand = null;
-		private ObservableCollection<MatchViewModel> matches = null;
-		private TournamentPlanViewModel tournamentPlan = null;
-		private IEventService eventService;
+		private Models.Tournament tournament;
+		private RelayCommand cancelCommand;
+		private RelayCommand saveCommand;
+		private ObservableCollection<MatchViewModel> matches;
+		private ObservableCollection<MatchViewModel> playableMatches; 
+		private TournamentPlanViewModel tournamentPlan;
+		private readonly IEventService eventService;
 		#endregion
 
 		#region ctors
@@ -32,6 +31,8 @@ namespace DartApp.Club.Tournament
 					m.MatchChanged +=m_MatchChanged;
 					this.matches.Add(m);
 				});
+			KickFreilose();
+			UpdatePlayableMatches();
 			this.eventService = eventService;
 		}
 		#endregion
@@ -67,11 +68,11 @@ namespace DartApp.Club.Tournament
 		{
 			get
 			{
-				return this.matches;
+				return this.playableMatches;
 			}
 			set
 			{
-				this.matches = value;
+				this.playableMatches = value;
 				OnPropertyChanged("Matches");
 			}
 		}
@@ -100,33 +101,63 @@ namespace DartApp.Club.Tournament
 			this.eventService.PublishDisplayChangedEvent(DisplayEnum.Club);
 		}
 
+		private void UpdatePlayableMatches()
+		{
+			var help = new ObservableCollection<MatchViewModel>();
+			foreach (var match in this.matches)
+			{
+				if(!string.IsNullOrEmpty(match.Player1) && !string.IsNullOrEmpty(match.Player2)
+					&& match.Player1Legs == "0" && match.Player2Legs == "0")
+					help.Add(match);
+			}
+			this.Matches = help;
+		}
+
+		private void KickFreilose()
+		{
+			foreach (var match in this.matches)
+			{
+				if (match.Player2 == "FL")
+				{
+					match.Player1Legs = "1";
+					match.OkCommand.Execute(null);
+				}
+				else if (match.Player1 == "FL")
+				{
+					match.Player2Legs = "1";
+					match.OkCommand.Execute(null);
+				}
+			}
+		}
+
 		#endregion
 
 		#region public methods
-		void m_MatchChanged(Models.Match match)
+		void m_MatchChanged(Match match)
 		{
-			this.TournamentPlan.Results.Where(x => x.GetMatchKey() == match.PositionKey).First().Refresh();
+			this.TournamentPlan.Results.First(x => x.GetMatchKey() == match.PositionKey).Refresh();
 			var toRefresh = TournamentController.EndMatch(match, this.tournament);
 			toRefresh.ForEach(i =>
 			{
-				this.TournamentPlan.Results.Where(x => x.GetMatchKey() == i).First().Refresh();
-				this.Matches[i].Refresh();
+				this.TournamentPlan.Results.First(x => x.GetMatchKey() == i).Refresh();
+				this.matches[i].Refresh();
 			});
 			var ranking = TournamentController.GetRanking(match, this.tournament);
 			if (ranking > 0)
 			{
 				if (ranking == 1)
 				{
-					this.TournamentPlan.Rankings.Where(x => x.Ranking == ranking).First().Player = match.GetWinner();
-					this.TournamentPlan.Rankings.Where(x => x.Ranking == ranking+1).First().Player = match.GetLoser();
+					this.TournamentPlan.Rankings.First(x => x.Ranking == ranking).Player = match.GetWinner();
+					this.TournamentPlan.Rankings.First(x => x.Ranking == ranking+1).Player = match.GetLoser();
 				}
 				else
 				{
 
-					this.TournamentPlan.Rankings.Where(x => x.Ranking == ranking).First().Player = match.GetLoser();
+					this.TournamentPlan.Rankings.First(x => x.Ranking == ranking).Player = match.GetLoser();
 				}
 				this.TournamentPlan.Refresh();
 			}
+			UpdatePlayableMatches();
 		}
 		#endregion
 	}

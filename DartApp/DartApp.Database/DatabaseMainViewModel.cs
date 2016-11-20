@@ -1,39 +1,36 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Windows.Input;
-using System.Collections.ObjectModel;
-using Base;
-using DartApp.Models;
-using DartApp.Services;
-using DartApp.Database.ModelViews;
-using DartApp.QueryService;
-using DartApp.Database.EditDialogs;
-using DartApp.CommandServices;
 using System.Windows;
+using System.Windows.Input;
+using Base;
+using DartApp.CommandServices;
+using DartApp.Database.EditDialogs;
+using DartApp.Database.ModelViews;
+using DartApp.Models;
+using DartApp.QueryService;
+using DartApp.Services;
 
 namespace DartApp.Database
 {
 	public class DatabaseMainViewModel : ViewModelBase
 	{
 		#region members
-		private RelayCommand playerCommand = null;
-		private RelayCommand tournamentSerialCommand = null;
-		private RelayCommand newCommand = null;
-		private RelayCommand editCommand = null;
-		private RelayCommand deleteCommand = null;
-		private RelayCommand homeCommand = null;
-		private RelayCommand searchCommand = null;
-		private ModelBase selectedItem = null;
-		private ObservableCollection<ModelBase> searchResult = null;
+		private RelayCommand playerCommand;
+		private RelayCommand tournamentSerialCommand;
+		private RelayCommand newCommand;
+		private RelayCommand editCommand;
+		private RelayCommand deleteCommand;
+		private RelayCommand homeCommand;
+		private RelayCommand searchCommand;
+		private ModelBase selectedItem;
+		private ObservableCollection<ModelBase> searchResult;
 		private string header = "";
 		private string search = "";
-		private ViewModelBase specificView = null;
+		private ViewModelBase specificView;
 		private ModelEnum modelEnum = ModelEnum.Default;
-        private IEventService eventService;
-		private IDartAppQueryService queryService;
-		private IDartAppCommandService commandService;
+        private readonly IEventService eventService;
+		private readonly IDartAppQueryService queryService;
+		private readonly IDartAppCommandService commandService;
 		private AddPlayerWindow addPlayerWindow;
 		private AddTournamentSeriesWindow addTournamentSeriesWindow;
 		#endregion
@@ -270,19 +267,12 @@ namespace DartApp.Database
 					this.addPlayerWindow.DataContext = pvm;
 					this.addPlayerWindow.ShowDialog();
 					break;
-			/*	case ModelEnum.Holiday:
-					var evm = new EditHolidayViewModel(this.queryService);
-					evm.ButtonClicked += E_UpdateHolidayList;
-					this.editHolidayWindow = new EditHolidayWindow();
-					this.editHolidayWindow.DataContext = evm;
-					this.editHolidayWindow.ShowDialog();
-					break;*/
 			}
 		}
 
 		private bool CanEdit()
 		{
-			return this.SelectedItem != null;// || this.modelEnum == ModelEnum.Holiday;
+			return this.SelectedItem != null;
 		}
 
 		void E_UpdatePlayer(Player newPlayer)
@@ -296,50 +286,9 @@ namespace DartApp.Database
 			this.SelectedItem = newPlayer;
 		}
 
-		/*void E_UpdateHolidayList(List<Player> newHolidayPlayers)
-		{
-			this.editHolidayWindow.Close();
-			if (newHolidayPlayers == null)
-				return;
-
-			var oldHolidayPlayers = this.queryService.GetAllHolidayPlayers();
-
-			List<Player> toAdd = new List<Player>();
-			foreach (var np in newHolidayPlayers)
-			{
-				var found = false;
-				foreach (var op in oldHolidayPlayers)
-				{
-					if (found) break;
-					if (op.GetId() == np.GetId())
-						found = true;
-				}
-				if (!found)
-					toAdd.Add(np);
-			}
-
-			List<Player> toRemove = new List<Player>();
-			foreach (var op in oldHolidayPlayers)
-			{
-				var found = false;
-				foreach (var np in newHolidayPlayers)
-				{
-					if (found) break;
-					if (op.GetId() == np.GetId())
-						found = true;
-				}
-				if (!found)
-					toRemove.Add(op);
-			}
-
-			toAdd.ForEach(x => this.commandService.AddToHoliday(x));
-			toRemove.ForEach(x => this.commandService.RemoveFromHoliday(x));
-			RefreshView(ModelEnum.Holiday);
-		}*/
-
 		private void Delete()
 		{
-			MessageBoxResult ret = MessageBox.Show("Willst du " + this.SelectedItem.ToString() + " wirklich löschen?", "Löschen", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+			MessageBoxResult ret = MessageBox.Show("Willst du " + this.SelectedItem + " wirklich löschen?", "Löschen", MessageBoxButton.YesNo, MessageBoxImage.Warning);
 
 			if (ret == MessageBoxResult.Yes)
 			{
@@ -395,11 +344,6 @@ namespace DartApp.Database
 		{
 			return this.modelEnum != ModelEnum.Player;
 		}
-
-		/*private bool CanSelectHoliday()
-		{
-			return this.modelEnum != ModelEnum.Holiday;
-		}*/
 
 		private bool CanSelectTournamentSeries()
 		{

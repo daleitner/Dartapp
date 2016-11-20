@@ -15,9 +15,17 @@
 		<StackPanel Orientation="Vertical" VerticalAlignment="Center">
 			<Label Content="VS" FontWeight="Bold" FontSize="16" HorizontalAlignment="Center"/>
 			<StackPanel Orientation="Horizontal">
-				<TextBox Text="{Binding Path=Player1Legs}" Width="30" />
+					<TextBox Text="{Binding Path=Player1Legs, UpdateSourceTrigger=PropertyChanged}" Width="30">
+						<TextBox.InputBindings>
+							<KeyBinding Key="Enter" Command="{Binding Path=OkCommand}"></KeyBinding>
+						</TextBox.InputBindings>
+					</TextBox>
 				<Label Content=":" />
-				<TextBox Text="{Binding Path=Player2Legs}" Width="30" />
+					<TextBox Text="{Binding Path=Player2Legs, UpdateSourceTrigger=PropertyChanged}" Width="30">
+						<TextBox.InputBindings>
+							<KeyBinding Key="Enter" Command="{Binding Path=OkCommand}"></KeyBinding>
+						</TextBox.InputBindings>
+					</TextBox>
 			</StackPanel>
 			<Button Content="Eintragen" Command="{Binding Path=OkCommand}" Margin="5" />
 		</StackPanel>

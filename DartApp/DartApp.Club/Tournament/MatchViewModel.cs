@@ -15,6 +15,8 @@ namespace DartApp.Club.Tournament
 	{
 		private BitmapImage player1Image = null;
 		private BitmapImage player2Image = null;
+		private string player1Legs = "0";
+		private string player2Legs = "0";
 		private string player1 = "";
 		private string player2 = "";
 		private Match match;
@@ -84,13 +86,19 @@ namespace DartApp.Club.Tournament
 
 		public string Player1Legs
 		{
-			get 
+			get
 			{
-				return this.match.Player1Legs.ToString();
+				return this.player1Legs;
 			}
-			set 
+			set
 			{
-				this.match.Player1Legs = Int32.Parse(value);
+				this.player1Legs = value;
+				if (!string.IsNullOrEmpty(this.player1Legs))
+				{
+					int help = 0;
+					Int32.TryParse(this.player1Legs, out help);
+					this.player1Legs = help.ToString();
+				}
 				OnPropertyChanged("Player1Legs");
 			}
 		}
@@ -99,11 +107,17 @@ namespace DartApp.Club.Tournament
 		{
 			get
 			{
-				return this.match.Player2Legs.ToString();
+				return this.player2Legs;
 			}
 			set
 			{
-				this.match.Player2Legs = Int32.Parse(value);
+				this.player2Legs = value;
+				if (!string.IsNullOrEmpty(this.player2Legs))
+				{
+					int help = 0;
+					Int32.TryParse(this.player2Legs, out help);
+					this.player2Legs = help.ToString();
+				}
 				OnPropertyChanged("Player2Legs");
 			}
 		}
@@ -125,13 +139,16 @@ namespace DartApp.Club.Tournament
 
 		private void OkClicked()
 		{
+			this.match.Player1Legs = Int32.Parse(this.player1Legs);
+			this.match.Player2Legs = Int32.Parse(this.player2Legs);
 			if (this.MatchChanged != null)
 				this.MatchChanged(this.match);
 		}
 
 		private bool CanClick()
 		{
-			return this.match.Player1Legs != this.match.Player2Legs;
+			return !string.IsNullOrEmpty(this.player1Legs) && !string.IsNullOrEmpty(this.player2Legs) && 
+				this.player1Legs != this.player2Legs;
 		}
 
 		internal void Refresh()
@@ -157,6 +174,8 @@ namespace DartApp.Club.Tournament
 				else
 					this.Player2Image = new BitmapImage(new Uri(picsPath, ".\\pics\\default.jpg"));
 			}
+			if(this.Player1 == "FL" || this.Player2 == "FL")
+				OkClicked();
 		}
 	}
 }
