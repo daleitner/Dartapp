@@ -113,14 +113,13 @@ namespace DartApp.QueryService
 				var ttable = this.mapping.GetTableByObject(typeof(Tournament));
 				var tcondition = new Condition().Add(new PropertyExpression(ttable.Columns["TournamentSeries"], CompareEnum.Equals, ts.GetId()));
 				var sortDict = new Dictionary<DataBaseColumn, SortEnum>();
-				sortDict.Add(ttable.Columns["Tournamentdate"], SortEnum.ASC);
+				sortDict.Add(ttable.Columns["Key"], SortEnum.ASC);
 				var tQuery = new DataBaseQuery(ttable.Columns.Values.ToList(), ttable, tcondition, sortDict);
 				var tRes = this.connection.ExecuteQuery(tQuery);
 				foreach (var tournament in tRes)
 				{
 					ts.Tournaments.Add(new Tournament(tournament));
 				}
-				ts.Tournaments = ts.Tournaments.OrderBy(x => x.Key).ToList();
 				ret.Add(ts);
 			}
 			return ret.OrderByDescending(x => x.CreatedAt).ToList();
@@ -165,6 +164,60 @@ namespace DartApp.QueryService
 				return null;
 			var ret = new TournamentSeries(res.First());
 			return ret;
+		}
+
+		public List<Tournament> GetFullTournamentsOfSeries(TournamentSeries series)
+		{
+			var ret = new List<Tournament>();
+			var ttable = this.mapping.GetTableByObject(typeof(Tournament));
+			var tcondition = new Condition().Add(new PropertyExpression(ttable.Columns["TournamentSeries"], CompareEnum.Equals, series.GetId()));
+			var sortDict = new Dictionary<DataBaseColumn, SortEnum> {{ttable.Columns["Key"], SortEnum.ASC}};
+			var tQuery = new DataBaseQuery(ttable.Columns.Values.ToList(), ttable, tcondition, sortDict);
+			var tRes = this.connection.ExecuteQuery(tQuery);
+			foreach (var tournament in tRes)
+			{
+				var t = new Tournament(tournament);
+
+				var mtable = this.mapping.GetTableByObject(typeof (Match));
+				var mcondition =
+					new Condition().Add(new PropertyExpression(mtable.Columns["Tid"], CompareEnum.Equals, t.GetId()));
+				var msortDict = new Dictionary<DataBaseColumn, SortEnum> { {mtable.Columns["Positionkey"], SortEnum.ASC} };
+				var mQuery = new DataBaseQuery(mtable.Columns.Values.ToList(), mtable, mcondition, msortDict);
+				var mRes = this.connection.ExecuteQuery(mQuery);
+				foreach (var m in mRes)
+				{
+					var match = new Match(m);
+					match.Player1 = GetPlayerById(m[2]);
+					match.Player2 = GetPlayerById(m[3]);
+					t.Matches.Add(match);
+				}
+
+				var ptable = this.mapping.GetTableByObject(typeof(Placement));
+				var pcondition =
+					new Condition().Add(new PropertyExpression(ptable.Columns["Tid"], CompareEnum.Equals, t.GetId()));
+				var psortDict = new Dictionary<DataBaseColumn, SortEnum> { { ptable.Columns["Position"], SortEnum.ASC } };
+				var pQuery = new DataBaseQuery(ptable.Columns.Values.ToList(), ptable, pcondition, psortDict);
+				var pRes = this.connection.ExecuteQuery(pQuery);
+				foreach (var p in pRes)
+				{
+					var placement = new Placement(p);
+					placement.Player = GetPlayerById(p[2]);
+					t.Placements.Add(placement);
+				}
+				ret.Add(t);
+			}
+			return ret;
+		}
+
+		private Player GetPlayerById(string playerId)
+		{
+			var table = this.mapping.GetTableByObject(typeof (Player));
+			var condition = new Condition().Add(new PropertyExpression(table.Columns["Pid"], CompareEnum.Equals, playerId));
+			var query = new DataBaseQuery(table, condition);
+			var res = this.connection.ExecuteQuery(query).FirstOrDefault();
+			if(res == null)
+				return new Player("FL");
+			return new Player(res);
 		}
 	}
 }

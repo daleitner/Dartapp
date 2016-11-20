@@ -175,6 +175,7 @@ namespace DartApp.Club.Menu
 			this.selectedSeries = this.series.FirstOrDefault();
 			if (this.selectedSeries != null)
 			{
+				this.selectedSeries.Tournaments = this.queryService.GetFullTournamentsOfSeries(this.selectedSeries);
 				for (int i = 0; i < this.selectedSeries.Tournaments.Count; i++)
 				{
 					if (this.selectedSeries.Tournaments[i].State != TournamentState.Closed)
