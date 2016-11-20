@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Windows.Input;
 using System.Collections.ObjectModel;
+using System.Data;
+using System.Windows.Markup;
 using Base;
 using DartApp.Services;
 using DartApp.QueryService;
@@ -18,7 +20,8 @@ namespace DartApp.Club.Menu
 		private RelayCommand statisticsCommand = null;
 		private RelayCommand printCommand = null;
 		private RelayCommand homeButtonCommand = null;
-		private ObservableCollection<DataViewModel> data = null;
+		private DataTable data = null;
+		private List<DataViewModel> dataViewModels = null; 
 		private List<PlacementPoint> points = null;
 		private List<TournamentSeries> series = null;
 		private TournamentSeries selectedSeries = null;
@@ -92,7 +95,8 @@ namespace DartApp.Club.Menu
 				return this.homeButtonCommand;
 			}
 		}
-		public ObservableCollection<DataViewModel> Data
+
+		public DataTable Data
 		{
 			get
 			{
@@ -104,6 +108,7 @@ namespace DartApp.Club.Menu
 				OnPropertyChanged("Data");
 			}
 		}
+
 		public List<PlacementPoint> Points
 		{
 			get
@@ -184,10 +189,80 @@ namespace DartApp.Club.Menu
 						break;
 					}
 				}
-
+				UpdateData();
 				if (this.actualTournamentIndex >= 0)
 					this.startText = "Turnier " + this.selectedSeries.Tournaments[this.actualTournamentIndex].Key + " starten";
 			}
+		}
+
+		private void UpdateData()
+		{
+			var table = new DataTable();
+			table.Columns.Add("Platz");
+			table.Columns.Add("Name");
+			this.selectedSeries.Tournaments.ForEach(x => table.Columns.Add(x.Key.ToString()));
+			table.Columns.Add("Gesamt");
+			var allPlayers = GetAllPlayersOfTournamentSeries(this.selectedSeries);
+			this.dataViewModels = new List<DataViewModel>();
+			foreach (var player in allPlayers)
+			{
+				var dvm = new DataViewModel {Name = player.VorName + " " + player.NachName};
+				foreach (var tournament in this.selectedSeries.Tournaments)
+				{
+					if (tournament.State == TournamentState.Closed)
+					{
+						bool found = false;
+						foreach (var placement in tournament.Placements)
+						{
+							if (placement.Player.Equals(player))
+							{
+								var tmp = placement.Position;
+								while (this.Points.FirstOrDefault(x => x.Position == tmp) == null)
+									tmp--;
+								var p = this.Points.First(x => x.Position == tmp).Points;
+								dvm.Columns.Add(tournament.Key.ToString(), p);
+								found = true;
+								break;
+							}
+						}
+						if(!found)
+							dvm.Columns.Add(tournament.Key.ToString(), "");
+					}
+					else
+					{
+						dvm.Columns.Add(tournament.Key.ToString(), "");
+					}
+				}
+				var sum = 0;
+				dvm.Columns.Values.ToList().ForEach(x =>
+					{
+						if (!string.IsNullOrEmpty(x.ToString()))
+							sum += Int32.Parse(x.ToString());
+					});
+				dvm.Sum = sum;
+				this.dataViewModels.Add(dvm);
+			}
+			this.dataViewModels = this.dataViewModels.OrderByDescending(x => x.Sum).ToList();
+			for (int i = 0; i < this.dataViewModels.Count; i++)
+				this.dataViewModels[i].Placement = i + 1;
+
+			foreach (var dvm in this.dataViewModels)
+			{
+				table.Rows.Add(dvm.ToObjectArray());
+			}
+			this.Data = table;
+		}
+
+		private List<Player> GetAllPlayersOfTournamentSeries(TournamentSeries tournamentSeries)
+		{
+			var ret = new List<Player>();
+			foreach (var placement in from tournament in tournamentSeries.Tournaments
+					where tournament.State == TournamentState.Closed from placement in tournament.Placements
+					where !ret.Contains(placement.Player) select placement)
+			{
+				ret.Add(placement.Player);
+			}
+			return ret;
 		}
 
 		private void Start()

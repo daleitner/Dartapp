@@ -29,6 +29,6 @@
 		</StackPanel>
 		<Rectangle Fill="Black" Width="1" HorizontalAlignment="Left" Grid.Column="1" />
 		<Label Name="header" Content="{Binding Path=Header}" HorizontalAlignment="Center" VerticalAlignment="Top" Grid.Column="1" FontSize="30" Margin="344,10,326,0" Height="10" Width="10" />
-		<DataGrid Name="datagrid1" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10,50,10,10" CanUserAddRows="False" CanUserDeleteRows="False" CanUserReorderColumns="False"></DataGrid>
+		<DataGrid Name="datagrid1" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10,50,10,10" CanUserAddRows="False" CanUserDeleteRows="False" CanUserReorderColumns="False" IsReadOnly="True" ItemsSource="{Binding Path=Data.DefaultView}"></DataGrid>
 	</Grid>
 </UserControl>
