@@ -220,6 +220,13 @@ namespace DartApp.Club.Tournament
 			return false;
 		}
 
+
+		/// <summary>
+		/// Auf welchem Platz landet der Verlierer.
+		/// </summary>
+		/// <param name="match"></param>
+		/// <param name="tournament"></param>
+		/// <returns>Platz des Verlierers</returns>
 		internal static int GetRanking(Models.Match match, Models.Tournament tournament)
 		{
 			var numberOfPlayers = tournament.Matches.Count / 2 + 1;
@@ -246,9 +253,9 @@ namespace DartApp.Club.Tournament
 				actRanking = actRanking - area;
 				start = start + 3 * area;
 			}
-			if (match.PositionKey == tournament.Matches.Count - 1)
+			if (match.PositionKey == tournament.Matches.Count - 1) //if Match is Finale
 				return 1;
-			return 0;
+			return 0; //if Match is at winner side
 		}
 	}
 }

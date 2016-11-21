@@ -20,6 +20,8 @@ namespace DartApp.Club.Tournament
 		private readonly IEventService eventService;
 		private readonly IDartAppCommandService commandService;
 		private readonly TournamentSeries series;
+		private bool tournamentFinished = false;
+
 		#endregion
 
 		#region ctors
@@ -63,7 +65,8 @@ namespace DartApp.Club.Tournament
 				if (this.saveCommand == null)
 				{
 					this.saveCommand = new RelayCommand(
-						param => Save()
+						param => Save(),
+						param => CanSave()
 					);
 				}
 				return this.saveCommand;
@@ -107,6 +110,11 @@ namespace DartApp.Club.Tournament
 			this.tournamentPlan.Rankings.ToList().ForEach(x => this.tournament.Placements.Add(new Placement(x.Ranking, x.Player)));
 			this.commandService.SaveTournament(this.tournament, this.series);
 			this.eventService.PublishDisplayChangedEvent(DisplayEnum.Club);
+		}
+
+		private bool CanSave()
+		{
+			return this.tournamentFinished;
 		}
 
 		private void UpdatePlayableMatches()
@@ -157,6 +165,7 @@ namespace DartApp.Club.Tournament
 				{
 					this.TournamentPlan.Rankings.First(x => x.Ranking == ranking).Player = match.GetWinner();
 					this.TournamentPlan.Rankings.First(x => x.Ranking == ranking+1).Player = match.GetLoser();
+					this.tournamentFinished = true;
 				}
 				else
 				{
