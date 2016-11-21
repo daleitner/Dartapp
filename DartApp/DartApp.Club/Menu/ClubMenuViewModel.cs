@@ -180,7 +180,7 @@ namespace DartApp.Club.Menu
 			this.selectedSeries = this.series.FirstOrDefault();
 			if (this.selectedSeries != null)
 			{
-				this.selectedSeries.Tournaments = this.queryService.GetFullTournamentsOfSeries(this.selectedSeries);
+				this.selectedSeries = this.queryService.GetFullTournamentSeries(this.selectedSeries);
 				for (int i = 0; i < this.selectedSeries.Tournaments.Count; i++)
 				{
 					if (this.selectedSeries.Tournaments[i].State != TournamentState.Closed)
@@ -200,6 +200,7 @@ namespace DartApp.Club.Menu
 			var table = new DataTable();
 			table.Columns.Add("Platz");
 			table.Columns.Add("Name");
+			this.selectedSeries.AdditionalColumns.ForEach(x => table.Columns.Add(x.Name));
 			this.selectedSeries.Tournaments.ForEach(x => table.Columns.Add(x.Key.ToString()));
 			table.Columns.Add("Gesamt");
 			var allPlayers = GetAllPlayersOfTournamentSeries(this.selectedSeries);
@@ -207,6 +208,20 @@ namespace DartApp.Club.Menu
 			foreach (var player in allPlayers)
 			{
 				var dvm = new DataViewModel {Name = player.VorName + " " + player.NachName};
+				foreach (var column in this.selectedSeries.AdditionalColumns)
+				{
+					bool found = false;
+					foreach (var value in column.Values)
+					{
+						if (value.Player.Equals(player))
+						{
+							dvm.Columns.Add(column.Name, value.Value);
+							found = true;
+						}
+					}
+					if(!found)
+						dvm.Columns.Add(column.Name, "");
+				}
 				foreach (var tournament in this.selectedSeries.Tournaments)
 				{
 					if (tournament.State == TournamentState.Closed)

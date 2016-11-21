@@ -96,16 +96,6 @@ namespace DartApp.QueryService
 			foreach (var res in tournamentResult)
 			{
 				var ts = new TournamentSeries(res);
-				var ttable = this.mapping.GetTableByObject(typeof(Tournament));
-				var tcondition = new Condition().Add(new PropertyExpression(ttable.Columns["TournamentSeries"], CompareEnum.Equals, ts.GetId()));
-				var sortDict = new Dictionary<DataBaseColumn, SortEnum>();
-				sortDict.Add(ttable.Columns["Key"], SortEnum.ASC);
-				var tQuery = new DataBaseQuery(ttable.Columns.Values.ToList(), ttable, tcondition, sortDict);
-				var tRes = this.connection.ExecuteQuery(tQuery);
-				foreach (var tournament in tRes)
-				{
-					ts.Tournaments.Add(new Tournament(tournament));
-				}
 				ret.Add(ts);
 			}
 			return ret.OrderByDescending(x => x.CreatedAt).ToList();
@@ -152,9 +142,12 @@ namespace DartApp.QueryService
 			return ret;
 		}
 
-		public List<Tournament> GetFullTournamentsOfSeries(TournamentSeries series)
+		public TournamentSeries GetFullTournamentSeries(TournamentSeries series)
 		{
-			var ret = new List<Tournament>();
+			series.Tournaments = new List<Tournament>();
+			series.AdditionalColumns = new List<AdditionalColumn>();
+
+			//get tournaments with matches and players of matches
 			var ttable = this.mapping.GetTableByObject(typeof(Tournament));
 			var tcondition = new Condition().Add(new PropertyExpression(ttable.Columns["TournamentSeries"], CompareEnum.Equals, series.GetId()));
 			var sortDict = new Dictionary<DataBaseColumn, SortEnum> {{ttable.Columns["Key"], SortEnum.ASC}};
@@ -190,9 +183,31 @@ namespace DartApp.QueryService
 					placement.Player = GetPlayerById(p[2]);
 					t.Placements.Add(placement);
 				}
-				ret.Add(t);
+				series.Tournaments.Add(t);
 			}
-			return ret;
+
+			//get additional Columns with column Values and Player
+			var ctable = this.mapping.GetTableByObject(typeof(AdditionalColumn));
+			var ccondition = new Condition().Add(new PropertyExpression(ctable.Columns["Tid"], CompareEnum.Equals, series.GetId()));
+			var cQuery = new DataBaseQuery(ctable, ccondition);
+			var cRes = this.connection.ExecuteQuery(cQuery);
+			foreach (var c in cRes)
+			{
+				var column = new AdditionalColumn(c);
+
+				var cvtable = this.mapping.GetTableByObject(typeof(AdditionalColumnValue));
+				var cvcondition = new Condition().Add(new PropertyExpression(cvtable.Columns["AdditionalColumn"], CompareEnum.Equals, column.GetId()));
+				var cvQuery = new DataBaseQuery(cvtable, cvcondition);
+				var cvRes = this.connection.ExecuteQuery(cvQuery);
+				foreach (var value in cvRes)
+				{
+					var columnValue = new AdditionalColumnValue(value);
+					columnValue.Player = GetPlayerById(value[2]);
+					column.Values.Add(columnValue);
+				}
+				series.AdditionalColumns.Add(column);
+			}
+			return series;
 		}
 
 		private Player GetPlayerById(string playerId)

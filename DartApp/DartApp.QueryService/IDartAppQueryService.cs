@@ -18,6 +18,6 @@ namespace DartApp.QueryService
 		List<TournamentSeries> GetTournamentSeries();
 		List<Player> GetSelectedPlayersOrderedByStatistics(List<Player> selectedPlayers, TournamentSeries series);
 		TournamentSeries GetTournamentSeriesOfTournament(Tournament tournament);
-		List<Tournament> GetFullTournamentsOfSeries(TournamentSeries selectedSeries);
+		TournamentSeries GetFullTournamentSeries(TournamentSeries selectedSeries);
 	}
 }
