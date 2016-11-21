@@ -15,5 +15,6 @@ namespace DartApp.CommandServices
 		void InsertTournamentSeries(TournamentSeries newTournamentSeries);
 		void InsertStatistic(Statistic stat);
 	    void SaveTournament(Tournament tournament, TournamentSeries series);
+	    void SaveAdditionalColumnValues(List<AdditionalColumnValue> columnValues);
     }
 }

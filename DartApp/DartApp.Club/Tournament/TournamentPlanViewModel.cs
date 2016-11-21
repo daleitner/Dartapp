@@ -5,6 +5,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DartApp.Models;
 
 namespace DartApp.Club.Tournament
 {
@@ -14,7 +15,8 @@ namespace DartApp.Club.Tournament
 		private string title = null;
 		private ObservableCollection<RankingViewModel> rankings = null;
 		private List<ResultViewModel> results = null;
-		public TournamentPlanViewModel(Models.Tournament tournament)
+		private ObservableCollection<AdditionalColumnValue> additionalColumnValues; 
+		public TournamentPlanViewModel(Models.Tournament tournament, List<AdditionalColumn> additionalColumns)
 		{
 			this.tournament = tournament;
 			this.title = this.tournament.DisplayName;
@@ -26,6 +28,9 @@ namespace DartApp.Club.Tournament
 			{
 				this.rankings.Add(new RankingViewModel(i, null));
 			}
+			this.additionalColumnValues = new ObservableCollection<AdditionalColumnValue>();
+			this.Players = new ObservableCollection<Player>(tournament.GetAllPlayers());
+			this.Columns = new ObservableCollection<AdditionalColumn>(additionalColumns);
 		}
 
 		public string Title
@@ -66,6 +71,22 @@ namespace DartApp.Club.Tournament
 				OnPropertyChanged("Results");
 			}
 		}
+
+		public ObservableCollection<AdditionalColumnValue> AdditionalColumnValues
+		{
+			get
+			{
+				return this.additionalColumnValues;
+			}
+			set
+			{
+				this.additionalColumnValues = value;
+				OnPropertyChanged("AdditionalColumnValues");
+			}
+		} 
+
+		public ObservableCollection<AdditionalColumn> Columns { get; set; }
+		public ObservableCollection<Player> Players { get; set; }  
 
 		internal void Refresh()
 		{

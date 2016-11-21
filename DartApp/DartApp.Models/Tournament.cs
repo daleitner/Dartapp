@@ -42,6 +42,19 @@ namespace DartApp.Models
 
 		public List<Match> Matches { get; set; }
 
-		public List<Placement> Placements { get; set; } 
+		public List<Placement> Placements { get; set; }
+
+		public List<Player> GetAllPlayers()
+		{
+			var ret = new List<Player>();
+			foreach (var match in this.Matches)
+			{
+				if(match.Player1 != null && match.Player1.VorName != "FL" && !ret.Contains(match.Player1))
+					ret.Add(match.Player1);
+				if (match.Player2 != null && match.Player2.VorName != "FL" && !ret.Contains(match.Player2))
+					ret.Add(match.Player2);
+			}
+			return ret;
+		}
 	}
 }

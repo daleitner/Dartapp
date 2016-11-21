@@ -23,7 +23,9 @@ namespace DartApp.Models
 		#endregion
 
 		#region properties
+
 		public Player Player { get; set; }
+		public AdditionalColumn Column { get; set; }
 		public int Value { get; set; }
 		#endregion
  }

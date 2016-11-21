@@ -71,6 +71,11 @@ namespace DartApp.CommandServices
 				.ForEach(x => this.dbManager.Insert(x, tournament));
 		}
 
+		public void SaveAdditionalColumnValues(List<AdditionalColumnValue> columnValues)
+		{
+			columnValues.ForEach(x => this.dbManager.Insert(x,x.Column));
+		}
+
 		private void UpdateTourmanent(Tournament tournament, TournamentSeries series)
 		{
 			var table = this.mapping.GetTableByObject(typeof(Tournament));

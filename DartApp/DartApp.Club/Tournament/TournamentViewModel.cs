@@ -30,7 +30,7 @@ namespace DartApp.Club.Tournament
 			this.series = series;
 			this.commandService = commandService;
 			this.tournament = tournament;
-			this.tournamentPlan = new TournamentPlanViewModel(this.tournament);
+			this.tournamentPlan = new TournamentPlanViewModel(this.tournament, series.AdditionalColumns);
 			this.matches = new ObservableCollection<MatchViewModel>();
 			this.tournament.Matches.ForEach(x => 
 				{
@@ -109,6 +109,7 @@ namespace DartApp.Club.Tournament
 			this.tournament.State = TournamentState.Closed;
 			this.tournamentPlan.Rankings.ToList().ForEach(x => this.tournament.Placements.Add(new Placement(x.Ranking, x.Player)));
 			this.commandService.SaveTournament(this.tournament, this.series);
+			this.commandService.SaveAdditionalColumnValues(this.TournamentPlan.AdditionalColumnValues.ToList());
 			this.eventService.PublishDisplayChangedEvent(DisplayEnum.Club);
 		}
 

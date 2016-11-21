@@ -222,6 +222,7 @@ namespace DartApp.Club.Menu
 					if(!found)
 						dvm.Columns.Add(column.Name, "");
 				}
+				var sum = 0;
 				foreach (var tournament in this.selectedSeries.Tournaments)
 				{
 					if (tournament.State == TournamentState.Closed)
@@ -236,6 +237,7 @@ namespace DartApp.Club.Menu
 									tmp--;
 								var p = this.Points.First(x => x.Position == tmp).Points;
 								dvm.Columns.Add(tournament.Key.ToString(), p);
+								sum += p;
 								found = true;
 								break;
 							}
@@ -248,12 +250,6 @@ namespace DartApp.Club.Menu
 						dvm.Columns.Add(tournament.Key.ToString(), "");
 					}
 				}
-				var sum = 0;
-				dvm.Columns.Values.ToList().ForEach(x =>
-					{
-						if (!string.IsNullOrEmpty(x.ToString()))
-							sum += Int32.Parse(x.ToString());
-					});
 				dvm.Sum = sum;
 				this.dataViewModels.Add(dvm);
 			}

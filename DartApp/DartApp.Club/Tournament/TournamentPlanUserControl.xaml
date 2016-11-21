@@ -9,6 +9,7 @@
 		<Grid.RowDefinitions>
 			<RowDefinition Height="37"/>
 			<RowDefinition Height="*"/>
+			<RowDefinition Height="100" />
 		</Grid.RowDefinitions>
 		<Label Content="{Binding Path=Title}" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,5,0,0" />
 		<DataGrid Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Top" ItemsSource="{Binding Path=Rankings}" Margin="0,5,5,0" Width="120" IsEnabled="False" AutoGenerateColumns="False">
@@ -24,5 +25,27 @@
 				</ItemsPanelTemplate>
 			</ItemsControl.ItemsPanel>
 		</ItemsControl>
+		<DataGrid HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="2" Margin="5,0,0,5" ItemsSource="{Binding Path=AdditionalColumnValues}" AutoGenerateColumns="False">
+			<DataGrid.Columns>
+				<DataGridTemplateColumn Header="Spieler">
+					<DataGridTemplateColumn.CellTemplate>
+						<DataTemplate>
+							<ComboBox ItemsSource="{Binding DataContext.Players, 
+                        RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" SelectedItem="{Binding Player}" DisplayMemberPath="DisplayName" />
+						</DataTemplate>
+					</DataGridTemplateColumn.CellTemplate>
+				</DataGridTemplateColumn>
+				<DataGridTemplateColumn Header="Leistung">
+					<DataGridTemplateColumn.CellTemplate>
+						<DataTemplate>
+							<ComboBox ItemsSource="{Binding DataContext.Columns, 
+                        RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" SelectedItem="{Binding Column}" DisplayMemberPath="Name" />
+						</DataTemplate>
+					</DataGridTemplateColumn.CellTemplate>
+				</DataGridTemplateColumn>
+				<DataGridTextColumn Header="Wert" Binding="{Binding Value}"/>
+
+			</DataGrid.Columns>
+		</DataGrid>
 	</Grid>
 </UserControl>
