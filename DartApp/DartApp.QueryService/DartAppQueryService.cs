@@ -35,20 +35,6 @@ namespace DartApp.QueryService
 							ret.Add(pl);
 					}
 					break;
-				/*case ModelEnum.Holiday:
-					var playertable = this.mapping.GetTableByObject(typeof(Player));
-					var holidayTable = this.mapping.GetTableByRelation("Holiday");
-					var condition = new Condition()
-						.Add(new PropertyExpression(playertable.Columns["Pid"], CompareEnum.In, new DataBaseQuery(new List<DataBaseColumn>(){holidayTable.Columns["Pid"]}, holidayTable, null)));
-					var holidayQuery = new DataBaseQuery(playertable, condition);
-					var holidayResult = this.connection.ExecuteQuery(holidayQuery);
-					foreach (var res in holidayResult)
-					{
-						var pl = new Player(res);
-						if (String.IsNullOrEmpty(search) || pl.DisplayName.Contains(search))
-							ret.Add(pl);
-					}
-					break;*/
 				case ModelEnum.TournamentSeries:
 					var tournamentQuery = new DataBaseQuery(this.mapping.GetTableByObject(typeof(TournamentSeries)));
 					var tournamentResult = this.connection.ExecuteQuery(tournamentQuery);

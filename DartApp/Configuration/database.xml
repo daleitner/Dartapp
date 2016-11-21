@@ -12,6 +12,17 @@
 		<Column name="Name" type="VARCHAR" />
 		<Column name="CreatedAt" type="DATE" />
 	</Table>
+	<Table name="AdditionalColumns">
+		<Column name="Aid" type="VARCHAR" primarykey="true" />
+		<Column name="Name" type="VARCHAR" />
+		<Column name="Tid" type="VARCHAR" foreignkey="Tid" reference="TournamentSerial" />
+	</Table>
+	<Table name="AdditionalColumnValues">
+		<Column name="Aid" type="VARCHAR" primarykey="true" />
+		<Column name="Player" type="VARCHAR" foreignkey="Pid" reference="Players"/>
+		<Column name="AdditionalColumn" type="VARCHAR" foreignkey="Aid" reference="AdditionalColumns" />
+		<Column name="Value" type="INTEGER" />
+	</Table>
 	<Table name="Tournaments">
 		<Column name="Tid" type="VARCHAR" primarykey="true" />
 		<Column name="Key" type="INTEGER" />

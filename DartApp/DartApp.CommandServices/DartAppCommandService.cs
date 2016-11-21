@@ -49,8 +49,10 @@ namespace DartApp.CommandServices
 		public void InsertTournamentSeries(TournamentSeries newTournamentSeries)
 		{
 			var tournaments = new List<ModelBase>();
+			var columns = new List<ModelBase>();
 			newTournamentSeries.Tournaments.ForEach(x => tournaments.Add(x));
-			var tree = new ModelBaseTree(newTournamentSeries, tournaments);
+			newTournamentSeries.AdditionalColumns.ForEach(x => columns.Add(x));
+			var tree = new ModelBaseTree(newTournamentSeries, new List<List<ModelBase>>{ tournaments, columns});
 
 			this.dbManager.Insert(tree, null);
 		}

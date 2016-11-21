@@ -13,55 +13,24 @@ namespace DartApp.Database.EditDialogs
 	public class AddTournamentSeriesViewModel : ViewModelBase
 	{
 		#region members
-		private ItemSelectionViewModel itemSelection;
 		private RelayCommand cancelCommand = null;
 		private RelayCommand saveCommand = null;
 		private string name = "";
 		private int amountTournament = 1;
+		private ObservableCollection<AdditionalColumn> columns = null; 
 		public delegate void ButtonClickedEventHandler(TournamentSeries newTournamentSeries);
 		public event ButtonClickedEventHandler ButtonClicked = null;
 		#endregion
 
 		#region ctors
+
 		public AddTournamentSeriesViewModel(IDartAppQueryService queryService)
 		{
-			List<Player> allPlayers = queryService.GetAllPlayers();
-			List<Player> selectedPlayers = new List<Player>();
-			ObservableCollection<object> selectedObjects = new ObservableCollection<object>();
-			ObservableCollection<object> allObjects = new ObservableCollection<object>();
-
-			foreach (var x in allPlayers)
-			{
-				bool check = false;
-				foreach (var y in selectedPlayers)
-				{
-					if (x.GetId() == y.GetId())
-						check = true;
-				}
-				if (!check)
-					allObjects.Add(x);
-			}
-
-			selectedPlayers.ForEach(x => selectedObjects.Add(x));
-
-			this.itemSelection = new ItemSelectionViewModel(allObjects, selectedObjects, "Alle Spieler:", "Zulässige Spieler:");
+			this.columns = new ObservableCollection<AdditionalColumn>();
 		}
 		#endregion
 
 		#region properties
-		public ItemSelectionViewModel ItemSelection
-		{
-			get
-			{
-				return this.itemSelection;
-			}
-			set
-			{
-				this.itemSelection = value;
-				OnPropertyChanged("ItemSelection");
-			}
-		}
-
 		public ICommand CancelCommand
 		{
 			get
@@ -102,6 +71,19 @@ namespace DartApp.Database.EditDialogs
 			}
 		}
 
+		public ObservableCollection<AdditionalColumn> Columns
+		{
+			get
+			{
+				return this.columns;
+			}
+			set
+			{
+				this.columns = value;
+				OnPropertyChanged("Columns");
+			}
+		} 
+
 		public string AmountTournament
 		{
 			get
@@ -130,7 +112,7 @@ namespace DartApp.Database.EditDialogs
 		{
 			if (ButtonClicked != null)
 			{
-				var tournamentSeries = new TournamentSeries {Name = this.Name};
+				var tournamentSeries = new TournamentSeries {Name = this.Name, AdditionalColumns = this.Columns.ToList()};
 				for (var i = 1; i<=this.amountTournament; i++)
 				{
 					var tournament = new Tournament {Date = DateTime.Today, Key = i, State=TournamentState.Open};

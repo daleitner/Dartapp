@@ -15,6 +15,7 @@ namespace DartApp.Models
 		{
 			this.CreatedAt = DateTime.Now;
 			this.Tournaments = new List<Tournament>();
+			this.AdditionalColumns = new List<AdditionalColumn>();
 		}
 
 		public TournamentSeries(List<string> itemArray)
@@ -23,6 +24,7 @@ namespace DartApp.Models
 			this.Name = itemArray[1];
 			this.CreatedAt = DateTime.Parse(itemArray[2]);
 			this.Tournaments = new List<Tournament>();
+			this.AdditionalColumns = new List<AdditionalColumn>();
 		}
 
 		public string Name
@@ -41,5 +43,7 @@ namespace DartApp.Models
 		public DateTime CreatedAt { get; set; }
 
 		public List<Tournament> Tournaments;
+
+		public List<AdditionalColumn> AdditionalColumns;
 	}
 }

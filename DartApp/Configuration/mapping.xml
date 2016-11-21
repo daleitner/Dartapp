@@ -11,6 +11,17 @@
 		<Column name="Name" attribute="Name" type="VARCHAR" />
 		<Column name="CreatedAt" attribute="CreatedAt" type="DATE" />
 	</Table>
+	<Table name="AdditionalColumns" csobject="AdditionalColumn">
+		<Column name="Aid" attribute="Id" type="VARCHAR" />
+		<Column name="Name" attribute="Name" type="VARCHAR" />
+		<Column name="Tid" attribute="ParentId" type="VARCHAR" />
+	</Table>
+	<Table name="AdditionalColumnValues" csobject="AdditionalColumnValue">
+		<Column name="Aid" attribute="Id" type="VARCHAR" />
+		<Column name="Value" attribute="Value" type="INTEGER" />
+		<Column name="AdditionalColumn" attribute="ParentId" type="VARCHAR" />
+		<Column name="Player" attribute="Player" type="VARCHAR" />
+	</Table>
 	<Table name="Tournaments" csobject="Tournament">
 		<Column name="Tid" attribute="Id" type="VARCHAR" />
 		<Column name="Key" attribute="Key" type="INTEGER" />
