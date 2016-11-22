@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DataBaseInitializer;
-using DartApp.Models;
-using SQLDatabase;
 using Base;
+using DartApp.Models;
+using DataBaseInitializer;
+using SQLDatabase;
 
 namespace DartApp.CommandServices
 {
@@ -36,14 +33,14 @@ namespace DartApp.CommandServices
 			var table = this.mapping.GetTableByObject(typeof(Player));
 			var dictionary = this.mapping.CreateDatabaseDictionary(table, newPlayer);
 			var condition = new Condition().Add(new PropertyExpression(table.Columns["Pid"], CompareEnum.Equals, newPlayer.GetId()));
-			this.dbManager.DataBaseConnection.UpdateElement(new SQLDatabase.ElementUpdate(table, dictionary, condition));
+			this.dbManager.DataBaseConnection.UpdateElement(new ElementUpdate(table, dictionary, condition));
 		}
 
 		public void DeletePlayer(Player playerToDelete)
 		{
 			var table = this.mapping.GetTableByObject(typeof(Player));
 			var condition = new Condition().Add(new PropertyExpression(table.Columns["Pid"], CompareEnum.Equals, playerToDelete.GetId()));
-			this.dbManager.DataBaseConnection.DeleteElement(new SQLDatabase.ElementDelete(table, condition));
+			this.dbManager.DataBaseConnection.DeleteElement(new ElementDelete(table, condition));
 		}
 
 		public void InsertTournamentSeries(TournamentSeries newTournamentSeries)
@@ -73,7 +70,28 @@ namespace DartApp.CommandServices
 
 		public void SaveAdditionalColumnValues(List<AdditionalColumnValue> columnValues)
 		{
-			columnValues.ForEach(x => this.dbManager.Insert(x,x.Column));
+			var table = this.mapping.GetTableByObject(typeof (AdditionalColumnValue));
+
+			columnValues.ForEach(x =>
+			{
+				//check if Player already has a better value
+				var condition = new Condition().Add(new PropertyExpression(table.Columns["Player"], CompareEnum.Equals, x.Player.GetId()));
+				var query = new DataBaseQuery(table, condition);
+				var result = this.connection.ExecuteQuery(query).FirstOrDefault();
+				if(result == null)
+					this.dbManager.Insert(x, x.Column);
+				else
+				{
+					var oldValue = new AdditionalColumnValue(result);
+					if (x.Value > oldValue.Value)
+					{
+						var vdict = this.mapping.CreateDatabaseDictionary(table, x, x.Column);
+						vdict[table.Columns["Aid"]] = oldValue.GetId();
+						var vcondition = new Condition().Add(new PropertyExpression(table.Columns["Aid"], CompareEnum.Equals, oldValue.GetId()));
+						this.connection.UpdateElement(new ElementUpdate(table, vdict, vcondition));
+					}
+				}
+			});
 		}
 
 		private void UpdateTourmanent(Tournament tournament, TournamentSeries series)
@@ -81,7 +99,7 @@ namespace DartApp.CommandServices
 			var table = this.mapping.GetTableByObject(typeof(Tournament));
 			var dictionary = this.mapping.CreateDatabaseDictionary(table, tournament, series);
 			var condition = new Condition().Add(new PropertyExpression(table.Columns["Tid"], CompareEnum.Equals, tournament.GetId()));
-			this.dbManager.DataBaseConnection.UpdateElement(new SQLDatabase.ElementUpdate(table, dictionary, condition));
+			this.connection.UpdateElement(new ElementUpdate(table, dictionary, condition));
 		}
 	}
 }
