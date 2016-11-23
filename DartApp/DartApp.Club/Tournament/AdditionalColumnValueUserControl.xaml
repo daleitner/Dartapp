@@ -1,0 +1,17 @@
+﻿<UserControl x:Class="DartApp.Club.Tournament.AdditionalColumnValueUserControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:DartApp.Club.Tournament"
+             mc:Ignorable="d" 
+             d:DesignHeight="30" d:DesignWidth="450">
+    <StackPanel Orientation="Horizontal">
+            <Label Content="Spieler:" HorizontalAlignment="Left" VerticalAlignment="Center"></Label>
+		<ComboBox ItemsSource="{Binding Path=Players}" SelectedItem="{Binding Path=SelectedPlayer}" DisplayMemberPath="DisplayName" Width="100" HorizontalAlignment="Left" VerticalAlignment="Center"></ComboBox>
+		<Label Content="Leistung:" HorizontalAlignment="Left" VerticalAlignment="Center"></Label>
+		<ComboBox ItemsSource="{Binding Path=Columns}" SelectedItem="{Binding Path=SelectedColumn}" DisplayMemberPath="Name" Width="100" HorizontalAlignment="Left" VerticalAlignment="Center"></ComboBox>
+		<Label Content="Value:" HorizontalAlignment="Left" VerticalAlignment="Center"></Label>
+		<TextBox Text="{Binding Path=Value}" Width="40" Margin="0,0,10,0" HorizontalAlignment="Left" VerticalAlignment="Center"></TextBox>
+	</StackPanel>
+</UserControl>

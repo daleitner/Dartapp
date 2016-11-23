@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Input;
@@ -109,7 +111,13 @@ namespace DartApp.Club.Tournament
 			this.tournament.State = TournamentState.Closed;
 			this.tournamentPlan.Rankings.ToList().ForEach(x => this.tournament.Placements.Add(new Placement(x.Ranking, x.Player)));
 			this.commandService.SaveTournament(this.tournament, this.series);
-			this.commandService.SaveAdditionalColumnValues(this.TournamentPlan.AdditionalColumnValues.ToList());
+			var columnValues = new List<AdditionalColumnValue>();
+			foreach (var value in this.TournamentPlan.AdditionalColumnValues)
+			{
+				if(value.SelectedColumn != null && value.SelectedPlayer != null && !string.IsNullOrEmpty(value.Value))
+					columnValues.Add(new AdditionalColumnValue { Player = value.SelectedPlayer, Column = value.SelectedColumn, Value = Int32.Parse(value.Value) });
+			}
+			this.commandService.SaveAdditionalColumnValues(columnValues);
 			this.eventService.PublishDisplayChangedEvent(DisplayEnum.Club);
 		}
 

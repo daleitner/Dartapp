@@ -68,6 +68,10 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="Tournament\AdditionalColumnValueUserControl.xaml.cs">
+      <DependentUpon>AdditionalColumnValueUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Tournament\AdditionalColumnValueViewModel.cs" />
     <Compile Include="Tournament\MatchUserControl.xaml.cs">
       <DependentUpon>MatchUserControl.xaml</DependentUpon>
     </Compile>
@@ -102,6 +106,10 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="Menu\ClubMenuUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Tournament\AdditionalColumnValueUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

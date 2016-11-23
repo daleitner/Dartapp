@@ -5,6 +5,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using DartApp.Models;
 
 namespace DartApp.Club.Tournament
@@ -15,7 +16,9 @@ namespace DartApp.Club.Tournament
 		private string title = null;
 		private ObservableCollection<RankingViewModel> rankings = null;
 		private List<ResultViewModel> results = null;
-		private ObservableCollection<AdditionalColumnValue> additionalColumnValues; 
+		private ObservableCollection<AdditionalColumnValueViewModel> additionalColumnValues;
+		private RelayCommand addCommand = null;
+		private RelayCommand removeCommand = null;
 		public TournamentPlanViewModel(Models.Tournament tournament, List<AdditionalColumn> additionalColumns)
 		{
 			this.tournament = tournament;
@@ -28,9 +31,9 @@ namespace DartApp.Club.Tournament
 			{
 				this.rankings.Add(new RankingViewModel(i, null));
 			}
-			this.additionalColumnValues = new ObservableCollection<AdditionalColumnValue>();
-			this.Players = new ObservableCollection<Player>(tournament.GetAllPlayers());
-			this.Columns = new ObservableCollection<AdditionalColumn>(additionalColumns);
+			this.additionalColumnValues = new ObservableCollection<AdditionalColumnValueViewModel>() {new AdditionalColumnValueViewModel(tournament.GetAllPlayers(), additionalColumns)};
+			this.Players = tournament.GetAllPlayers();
+			this.Columns = additionalColumns;
 		}
 
 		public string Title
@@ -72,7 +75,7 @@ namespace DartApp.Club.Tournament
 			}
 		}
 
-		public ObservableCollection<AdditionalColumnValue> AdditionalColumnValues
+		public ObservableCollection<AdditionalColumnValueViewModel> AdditionalColumnValues
 		{
 			get
 			{
@@ -83,15 +86,57 @@ namespace DartApp.Club.Tournament
 				this.additionalColumnValues = value;
 				OnPropertyChanged("AdditionalColumnValues");
 			}
-		} 
+		}
+		public ICommand AddCommand
+		{
+			get
+			{
+				if (this.addCommand == null)
+				{
+					this.addCommand = new RelayCommand(
+						param => Add()
+					);
+				}
+				return this.addCommand;
+			}
+		}
+		public ICommand RemoveCommand
+		{
+			get
+			{
+				if (this.removeCommand == null)
+				{
+					this.removeCommand = new RelayCommand(
+						param => Remove(),
+						param => CanRemove()
+					);
+				}
+				return this.removeCommand;
+			}
+		}
 
-		public ObservableCollection<AdditionalColumn> Columns { get; set; }
-		public ObservableCollection<Player> Players { get; set; }  
+		public List<AdditionalColumn> Columns { get; set; }
+		public List<Player> Players { get; set; }  
 
 		internal void Refresh()
 		{
 			var help = new ObservableCollection<RankingViewModel>(this.Rankings);
 			this.Rankings = new ObservableCollection<RankingViewModel>(help);
+		}
+
+		private void Add()
+		{
+			this.AdditionalColumnValues.Add(new AdditionalColumnValueViewModel(this.Players, this.Columns));
+		}
+
+		private void Remove()
+		{
+			this.AdditionalColumnValues.Remove(this.AdditionalColumnValues.Last());
+		}
+
+		private bool CanRemove()
+		{
+			return this.AdditionalColumnValues.Count > 1;
 		}
 	}
 }
