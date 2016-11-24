@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="580">
-    <Grid>
+	<Grid>
 		<Grid.RowDefinitions>
 			<RowDefinition Height="37"/>
 			<RowDefinition Height="*"/>
@@ -49,6 +49,8 @@
 		</DataGrid>-->
 		<Button Grid.Row="2" Content="+" Width="20" Command="{Binding Path=AddCommand}" Margin="10,0,10,0" HorizontalAlignment="Left" VerticalAlignment="Top"></Button>
 		<Button Grid.Row="2" Content="-" Width="20" Command="{Binding Path=RemoveCommand}" Margin="40,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"></Button>
-		<ItemsControl ItemsSource="{Binding Path=AdditionalColumnValues}" Grid.Row="2" Margin="0,22,0,0"></ItemsControl>
+		<ScrollViewer Grid.Row="2" Margin="0,22,0,0" HorizontalAlignment="Left">
+			<ItemsControl ItemsSource="{Binding Path=AdditionalColumnValues}"></ItemsControl>
+		</ScrollViewer>
 	</Grid>
 </UserControl>

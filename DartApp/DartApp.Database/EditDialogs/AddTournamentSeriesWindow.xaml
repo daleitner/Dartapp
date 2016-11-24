@@ -4,9 +4,20 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DartApp.Database.EditDialogs"
+        xmlns:model="clr-namespace:DartApp.Models;assembly=Dartapp.Models"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
         xmlns:select="clr-namespace:DartApp.Controls;assembly=DartApp.Controls"
         mc:Ignorable="d"
         Title="AddTournamentSeriesWindow" Height="400" Width="600">
+    <Window.Resources>
+        <ObjectDataProvider MethodName="GetValues"
+                    ObjectType="{x:Type sys:Enum}"
+                    x:Key="BehaviorDataProvider">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="model:BehaviorEnum" />
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+    </Window.Resources>
     <Grid>
         <Label Content="Name:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="30,30,0,0"></Label>
 		<TextBox Text="{Binding Path=Name, UpdateSourceTrigger=PropertyChanged}" Width="120" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="130,35,0,0"></TextBox>
@@ -16,7 +27,8 @@
 		<DataGrid ItemsSource="{Binding Path=Columns}" AutoGenerateColumns="False" Width="150" Height="200" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="40,120,0,0">
 			<DataGrid.Columns>
 				<DataGridTextColumn Binding="{Binding Name}" Header="Bezeichnung" Width="*"></DataGridTextColumn>
-			</DataGrid.Columns>
+                <DataGridComboBoxColumn ItemsSource="{Binding Source={StaticResource ResourceKey=BehaviorDataProvider}}" SelectedItemBinding="{Binding Behavior}" Header="Verhalten" Width="*" />
+            </DataGrid.Columns>
 		</DataGrid>
 		<Button Content="Abbrechen" Height="25" Name="Button1" HorizontalAlignment="Right" Margin="0,0,110,5" VerticalAlignment="Bottom" Width="90" Command="{Binding Path=CancelCommand}" FontSize="14" TabIndex="1" />
 		<Button Content="Speichern" Height="25" HorizontalAlignment="Right" Margin="0,0,10,5" Name="button2" VerticalAlignment="Bottom" Width="90" Command="{Binding Path=SaveCommand}" FontSize="14" TabIndex="2" />

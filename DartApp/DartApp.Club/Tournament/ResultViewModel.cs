@@ -9,7 +9,6 @@ namespace DartApp.Club.Tournament
 {
 	public class ResultViewModel : ViewModelBase
 	{
-		private string resultString = "";
 		private Models.Match match = null;
 		public ResultViewModel(Models.Match match)
 		{

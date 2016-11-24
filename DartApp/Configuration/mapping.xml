@@ -14,6 +14,7 @@
 	<Table name="AdditionalColumns" csobject="AdditionalColumn">
 		<Column name="Aid" attribute="Id" type="VARCHAR" />
 		<Column name="Name" attribute="Name" type="VARCHAR" />
+    <Column name="Behavior" attribute="Behavior" type="VARCHAR" />
 		<Column name="Tid" attribute="ParentId" type="VARCHAR" />
 	</Table>
 	<Table name="AdditionalColumnValues" csobject="AdditionalColumnValue">

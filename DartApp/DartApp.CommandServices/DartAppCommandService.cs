@@ -74,8 +74,10 @@ namespace DartApp.CommandServices
 
 			columnValues.ForEach(x =>
 			{
-				//check if Player already has a better value
-				var condition = new Condition().Add(new PropertyExpression(table.Columns["Player"], CompareEnum.Equals, x.Player.GetId()));
+				//check if Player already has a value
+				var condition = new Condition().Add(new LogicalExpression(LogicalEnum.AND)
+					.Add(new PropertyExpression(table.Columns["Player"], CompareEnum.Equals, x.Player.GetId()))
+					.Add(new PropertyExpression(table.Columns["AdditionalColumn"], CompareEnum.Equals, x.Column.GetId())));
 				var query = new DataBaseQuery(table, condition);
 				var result = this.connection.ExecuteQuery(query).FirstOrDefault();
 				if(result == null)
@@ -83,12 +85,30 @@ namespace DartApp.CommandServices
 				else
 				{
 					var oldValue = new AdditionalColumnValue(result);
-					if (x.Value > oldValue.Value)
+					var vdict = this.mapping.CreateDatabaseDictionary(table, x, x.Column);
+					vdict[table.Columns["Aid"]] = oldValue.GetId();
+					var vcondition = new Condition().Add(new PropertyExpression(table.Columns["Aid"], CompareEnum.Equals, oldValue.GetId()));
+
+					switch (x.Column.Behavior)
 					{
-						var vdict = this.mapping.CreateDatabaseDictionary(table, x, x.Column);
-						vdict[table.Columns["Aid"]] = oldValue.GetId();
-						var vcondition = new Condition().Add(new PropertyExpression(table.Columns["Aid"], CompareEnum.Equals, oldValue.GetId()));
-						this.connection.UpdateElement(new ElementUpdate(table, vdict, vcondition));
+						case BehaviorEnum.Maximum:
+							if (x.Value > oldValue.Value)
+							{
+								this.connection.UpdateElement(new ElementUpdate(table, vdict, vcondition));
+							}
+							break;
+						case BehaviorEnum.Minimum:
+							if (x.Value < oldValue.Value)
+							{
+								this.connection.UpdateElement(new ElementUpdate(table, vdict, vcondition));
+							}
+							break; 
+						case BehaviorEnum.Summe:
+							x.Value += oldValue.Value;
+							vdict = this.mapping.CreateDatabaseDictionary(table, x, x.Column);
+							vdict[table.Columns["Aid"]] = oldValue.GetId();
+							this.connection.UpdateElement(new ElementUpdate(table, vdict, vcondition));
+						break;
 					}
 				}
 			});

@@ -15,6 +15,7 @@
 	<Table name="AdditionalColumns">
 		<Column name="Aid" type="VARCHAR" primarykey="true" />
 		<Column name="Name" type="VARCHAR" />
+    <Column name="Behavior" type="VARCHAR" />
 		<Column name="Tid" type="VARCHAR" foreignkey="Tid" reference="TournamentSerial" />
 	</Table>
 	<Table name="AdditionalColumnValues">

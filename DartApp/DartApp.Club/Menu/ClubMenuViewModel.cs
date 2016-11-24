@@ -143,6 +143,7 @@ namespace DartApp.Club.Menu
 			{
 				this.selectedSeries = value;
 				OnPropertyChanged("SelectedSeries");
+				UpdateData();
 			}
 		}
 		public string StartText
@@ -178,25 +179,13 @@ namespace DartApp.Club.Menu
 			this.points = this.queryService.GetPlacementPoints();
 			this.series = this.queryService.GetTournamentSeries();
 			this.selectedSeries = this.series.FirstOrDefault();
-			if (this.selectedSeries != null)
-			{
-				this.selectedSeries = this.queryService.GetFullTournamentSeries(this.selectedSeries);
-				for (int i = 0; i < this.selectedSeries.Tournaments.Count; i++)
-				{
-					if (this.selectedSeries.Tournaments[i].State != TournamentState.Closed)
-					{
-						this.actualTournamentIndex = i;
-						break;
-					}
-				}
-				UpdateData();
-				if (this.actualTournamentIndex >= 0)
-					this.startText = "Turnier " + this.selectedSeries.Tournaments[this.actualTournamentIndex].Key + " starten";
-			}
+			UpdateData();
 		}
 
 		private void UpdateData()
 		{
+			if (this.selectedSeries.Tournaments == null || this.selectedSeries.Tournaments.Count == 0)
+				this.selectedSeries = this.queryService.GetFullTournamentSeries(this.selectedSeries);
 			var table = new DataTable();
 			table.Columns.Add("Platz");
 			table.Columns.Add("Name");
@@ -262,16 +251,30 @@ namespace DartApp.Club.Menu
 				table.Rows.Add(dvm.ToObjectArray());
 			}
 			this.Data = table;
+
+			if (this.selectedSeries != null)
+			{
+				for (int i = 0; i < this.selectedSeries.Tournaments.Count; i++)
+				{
+					if (this.selectedSeries.Tournaments[i].State != TournamentState.Closed)
+					{
+						this.actualTournamentIndex = i;
+						break;
+					}
+				}
+
+				if (this.actualTournamentIndex >= 0)
+					this.StartText = "Turnier " + this.selectedSeries.Tournaments[this.actualTournamentIndex].Key + " starten";
+			}
 		}
 
 		private List<Player> GetAllPlayersOfTournamentSeries(TournamentSeries tournamentSeries)
 		{
 			var ret = new List<Player>();
-			foreach (var placement in from tournament in tournamentSeries.Tournaments
-					where tournament.State == TournamentState.Closed from placement in tournament.Placements
-					where !ret.Contains(placement.Player) select placement)
+			foreach(var tournament in tournamentSeries.Tournaments)
 			{
-				ret.Add(placement.Player);
+				var players = tournament.GetAllPlayers();
+				players.Where(p => !ret.Contains(p)).ToList().ForEach(p => ret.Add(p));
 			}
 			return ret;
 		}
