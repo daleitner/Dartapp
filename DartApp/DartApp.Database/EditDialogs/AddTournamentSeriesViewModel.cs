@@ -17,6 +17,7 @@ namespace DartApp.Database.EditDialogs
 		private RelayCommand saveCommand = null;
 		private string name = "";
 		private int amountTournament = 1;
+		private int amountRelevantTournaments = 1;
 		private ObservableCollection<AdditionalColumn> columns = null; 
 		public delegate void ButtonClickedEventHandler(TournamentSeries newTournamentSeries);
 		public event ButtonClickedEventHandler ButtonClicked = null;
@@ -97,6 +98,20 @@ namespace DartApp.Database.EditDialogs
 				OnPropertyChanged("AmountTournament");
 			}
 		}
+
+		public string AmountRelevantTournaments
+		{
+			get
+			{
+				return this.amountRelevantTournaments.ToString();
+			}
+			set
+			{
+				if (!Int32.TryParse(value, out this.amountRelevantTournaments))
+					this.amountRelevantTournaments = 0;
+				OnPropertyChanged("AmountRelevantTournaments");
+			}
+		}
 		#endregion
 
 		#region private methods
@@ -112,7 +127,7 @@ namespace DartApp.Database.EditDialogs
 		{
 			if (ButtonClicked != null)
 			{
-				var tournamentSeries = new TournamentSeries {Name = this.Name, AdditionalColumns = this.Columns.ToList()};
+				var tournamentSeries = new TournamentSeries {Name = this.Name, AdditionalColumns = this.Columns.ToList(), RelevantTournaments = this.amountRelevantTournaments};
 				for (var i = 1; i<=this.amountTournament; i++)
 				{
 					var tournament = new Tournament {Date = DateTime.Today, Key = i, State=TournamentState.Open};

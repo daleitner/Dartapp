@@ -23,6 +23,8 @@
 		<TextBox Text="{Binding Path=Name, UpdateSourceTrigger=PropertyChanged}" Width="120" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="130,35,0,0"></TextBox>
 		<Label Content="Anzahl Turniere:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="30,60,0,0"></Label>
 		<TextBox Text="{Binding Path=AmountTournament, UpdateSourceTrigger=PropertyChanged}" Width="30" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="130,65,0,0"></TextBox>
+		<Label Content="davon für die Wertung:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="165,60,0,0"></Label>
+		<TextBox Text="{Binding Path=AmountRelevantTournaments, UpdateSourceTrigger=PropertyChanged}" Width="30" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="302,65,0,0"></TextBox>
 		<Label Content="Zusatzinformationen:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="30,90,0,0"></Label>
 		<DataGrid ItemsSource="{Binding Path=Columns}" AutoGenerateColumns="False" Width="150" Height="200" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="40,120,0,0">
 			<DataGrid.Columns>

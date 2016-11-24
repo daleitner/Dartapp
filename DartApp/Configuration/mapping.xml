@@ -10,6 +10,7 @@
 		<Column name="Tid" attribute="Id" type="VARCHAR" />
 		<Column name="Name" attribute="Name" type="VARCHAR" />
 		<Column name="CreatedAt" attribute="CreatedAt" type="DATE" />
+		<Column name="RelevantTournaments" attribute="RelevantTournaments" type="INTEGER" />
 	</Table>
 	<Table name="AdditionalColumns" csobject="AdditionalColumn">
 		<Column name="Aid" attribute="Id" type="VARCHAR" />
