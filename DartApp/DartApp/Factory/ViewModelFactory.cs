@@ -49,9 +49,9 @@ namespace DartApp.Factory
 			return new MainViewModel(this.dartAppCommandService);
 		}
 
-		public ClubMenuViewModel GetClubMenuViewModel()
+		public ClubMenuViewModel GetClubMenuViewModel(TournamentSeries selectedSeries)
 		{
-			return new ClubMenuViewModel(this.dartAppQueryService, this.eventService);
+			return new ClubMenuViewModel(selectedSeries, this.dartAppQueryService, this.eventService);
 		}
 
 

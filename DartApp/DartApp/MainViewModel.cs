@@ -39,7 +39,10 @@ namespace DartApp
                     this.Content = this.factory.GetDatabaseMainViewModel();
                     break;
 				case DisplayEnum.Club:
-					this.Content = this.factory.GetClubMenuViewModel();
+					if(eventArgs != null && eventArgs.Count > 0)
+						this.Content = this.factory.GetClubMenuViewModel((TournamentSeries)eventArgs[0]);
+					else
+						this.Content = this.factory.GetClubMenuViewModel(null);
 					break;
 				case DisplayEnum.PlayerSelection:
 					this.Content = this.factory.GetPlayerSelectionViewModel((Tournament)eventArgs[0], (TournamentSeries)eventArgs[1]);

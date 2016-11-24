@@ -114,11 +114,11 @@ namespace DartApp.Club.Tournament
 			var columnValues = new List<AdditionalColumnValue>();
 			foreach (var value in this.TournamentPlan.AdditionalColumnValues)
 			{
-				if(value.SelectedColumn != null && value.SelectedPlayer != null && !string.IsNullOrEmpty(value.Value))
+				if (value.SelectedColumn != null && value.SelectedPlayer != null && !string.IsNullOrEmpty(value.Value))
 					columnValues.Add(new AdditionalColumnValue { Player = value.SelectedPlayer, Column = value.SelectedColumn, Value = Int32.Parse(value.Value) });
 			}
 			this.commandService.SaveAdditionalColumnValues(columnValues);
-			this.eventService.PublishDisplayChangedEvent(DisplayEnum.Club);
+			this.eventService.PublishDisplayChangedEvent(DisplayEnum.Club, new List<object> { this.series});
 		}
 
 		private bool CanSave()

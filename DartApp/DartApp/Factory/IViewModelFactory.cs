@@ -17,7 +17,7 @@ namespace DartApp.Factory
 		MainViewModel GetMainViewModel();
         HomeViewModel GetHomeViewModel();
         DatabaseMainViewModel GetDatabaseMainViewModel();
-		ClubMenuViewModel GetClubMenuViewModel();
+		ClubMenuViewModel GetClubMenuViewModel(TournamentSeries selectedSeries);
 		PlayerSelectionViewModel GetPlayerSelectionViewModel(Tournament tournament, TournamentSeries series);
 		TournamentViewModel GetTournamentViewModel(Tournament tournament, TournamentSeries series);
 		IDartAppQueryService GetQueryService();

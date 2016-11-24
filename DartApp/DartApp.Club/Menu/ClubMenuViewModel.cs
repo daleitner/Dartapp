@@ -33,11 +33,11 @@ namespace DartApp.Club.Menu
 		#endregion
 
 		#region ctors
-		public ClubMenuViewModel(IDartAppQueryService queryService, IEventService eventService)
+		public ClubMenuViewModel(TournamentSeries selectedSeries, IDartAppQueryService queryService, IEventService eventService)
 		{
 			this.eventService = eventService;
 			this.queryService = queryService;
-			LoadData();
+			LoadData(selectedSeries);
 		}
 		#endregion
 
@@ -174,11 +174,14 @@ namespace DartApp.Club.Menu
 
 		#region private methods
 
-		private void LoadData()
+		private void LoadData(TournamentSeries selectedSeries)
 		{
 			this.points = this.queryService.GetPlacementPoints();
 			this.series = this.queryService.GetTournamentSeries();
-			this.selectedSeries = this.series.FirstOrDefault();
+			if(selectedSeries != null)
+				this.selectedSeries = this.series.FirstOrDefault(x => x.GetId() == selectedSeries.GetId());
+			if (this.selectedSeries == null)
+				this.selectedSeries = this.series.FirstOrDefault();
 			UpdateData();
 		}
 
