@@ -26,6 +26,7 @@ namespace DartApp.Club.Tournament
 		public MatchViewModel(Match match)
 		{
 			this.match = match;
+			this.IsEntered = false;
 			if (this.match != null)
 			{
 				Refresh();
@@ -122,6 +123,8 @@ namespace DartApp.Club.Tournament
 			}
 		}
 
+		public bool IsEntered { get; set; }
+
 		public ICommand OkCommand
 		{
 			get
@@ -141,6 +144,7 @@ namespace DartApp.Club.Tournament
 		{
 			this.match.Player1Legs = Int32.Parse(this.player1Legs);
 			this.match.Player2Legs = Int32.Parse(this.player2Legs);
+			this.IsEntered = true;
 			if (this.MatchChanged != null)
 				this.MatchChanged(this.match);
 		}
@@ -164,6 +168,11 @@ namespace DartApp.Club.Tournament
 				else
 					this.Player1Image = new BitmapImage(new Uri(picsPath, ".\\pics\\default.jpg"));
 			}
+			else
+			{
+				this.Player1 = "";
+				this.Player1Image = null;
+			}
 			if (this.match.Player2 != null)
 			{
 				this.Player2 = this.match.Player2.VorName;
@@ -174,8 +183,16 @@ namespace DartApp.Club.Tournament
 				else
 					this.Player2Image = new BitmapImage(new Uri(picsPath, ".\\pics\\default.jpg"));
 			}
-			if(this.Player1 == "FL" || this.Player2 == "FL")
-				OkClicked();
+			else
+			{
+				this.Player2 = "";
+				this.Player2Image = null;
+			}
+		}
+
+		public int GetPositionKey()
+		{
+			return this.match.PositionKey;
 		}
 	}
 }

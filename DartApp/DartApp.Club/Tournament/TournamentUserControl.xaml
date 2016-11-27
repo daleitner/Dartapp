@@ -13,7 +13,8 @@
 		<ContentPresenter Content="{Binding Path=TournamentPlan}" Margin="0,0,2,0"/>
 		<Rectangle Fill="Black" Width="2" HorizontalAlignment="Right" />
 		<Label Content="Spiele" FontSize="16" FontWeight="Bold" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Top" />
-		<ScrollViewer Grid.Column="1" Margin="0,30,0,50">
+		<Button Content="Rückgängig" Grid.Column="1" Width="100" Command="{Binding Path=UndoCommand}" Margin="5,30,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"></Button>
+		<ScrollViewer Grid.Column="1" Margin="0,60,0,50">
 			<ItemsControl ItemsSource="{Binding Path=Matches}" />
 		</ScrollViewer>
 		<Button Content="Abbrechen" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="100" Command="{Binding Path=CancelCommand}" Margin="5,0,0,10"/>
