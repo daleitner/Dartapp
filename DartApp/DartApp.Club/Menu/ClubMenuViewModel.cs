@@ -187,6 +187,7 @@ namespace DartApp.Club.Menu
 
 		private void UpdateData()
 		{
+			this.Header = this.selectedSeries.Name;
 			if (this.selectedSeries.Tournaments == null || this.selectedSeries.Tournaments.Count == 0)
 				this.selectedSeries = this.queryService.GetFullTournamentSeries(this.selectedSeries);
 			var table = new DataTable();

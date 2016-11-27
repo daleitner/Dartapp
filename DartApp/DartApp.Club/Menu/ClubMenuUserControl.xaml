@@ -15,7 +15,7 @@
 			<ComboBox ItemsSource="{Binding Path=Series}" SelectedItem="{Binding Path=SelectedSeries}" Width="100" Margin="5"/>
 			<Button Content="{Binding Path=StartText}" Command="{Binding Path=StartCommand}" Margin="5" Width="100" />
 			<Button Content="Statistiken" Command="{Binding Path=StatisticsCommand}" Margin="5" Width="100" />
-			<Button Content="Drucken" Command="{Binding Path=PrintCommand}" Margin="5" Width="100" />
+			<Button Content="Drucken" Command="{Binding Path=PrintCommand}" Margin="5" Width="100" Click="Button_Click" />
 			<Button Content="Hauptmenü" Command="{Binding Path=HomeButtonCommand}" Margin="5" Width="100" />
 			<Rectangle Height="1" Fill="Black" Margin="0,10"/>
 			<Label Content="Legende:" Margin="0,0,0,5" />
@@ -28,7 +28,9 @@
 			</DataGrid>
 		</StackPanel>
 		<Rectangle Fill="Black" Width="1" HorizontalAlignment="Left" Grid.Column="1" />
-		<Label Name="header" Content="{Binding Path=Header}" HorizontalAlignment="Center" VerticalAlignment="Top" Grid.Column="1" FontSize="30" Margin="344,10,326,0" Height="10" Width="10" />
-		<DataGrid Name="datagrid1" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10,50,10,10" CanUserAddRows="False" CanUserDeleteRows="False" CanUserReorderColumns="False" IsReadOnly="True" ItemsSource="{Binding Path=Data.DefaultView}"></DataGrid>
+		<Grid Grid.Column="1" Margin="1,0,0,0" Name="grid1">
+			<Label Name="header" Content="{Binding Path=Header}" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="32" Margin="0,10,0,0" />
+			<DataGrid Name="datagrid1" FontSize="16" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10,60,10,10" CanUserAddRows="False" CanUserDeleteRows="False" CanUserReorderColumns="False" IsReadOnly="True" ItemsSource="{Binding Path=Data.DefaultView}"></DataGrid>
+		</Grid>
 	</Grid>
 </UserControl>
