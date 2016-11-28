@@ -1,5 +1,24 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:DartApp.Resources">
-    
+	<Style x:Key="ShadowButton" TargetType="Button">
+		<Setter Property="Effect">
+			<Setter.Value>
+				<DropShadowEffect Color="Black" Direction="320" ShadowDepth="20" BlurRadius="5" Opacity="0.4" />
+			</Setter.Value>
+		</Setter>
+		<Setter Property="Cursor" Value="Hand"></Setter>
+		<Setter Property="Background" Value="#66bbff"></Setter>
+		<Style.Triggers>
+			<Trigger Property="IsMouseOver" Value="True">
+				<Setter Property="Background" Value="#ddffff"></Setter>
+			</Trigger>
+		</Style.Triggers>
+	</Style>
+
+	<LinearGradientBrush x:Key="DefaultBackground">
+		<GradientStop Color="Aqua" Offset="0.0" />
+		<GradientStop Color="DeepSkyBlue" Offset="0.5" />
+		<GradientStop Color="RoyalBlue" Offset="1.0" />
+	</LinearGradientBrush>
 </ResourceDictionary>
