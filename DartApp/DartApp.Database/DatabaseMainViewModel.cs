@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
@@ -15,14 +16,14 @@ namespace DartApp.Database
 	public class DatabaseMainViewModel : ViewModelBase
 	{
 		#region members
-		private RelayCommand playerCommand;
-		private RelayCommand tournamentSerialCommand;
 		private RelayCommand newCommand;
 		private RelayCommand editCommand;
 		private RelayCommand deleteCommand;
 		private RelayCommand homeCommand;
 		private RelayCommand searchCommand;
 		private ModelBase selectedItem;
+		private string selectedType;
+		private List<string> allTypes; 
 		private ObservableCollection<ModelBase> searchResult;
 		private string header = "";
 		private string search = "";
@@ -41,40 +42,48 @@ namespace DartApp.Database
 			this.queryService = queryService;
 			this.commandService = commandService;
             this.eventService = eventService;
-			this.modelEnum = ModelEnum.Player;
-			RefreshView(this.modelEnum);
+			this.allTypes = new List<string> {"Spieler", "Turnierserien"};
+			this.selectedType = this.allTypes.First();
+			RefreshView(SelectedTypeToModelEnum(this.selectedType));
 		}
 		#endregion
 
 		#region properties
-		public ICommand PlayerCommand
+
+		public List<string> AllTypes
 		{
 			get
 			{
-				if (this.playerCommand == null)
-				{
-					this.playerCommand = new RelayCommand(
-						param => RefreshView(ModelEnum.Player),
-						param => CanSelectPlayer()
-					);
-				}
-				return this.playerCommand;
+				return this.allTypes;
+			}
+			set
+			{
+				this.allTypes = value;
+				OnPropertyChanged("AllTypes");
+			}
+		} 
+		public string SelectedType
+		{
+			get
+			{
+				return this.selectedType;
+			}
+			set
+			{
+				this.selectedType = value;
+				RefreshView(SelectedTypeToModelEnum(this.selectedType));
+				OnPropertyChanged("SelectedType");
 			}
 		}
 
-		public ICommand TournamentSerialCommand
+		private ModelEnum SelectedTypeToModelEnum(string s)
 		{
-			get
+			switch (s)
 			{
-				if (this.tournamentSerialCommand == null)
-				{
-					this.tournamentSerialCommand = new RelayCommand(
-						param => RefreshView(ModelEnum.TournamentSeries),
-						param => CanSelectTournamentSeries()
-					);
-				}
-				return this.tournamentSerialCommand;
+				case "Spieler": return ModelEnum.Player;
+				case "Turnierserien": return ModelEnum.TournamentSeries;
 			}
+			return ModelEnum.Default;
 		}
 
 		public ICommand NewCommand
@@ -263,8 +272,7 @@ namespace DartApp.Database
 				case ModelEnum.Player:
 					var pvm = new AddPlayerViewModel((Player)this.SelectedItem);
 					pvm.ButtonClicked += E_UpdatePlayer;
-					this.addPlayerWindow = new AddPlayerWindow();
-					this.addPlayerWindow.DataContext = pvm;
+					this.addPlayerWindow = new AddPlayerWindow {DataContext = pvm};
 					this.addPlayerWindow.ShowDialog();
 					break;
 			}
@@ -313,9 +321,9 @@ namespace DartApp.Database
 			this.SearchResult = new ObservableCollection<ModelBase>(this.queryService.GetSearchResult(this.Search, this.modelEnum));
 		}
 
-		private void RefreshView(ModelEnum modelEnum)
+		private void RefreshView(ModelEnum _modelEnum)
 		{
-			this.modelEnum = modelEnum;
+			this.modelEnum = _modelEnum;
 			OnSearch();
 			UpdateSpecificModel();
 		}
@@ -338,16 +346,6 @@ namespace DartApp.Database
 			{
 				this.SpecificView = null;
 			}
-		}
-
-		private bool CanSelectPlayer()
-		{
-			return this.modelEnum != ModelEnum.Player;
-		}
-
-		private bool CanSelectTournamentSeries()
-		{
-			return this.modelEnum != ModelEnum.TournamentSeries;
 		}
 
 		#endregion

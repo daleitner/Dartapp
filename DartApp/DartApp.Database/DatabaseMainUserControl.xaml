@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              mc:Ignorable="d" 
-             d:DesignHeight="600" d:DesignWidth="800" Background="{DynamicResource DefaultBackground}">
+             d:DesignHeight="600" d:DesignWidth="800" Background="{DynamicResource ResourceKey=DefaultBackground}">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
@@ -19,8 +19,9 @@
                 <RowDefinition Height="40" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
-            <Label Name="label10" Content="{Binding Path=Header}" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="32" FontWeight="Bold" />
-            <Rectangle VerticalAlignment="Stretch" Width="2" HorizontalAlignment="Right" Fill="Black" Grid.RowSpan="3"/>
+			<ListBox SelectedItem="{Binding Path=SelectedType}" ItemsSource="{Binding Path=AllTypes}" Margin="10" Height="100">
+			</ListBox>
+			<Rectangle VerticalAlignment="Stretch" Width="2" HorizontalAlignment="Right" Fill="Black" Grid.RowSpan="3"/>
             <Grid Grid.Row="2">
                 <ScrollViewer Margin="0,0,5,0">
                     <Grid><!--Background="{StaticResource ColorMediumAquamarine}" -->
@@ -52,14 +53,6 @@
 				<RowDefinition Height="*" />
 			</Grid.RowDefinitions>
 			<Label Content="Menü" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="32" FontWeight="Bold" />
-			<StackPanel Grid.Row="1" VerticalAlignment="Top" Margin="0,40,0,0">
-				<Button Name="Button1" Content="Spieler" Command="{Binding Path=PlayerCommand}" Margin="10" HorizontalAlignment="Center" Width="100" />
-				<!--<Button Name="Button2" Content="Holiday Spieler" Command="{Binding Path=HolidayCommand}" Margin="10" HorizontalAlignment="Center" Width="100" />-->
-				<Button Name="Button3" Content="Turnierserien" Command="{Binding Path=TournamentSerialCommand}" Margin="10" HorizontalAlignment="Center" Width="100" />
-
-				<!--<Button Name="Button3" Content="Löschen" Command="{Binding Path=DeleteCommand}" Margin="10" HorizontalAlignment="Center" Width="100" />-->
-				<!--<Button Name="Button4" Content="Hauptmenü" Command="{Binding Path=HomeCommand}" Margin="10" HorizontalAlignment="Center" Width="100" />-->
-			</StackPanel>
 			<Rectangle Fill="Black" HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="1" Grid.Row="2"/>
 			<StackPanel Grid.Row="2" VerticalAlignment="Top" Margin="0,40,0,0">
 				<Button Name="Button5" Content="Anlegen" Command="{Binding Path=NewCommand}" Margin="10" HorizontalAlignment="Center" Width="100" />

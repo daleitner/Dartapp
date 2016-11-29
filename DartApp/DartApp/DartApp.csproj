@@ -86,10 +86,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Resources\Styles.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -146,6 +142,10 @@
     <ProjectReference Include="..\DartApp.Services\DartApp.Services.csproj">
       <Project>{60187009-d8a1-4d7a-b5b7-9c8bc92e1e4a}</Project>
       <Name>DartApp.Services</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DartApp.Styles\DartApp.Styles.csproj">
+      <Project>{2b75a6f0-9e91-4811-bb08-82f3f26a2762}</Project>
+      <Name>DartApp.Styles</Name>
     </ProjectReference>
     <ProjectReference Include="..\DataBaseInitializer\DataBaseInitializer.csproj">
       <Project>{42632621-0d74-4668-a943-adceab81600b}</Project>

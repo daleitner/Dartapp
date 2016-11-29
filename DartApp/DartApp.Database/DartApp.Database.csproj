@@ -136,6 +136,10 @@
       <Project>{60187009-d8a1-4d7a-b5b7-9c8bc92e1e4a}</Project>
       <Name>DartApp.Services</Name>
     </ProjectReference>
+    <ProjectReference Include="..\DartApp.Styles\DartApp.Styles.csproj">
+      <Project>{2b75a6f0-9e91-4811-bb08-82f3f26a2762}</Project>
+      <Name>DartApp.Styles</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
