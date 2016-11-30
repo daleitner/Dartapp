@@ -44,8 +44,16 @@
 				</DataTemplate>
 			</ListBox.ItemTemplate>
         </ListBox>
-        <Button Content=">>" Height="40" HorizontalAlignment="Center" Name="button1" VerticalAlignment="Bottom" Width="84" Grid.ColumnSpan="2" Margin="0,0,0,20" Command="{Binding SelectCommand}" Grid.Row="2"/>
-        <Button Content="&lt;&lt;" Height="40" HorizontalAlignment="Center" Name="button2" VerticalAlignment="Top" Width="84" Grid.ColumnSpan="2" Margin="0,20,0,0"  Grid.Row="3" Command="{Binding DeselectCommand}"/>
+		<Button ToolTip="Hinzufügen" Height="40" HorizontalAlignment="Center" Name="button1" VerticalAlignment="Bottom" Width="84" Grid.ColumnSpan="2" Margin="0,0,0,20" Command="{Binding SelectCommand}" Grid.Row="2">
+			<Button.Content>
+				<Image Source="pack://application:,,,/DartApp.Controls;component/Resources/right.png"></Image>
+			</Button.Content>
+		</Button>
+		<Button ToolTip="Entfernen" Height="40" HorizontalAlignment="Center" Name="button2" VerticalAlignment="Top" Width="84" Grid.ColumnSpan="2" Margin="0,20,0,0"  Grid.Row="3" Command="{Binding DeselectCommand}">
+			<Button.Content>
+				<Image Source="pack://application:,,,/DartApp.Controls;component/Resources/left.png"></Image>
+			</Button.Content>
+		</Button>
         <Label Content="{Binding Path=AllHeader}" HorizontalAlignment="Left" Name="label1" VerticalAlignment="Top" FontSize="14" FontWeight="Bold" />
         <Label Content="{Binding Path=SelectedHeader}" HorizontalAlignment="Left" Margin="83,0,0,0" Name="label2" VerticalAlignment="Top" Grid.Column="1" FontSize="14" FontWeight="Bold" />
 		<Label Content="Suche:" Grid.Row="1" Margin="2"></Label>

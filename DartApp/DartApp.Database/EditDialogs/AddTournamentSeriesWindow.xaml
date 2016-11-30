@@ -8,6 +8,7 @@
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
         xmlns:select="clr-namespace:DartApp.Controls;assembly=DartApp.Controls"
         mc:Ignorable="d"
+		Background="{DynamicResource DefaultBackground}"
         Title="AddTournamentSeriesWindow" Height="400" Width="600">
     <Window.Resources>
         <ObjectDataProvider MethodName="GetValues"
@@ -26,13 +27,22 @@
 		<Label Content="davon für die Wertung:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="165,60,0,0"></Label>
 		<TextBox Text="{Binding Path=AmountRelevantTournaments, UpdateSourceTrigger=PropertyChanged}" Width="30" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="302,65,0,0"></TextBox>
 		<Label Content="Zusatzinformationen:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="30,90,0,0"></Label>
-		<DataGrid ItemsSource="{Binding Path=Columns}" AutoGenerateColumns="False" Width="150" Height="200" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="40,120,0,0">
+		<DataGrid ItemsSource="{Binding Path=Columns}" AutoGenerateColumns="False" Width="170" Height="200" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="40,120,0,0">
 			<DataGrid.Columns>
 				<DataGridTextColumn Binding="{Binding Name}" Header="Bezeichnung" Width="*"></DataGridTextColumn>
                 <DataGridComboBoxColumn ItemsSource="{Binding Source={StaticResource ResourceKey=BehaviorDataProvider}}" SelectedItemBinding="{Binding Behavior}" Header="Verhalten" Width="*" />
             </DataGrid.Columns>
 		</DataGrid>
-		<Button Content="Abbrechen" Height="25" Name="Button1" HorizontalAlignment="Right" Margin="0,0,110,5" VerticalAlignment="Bottom" Width="90" Command="{Binding Path=CancelCommand}" FontSize="14" TabIndex="1" />
-		<Button Content="Speichern" Height="25" HorizontalAlignment="Right" Margin="0,0,10,5" Name="button2" VerticalAlignment="Bottom" Width="90" Command="{Binding Path=SaveCommand}" FontSize="14" TabIndex="2" />
+		<Button ToolTip="Abbrechen" Height="25" Name="Button1" HorizontalAlignment="Right" Margin="0,0,110,5" VerticalAlignment="Bottom" Width="90" Command="{Binding Path=CancelCommand}" FontSize="14" TabIndex="1">
+			<Button.Content>
+				<Image Source="pack://application:,,,/DartApp.Database;component/Resources/cancel.png"></Image>
+			</Button.Content>
+		</Button>
+		<Button ToolTip="Speichern" Height="25" HorizontalAlignment="Right" Margin="0,0,10,5" Name="button2" VerticalAlignment="Bottom" Width="90" Command="{Binding Path=SaveCommand}" FontSize="14" TabIndex="2">
+			<Button.Content>
+				<Image Source="pack://application:,,,/DartApp.Database;component/Resources/ok.png"></Image>
+			</Button.Content>
+		</Button>
+
 	</Grid>
 </Window>

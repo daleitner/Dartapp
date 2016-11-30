@@ -1,35 +1,30 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Windows.Input;
-using System.Collections.ObjectModel;
 using System.Data;
-using System.Windows.Markup;
+using System.Linq;
+using System.Windows.Input;
 using Base;
-using DartApp.Services;
-using DartApp.QueryService;
 using DartApp.Models;
+using DartApp.QueryService;
+using DartApp.Services;
 
 namespace DartApp.Club.Menu
 {
 	public class ClubMenuViewModel : ViewModelBase
 	{
 		#region members
-		private RelayCommand startCommand = null;
-		private RelayCommand statisticsCommand = null;
-		private RelayCommand printCommand = null;
-		private RelayCommand homeButtonCommand = null;
-		private DataTable data = null;
-		private List<DataViewModel> dataViewModels = null; 
-		private List<PlacementPoint> points = null;
-		private List<TournamentSeries> series = null;
-		private TournamentSeries selectedSeries = null;
+		private RelayCommand startCommand;
+		private RelayCommand statisticsCommand;
+		private RelayCommand printCommand;
+		private RelayCommand homeButtonCommand;
+		private DataTable data;
+		private List<DataViewModel> dataViewModels; 
+		private List<PlacementPoint> points;
+		private List<TournamentSeries> series;
+		private TournamentSeries selectedSeries;
 		private string startText = "";
-		private string header = "";
 		private int actualTournamentIndex = -1;
-		private IEventService eventService;
-		private IDartAppQueryService queryService;
+		private readonly IEventService eventService;
+		private readonly IDartAppQueryService queryService;
 		#endregion
 
 		#region ctors
@@ -158,18 +153,6 @@ namespace DartApp.Club.Menu
 				OnPropertyChanged("StartText");
 			}
 		}
-		public string Header
-		{
-			get
-			{
-				return this.header;
-			}
-			set
-			{
-				this.header = value;
-				OnPropertyChanged("Header");
-			}
-		}
 		#endregion
 
 		#region private methods
@@ -187,7 +170,6 @@ namespace DartApp.Club.Menu
 
 		private void UpdateData()
 		{
-			this.Header = this.selectedSeries.Name;
 			if (this.selectedSeries.Tournaments == null || this.selectedSeries.Tournaments.Count == 0)
 				this.selectedSeries = this.queryService.GetFullTournamentSeries(this.selectedSeries);
 			var table = new DataTable();
@@ -294,7 +276,7 @@ namespace DartApp.Club.Menu
 
 		private void Start()
 		{
-			this.eventService.PublishDisplayChangedEvent(DisplayEnum.PlayerSelection, new List<object>() { this.selectedSeries.Tournaments[this.actualTournamentIndex], this.selectedSeries } );
+			this.eventService.PublishDisplayChangedEvent(DisplayEnum.PlayerSelection, new List<object> { this.selectedSeries.Tournaments[this.actualTournamentIndex], this.selectedSeries } );
 		}
 
 		private bool CanStart()

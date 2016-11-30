@@ -9,9 +9,9 @@
 	<Rectangle Fill="Black" Height="2" VerticalAlignment="Top" />
 	<StackPanel Orientation="Horizontal" Margin="0,2,0,0">
 		<StackPanel Orientation="Vertical" VerticalAlignment="Center" Margin="2">
-			<Image Source="{Binding Path=Player1Image}" Width="60" Height="60" />
-			<Label Content="{Binding Path=Player1}" HorizontalAlignment="Center" />
-		</StackPanel>
+			<Image Source="{Binding Path=Player1Image}" ToolTip="{Binding Path=Player1}" Width="60" Height="60" />
+				<Label Content="{Binding Path=Player1}" HorizontalAlignment="Center" Width="60" />
+			</StackPanel>
 		<StackPanel Orientation="Vertical" VerticalAlignment="Center">
 			<Label Content="VS" FontWeight="Bold" FontSize="16" HorizontalAlignment="Center"/>
 			<StackPanel Orientation="Horizontal">
@@ -27,12 +27,16 @@
 						</TextBox.InputBindings>
 					</TextBox>
 			</StackPanel>
-			<Button Content="Eintragen" Command="{Binding Path=OkCommand}" Margin="5" />
+				<Button ToolTip="Eintragen" Command="{Binding Path=OkCommand}" Width="40" Margin="5">
+					<Button.Content>
+						<Image Source="pack://application:,,,/DartApp.Club;component/Resources/ok.png"></Image>
+					</Button.Content>
+				</Button>
 		</StackPanel>
 		<StackPanel Orientation="Vertical" VerticalAlignment="Center" Margin="2">
-			<Image Source="{Binding Path=Player2Image}" Width="60" Height="60" />
-			<Label Content="{Binding Path=Player2}" HorizontalAlignment="Center"/>
-		</StackPanel>
+			<Image Source="{Binding Path=Player2Image}" ToolTip="{Binding Path=Player2}" Width="60" Height="60" />
+				<Label Content="{Binding Path=Player2}" HorizontalAlignment="Center" Width="60"/>
+			</StackPanel>
 	</StackPanel>
 	</Grid>
 </UserControl>

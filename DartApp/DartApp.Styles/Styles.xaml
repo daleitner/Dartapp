@@ -14,10 +14,37 @@
 			</Trigger>
 		</Style.Triggers>
 	</Style>
+	
+	<Style TargetType="{x:Type TextBox}">
+		<Setter Property="Background" Value="{DynamicResource GrayBackground}"></Setter>
+	</Style>
+
+	<Style TargetType="{x:Type ListBox}">
+		<Setter Property="Background" Value="{DynamicResource GreenBackground}"></Setter>
+	</Style>
+
+	<Style TargetType="{x:Type Button}">
+		<Setter Property="Background" Value="{DynamicResource YellowBackground}"></Setter>
+	</Style>
 
 	<LinearGradientBrush x:Key="DefaultBackground">
 		<GradientStop Color="Aqua" Offset="0.0" />
 		<GradientStop Color="DeepSkyBlue" Offset="0.5" />
 		<GradientStop Color="RoyalBlue" Offset="1.0" />
+	</LinearGradientBrush>
+	<LinearGradientBrush x:Key="GrayBackground">
+		<GradientStop Color="WhiteSmoke" Offset="0.0" />
+		<GradientStop Color="LightGray" Offset="0.5" />
+		<GradientStop Color="Silver" Offset="1.0" />
+	</LinearGradientBrush>
+	<LinearGradientBrush x:Key="GreenBackground">
+		<GradientStop Color="#ccffcc" Offset="0.0" />
+		<GradientStop Color="LawnGreen" Offset="0.5" />
+		<GradientStop Color="ForestGreen" Offset="1.0" />
+	</LinearGradientBrush>
+	<LinearGradientBrush x:Key="YellowBackground">
+		<GradientStop Color="#FFFF99" Offset="0.0" />
+		<GradientStop Color="#FFFFEE" Offset="0.5" />
+		<GradientStop Color="#FFFF99" Offset="1.0" />
 	</LinearGradientBrush>
 </ResourceDictionary>

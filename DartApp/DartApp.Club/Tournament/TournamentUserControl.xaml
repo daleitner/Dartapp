@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
+			 Background="{DynamicResource DefaultBackground}"
              d:DesignHeight="600" d:DesignWidth="800">
 	<Grid>
 		<Grid.ColumnDefinitions>
@@ -13,11 +14,23 @@
 		<ContentPresenter Content="{Binding Path=TournamentPlan}" Margin="0,0,2,0"/>
 		<Rectangle Fill="Black" Width="2" HorizontalAlignment="Right" />
 		<Label Content="Spiele" FontSize="16" FontWeight="Bold" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Top" />
-		<Button Content="Rückgängig" Grid.Column="1" Width="100" Command="{Binding Path=UndoCommand}" Margin="5,30,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"></Button>
-		<ScrollViewer Grid.Column="1" Margin="0,60,0,50">
+		<Button ToolTip="Rückgängig" Grid.Column="1" Width="40" Command="{Binding Path=UndoCommand}" Margin="5,30,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+			<Button.Content>
+				<Image Source="pack://application:,,,/DartApp.Club;component/Resources/undo.png"></Image>
+			</Button.Content>
+		</Button>
+		<ScrollViewer Grid.Column="1" Margin="0,70,0,50">
 			<ItemsControl ItemsSource="{Binding Path=Matches}" />
 		</ScrollViewer>
-		<Button Content="Abbrechen" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="100" Command="{Binding Path=CancelCommand}" Margin="5,0,0,10"/>
-		<Button Content="Speichern" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="100" Command="{Binding Path=SaveCommand}" Margin="0,0,5,10"/>
+		<Button ToolTip="Abbrechen" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="40" Command="{Binding Path=CancelCommand}" Margin="5,0,0,10">
+			<Button.Content>
+				<Image Source="pack://application:,,,/DartApp.Club;component/Resources/cancel.png"></Image>
+			</Button.Content>
+		</Button>
+		<Button ToolTip="Turnier abschließen" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="40" Command="{Binding Path=SaveCommand}" Margin="0,0,5,10">
+			<Button.Content>
+				<Image Source="pack://application:,,,/DartApp.Club;component/Resources/exit.png"></Image>
+			</Button.Content>
+		</Button>
 	</Grid>
 </UserControl>

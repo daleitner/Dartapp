@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
 			 xmlns:select="clr-namespace:DartApp.Controls;assembly=DartApp.Controls"
              mc:Ignorable="d" 
+			 Background="{DynamicResource DefaultBackground}"
              d:DesignHeight="600" d:DesignWidth="800">
 	<Grid>
 		<Grid.RowDefinitions>
@@ -18,7 +19,15 @@
 		<TextBox Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Top" Text="{Binding Path=FLCount}" Width="20" Margin="0,10,5,0" IsEnabled="False" />
 		<Label Content="Spieler setzen:" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="309,10,0,0"  />
 		<ComboBox Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top" ItemsSource="{Binding Path=SettingSelection}" SelectedItem="{Binding Path=SelectedSetting}" Width="75" Margin="395,14,0,0" />
-		<Button Content="Zurück" Command="{Binding Path=BackCommand}" Grid.Row="1" Width="100" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="5,0,0,10"  />
-		<Button Content="Start" Command="{Binding Path=StartCommand}" Grid.Row="1" Width="100" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,5,10"  />
+		<Button ToolTip="Zurück" Command="{Binding Path=BackCommand}" Grid.Row="1" Width="60" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="5,0,0,10">
+			<Button.Content>
+				<Image Source="pack://application:,,,/DartApp.Club;component/Resources/cancel.png"></Image>
+			</Button.Content>
+		</Button>
+		<Button ToolTip="Start" Command="{Binding Path=StartCommand}" Grid.Row="1" Width="60" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,5,10">
+			<Button.Content>
+				<Image Source="pack://application:,,,/DartApp.Club;component/Resources/play.png"></Image>
+			</Button.Content>
+		</Button>
 	</Grid>
 </UserControl>

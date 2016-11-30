@@ -9,12 +9,12 @@
              d:DesignHeight="568" d:DesignWidth="460">
 	<Grid>
 		<Grid.ColumnDefinitions>
-			<ColumnDefinition Width="*" />
+			<ColumnDefinition Width="250" />
 			<ColumnDefinition Width="*" />
 		</Grid.ColumnDefinitions>
 		<Grid.RowDefinitions>
-			<RowDefinition Height="115*" />
-			<RowDefinition Height="169*" />
+			<RowDefinition Height="250" />
+			<RowDefinition Height="*" />
 		</Grid.RowDefinitions>
 		<Border BorderThickness="5" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="20,20,20,20" CornerRadius="10" BorderBrush="LightBlue">
 			<Grid >

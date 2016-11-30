@@ -47,9 +47,17 @@
 
 			</DataGrid.Columns>
 		</DataGrid>-->
-		<Button Grid.Row="2" Content="+" Width="20" Command="{Binding Path=AddCommand}" Margin="10,0,10,0" HorizontalAlignment="Left" VerticalAlignment="Top"></Button>
-		<Button Grid.Row="2" Content="-" Width="20" Command="{Binding Path=RemoveCommand}" Margin="40,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"></Button>
-		<ScrollViewer Grid.Row="2" Margin="0,22,0,0" HorizontalAlignment="Left">
+		<Button Grid.Row="2" ToolTip="Hinzufügen" Width="30" Command="{Binding Path=AddCommand}" Margin="10,0,10,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+			<Button.Content>
+				<Image Source="pack://application:,,,/DartApp.Club;component/Resources/add.png"></Image>
+			</Button.Content>
+		</Button>
+		<Button Grid.Row="2" ToolTip="Entfernen" Width="30" Command="{Binding Path=RemoveCommand}" Margin="50,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+			<Button.Content>
+				<Image Source="pack://application:,,,/DartApp.Club;component/Resources/minus.png"></Image>
+			</Button.Content>
+		</Button>
+		<ScrollViewer Grid.Row="2" Margin="0,32,0,0" HorizontalAlignment="Left">
 			<ItemsControl ItemsSource="{Binding Path=AdditionalColumnValues}"></ItemsControl>
 		</ScrollViewer>
 	</Grid>
