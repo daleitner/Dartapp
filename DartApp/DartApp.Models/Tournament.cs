@@ -16,6 +16,7 @@ namespace DartApp.Models
 
 	public class Tournament : ModelBase
 	{
+		private bool oldMode = false;
 		public Tournament()
 			:base()
 		{
@@ -55,6 +56,16 @@ namespace DartApp.Models
 					ret.Add(match.Player2);
 			}
 			return ret;
+		}
+
+		public bool IsOldMode()
+		{
+			return this.oldMode;
+		}
+
+		public void SetOldMode()
+		{
+			this.oldMode = true;
 		}
 	}
 }

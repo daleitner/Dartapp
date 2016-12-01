@@ -72,6 +72,10 @@
       <DependentUpon>AdditionalColumnValueUserControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Tournament\AdditionalColumnValueViewModel.cs" />
+    <Compile Include="Tournament\ManualPlayerSettingUserControl.xaml.cs">
+      <DependentUpon>ManualPlayerSettingUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Tournament\ManualPlayerSettingViewModel.cs" />
     <Compile Include="Tournament\MatchUserControl.xaml.cs">
       <DependentUpon>MatchUserControl.xaml</DependentUpon>
     </Compile>
@@ -110,6 +114,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Tournament\AdditionalColumnValueUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Tournament\ManualPlayerSettingUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -179,6 +187,10 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\ok.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\down.png" />
+    <Resource Include="Resources\up.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

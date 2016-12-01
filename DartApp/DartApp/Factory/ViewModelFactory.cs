@@ -12,6 +12,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using Base;
 
 namespace DartApp.Factory
 {
@@ -70,6 +71,11 @@ namespace DartApp.Factory
 		public IDartAppQueryService GetQueryService()
 		{
 			return this.dartAppQueryService;
+		}
+
+		public ViewModelBase GetManualPlayerSettingViewModel(Tournament tournament, List<Player> players, TournamentSeries tournamentSeries)
+		{
+			return new ManualPlayerSettingViewModel(tournament, players, tournamentSeries, eventService);
 		}
 	}
 }

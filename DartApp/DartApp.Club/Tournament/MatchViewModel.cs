@@ -160,17 +160,19 @@ namespace DartApp.Club.Tournament
 			var picsPath = new Uri(Path.GetFullPath("pics"));
 			if (this.match.Player1 != null)
 			{
-				this.Player1 = this.match.Player1.VorName; 
+				this.Player1 = this.match.Player1.VorName;
 				if (this.match.Player1.VorName == "FL")
-					this.Player1Image = new BitmapImage(new Uri(picsPath, ".\\pics\\freilos.jpg"));
-				else if (File.Exists(new Uri(picsPath, ".\\pics\\" + this.match.Player1.ImageName).LocalPath))
 				{
-					this.Player1Image = new BitmapImage(new Uri(picsPath, ".\\pics\\" + this.match.Player1.ImageName));
-					this.Player1 += " " + this.match.Player1.NachName;
+					this.Player1Image = new BitmapImage(new Uri(picsPath, ".\\pics\\freilos.jpg"));
 				}
 				else
 				{
-					this.Player1Image = new BitmapImage(new Uri(picsPath, ".\\pics\\default.jpg"));
+					if (File.Exists(new Uri(picsPath, ".\\pics\\" + this.match.Player1.ImageName).LocalPath))
+						this.Player1Image = new BitmapImage(new Uri(picsPath, ".\\pics\\" + this.match.Player1.ImageName));
+					else if(File.Exists(new Uri(picsPath, ".\\pics\\" + this.match.Player1.VorName + "_" + this.match.Player1.NachName + ".jpg").LocalPath))
+						this.Player1Image = new BitmapImage(new Uri(picsPath, ".\\pics\\" + this.match.Player1.VorName + "_" + this.match.Player1.NachName + ".jpg"));
+					else
+						this.Player1Image = new BitmapImage(new Uri(picsPath, ".\\pics\\default.jpg"));
 					this.Player1 += " " + this.match.Player1.NachName;
 				}
 			}
@@ -184,14 +186,15 @@ namespace DartApp.Club.Tournament
 				this.Player2 = this.match.Player2.VorName;
 				if (this.match.Player2.VorName == "FL")
 					this.Player2Image = new BitmapImage(new Uri(picsPath, ".\\pics\\freilos.jpg"));
-				else if (File.Exists(new Uri(picsPath, ".\\pics\\" + this.match.Player2.ImageName).LocalPath))
-				{
-					this.Player2Image = new BitmapImage(new Uri(picsPath, ".\\pics\\" + this.match.Player2.ImageName));
-					this.Player2 += " " + this.match.Player2.NachName;
-				}
 				else
 				{
-					this.Player2Image = new BitmapImage(new Uri(picsPath, ".\\pics\\default.jpg"));
+					if (File.Exists(new Uri(picsPath, ".\\pics\\" + this.match.Player2.ImageName).LocalPath))
+						this.Player2Image = new BitmapImage(new Uri(picsPath, ".\\pics\\" + this.match.Player2.ImageName));
+					else if (
+						File.Exists(new Uri(picsPath, ".\\pics\\" + this.match.Player2.VorName + "_" + this.match.Player2.NachName + ".jpg").LocalPath))
+						this.Player2Image = new BitmapImage(new Uri(picsPath, ".\\pics\\" + this.match.Player2.VorName + "_" + this.match.Player2.NachName + ".jpg"));
+					else
+						this.Player2Image = new BitmapImage(new Uri(picsPath, ".\\pics\\default.jpg"));
 					this.Player2 += " " + this.match.Player2.NachName;
 				}
 			}

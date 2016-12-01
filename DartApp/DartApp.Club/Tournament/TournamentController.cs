@@ -11,8 +11,20 @@ namespace DartApp.Club.Tournament
 	{
 		public static Models.Tournament DrawMatches(Models.Tournament tournament, List<Models.Player> players, string setOption, IDartAppQueryService queryService)
 		{
-			var orderedPlayers = GetOrderedPlayers(tournament, players, setOption, queryService);
-			var order = GetOrderForMatches(orderedPlayers.Count);
+			List<Models.Player> orderedPlayers;
+			List<int> order;
+			if (setOption == "Manuell setzen")
+			{
+				orderedPlayers = players;
+				order = new List<int>();
+				for(int i = 0; i<orderedPlayers.Count; i++)
+					order.Add(i);
+			}
+			else
+			{
+				orderedPlayers = GetOrderedPlayers(tournament, players, setOption, queryService);
+				order = GetOrderForMatches(orderedPlayers.Count);
+			}
 			for (int i = 0; i < orderedPlayers.Count; i = i + 2)
 			{
 				var match = new Models.Match(i/2, orderedPlayers[order[i]], orderedPlayers[order[i + 1]]);
@@ -131,7 +143,8 @@ namespace DartApp.Club.Tournament
 				{
 					start = start + 3 * areaSize;
 					areaSize = areaSize / 2;
-					isDesc = !isDesc;
+					if(!tournament.IsOldMode())
+						isDesc = !isDesc;
 				}
 			
 				winPositionKey = (match.PositionKey - start) / 2  + start + 3 * areaSize; //Sx -> Sx+1

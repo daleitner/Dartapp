@@ -1,0 +1,35 @@
+﻿<UserControl x:Class="DartApp.Club.Tournament.ManualPlayerSettingUserControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:DartApp.Club.Tournament"
+             mc:Ignorable="d" 
+			 Background="{DynamicResource ResourceKey=DefaultBackground}"
+             d:DesignHeight="600" d:DesignWidth="800">
+    <Grid>
+			<Label HorizontalAlignment="Center" Content="Setzliste" VerticalAlignment="Top" Margin="0,20,0,0" FontWeight="Bold" FontSize="20"></Label>
+            <ListBox ItemsSource="{Binding Path=Players}" SelectedItem="{Binding Path=SelectedPlayer}" HorizontalAlignment="Center" VerticalAlignment="Top" Width="300" Height="400" Margin="0,60,0,0"></ListBox>
+			<Button ToolTip="Nach oben verschieben" Command="{Binding Path=UpCommand}" Width="60" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="-100,500,0,0">
+			<Button.Content>
+				<Image Source="pack://application:,,,/DartApp.Club;component/Resources/up.png"></Image>
+			</Button.Content>
+		</Button>
+		<Button ToolTip="Nach unten verschieben" Command="{Binding Path=DownCommand}" Width="60" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="100,500,0,0">
+			<Button.Content>
+				<Image Source="pack://application:,,,/DartApp.Club;component/Resources/down.png"></Image>
+			</Button.Content>
+		</Button>
+		<Button ToolTip="Zurück" Command="{Binding Path=BackCommand}" Width="60" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="5,0,0,10">
+			<Button.Content>
+				<Image Source="pack://application:,,,/DartApp.Club;component/Resources/cancel.png"></Image>
+			</Button.Content>
+		</Button>
+		<Button ToolTip="Start" Command="{Binding Path=StartCommand}" Width="60" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,5,10">
+			<Button.Content>
+				<Image Source="pack://application:,,,/DartApp.Club;component/Resources/play.png"></Image>
+			</Button.Content>
+		</Button>
+		<CheckBox Content="Alter Modus" IsChecked="{Binding Path=OldMode}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,100,30"></CheckBox>
+    </Grid>
+</UserControl>

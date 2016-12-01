@@ -48,8 +48,28 @@ namespace DartApp
 					this.Content = this.factory.GetPlayerSelectionViewModel((Tournament)eventArgs[0], (TournamentSeries)eventArgs[1]);
 					break;
 				case DisplayEnum.Tournament:
-					var tournament = TournamentController.DrawMatches((Tournament)eventArgs[0], (List<Player>)eventArgs[1], eventArgs[2].ToString(), this.factory.GetQueryService());
-					this.Content = this.factory.GetTournamentViewModel(tournament, (TournamentSeries)eventArgs[3]);
+		            if (eventArgs[2].ToString() == "Manuell setzen fertig")
+		            {
+						var tournament = TournamentController.DrawMatches((Tournament)eventArgs[0], (List<Player>)eventArgs[1], "Manuell setzen", this.factory.GetQueryService());
+						if((bool)eventArgs[4])
+							tournament.SetOldMode();
+						this.Content = this.factory.GetTournamentViewModel(tournament, (TournamentSeries)eventArgs[3]);
+					}
+					else if (eventArgs[2].ToString() == "Manuell setzen")
+					{
+						List<Player> players = (List<Player>) eventArgs[1];
+						int size = TournamentController.GetTournamentSize(players.Count);
+						while(players.Count < size)
+							players.Add(new Player("FL"));
+						this.Content = this.factory.GetManualPlayerSettingViewModel((Tournament) eventArgs[0], players,
+							(TournamentSeries) eventArgs[3]);
+					}
+					else
+					{
+						var tournament = TournamentController.DrawMatches((Tournament)eventArgs[0], (List<Player>)eventArgs[1], eventArgs[2].ToString(), this.factory.GetQueryService());
+						this.Content = this.factory.GetTournamentViewModel(tournament, (TournamentSeries)eventArgs[3]);
+					}
+					
 					break;
             }
         }

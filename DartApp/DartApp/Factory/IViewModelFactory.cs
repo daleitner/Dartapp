@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Base;
 
 namespace DartApp.Factory
 {
@@ -21,5 +22,6 @@ namespace DartApp.Factory
 		PlayerSelectionViewModel GetPlayerSelectionViewModel(Tournament tournament, TournamentSeries series);
 		TournamentViewModel GetTournamentViewModel(Tournament tournament, TournamentSeries series);
 		IDartAppQueryService GetQueryService();
-	}
+	    ViewModelBase GetManualPlayerSettingViewModel(Tournament tournament, List<Player> players, TournamentSeries tournamentSeries);
+    }
 }

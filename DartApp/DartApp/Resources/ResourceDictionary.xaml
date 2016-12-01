@@ -43,4 +43,7 @@
 	<DataTemplate DataType="{x:Type tournament:AdditionalColumnValueViewModel}">
 		<tournament:AdditionalColumnValueUserControl />
 	</DataTemplate>
+	<DataTemplate DataType="{x:Type tournament:ManualPlayerSettingViewModel}">
+		<tournament:ManualPlayerSettingUserControl />
+	</DataTemplate>
 </ResourceDictionary>

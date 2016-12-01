@@ -188,12 +188,10 @@ namespace DartApp.Club.Tournament
 					cnt = cnt * 2;
 				}
 				ret.Add("Alle");
+				ret.Add("Manuell setzen");
 			}
 			return ret;
 		}
-		#endregion
-
-		#region public methods
 		#endregion
 	}
 }

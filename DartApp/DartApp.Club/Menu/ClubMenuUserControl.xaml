@@ -33,7 +33,7 @@
 				</Button.Content>
 			</Button>
 			<Label Content="Turnierserie:" VerticalAlignment="Center" Margin="5" />
-			<ComboBox VerticalAlignment="Center" ItemsSource="{Binding Path=Series}" SelectedItem="{Binding Path=SelectedSeries}" Width="100" Margin="5"/>
+			<ComboBox VerticalAlignment="Center" ItemsSource="{Binding Path=Series}" SelectedItem="{Binding Path=SelectedSeries}" Width="150" Margin="5"/>
 
 		</StackPanel>
 		<Grid Grid.Row="1">

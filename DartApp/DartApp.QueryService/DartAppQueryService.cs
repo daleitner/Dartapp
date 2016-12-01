@@ -147,6 +147,8 @@ namespace DartApp.QueryService
 			series.Tournaments = new List<Tournament>();
 			series.AdditionalColumns = new List<AdditionalColumn>();
 
+			var tempPlayers = new List<Player>();
+
 			//get tournaments with matches and players of matches
 			var ttable = this.mapping.GetTableByObject(typeof(Tournament));
 			var tcondition = new Condition().Add(new PropertyExpression(ttable.Columns["TournamentSeries"], CompareEnum.Equals, series.GetId()));
@@ -166,8 +168,8 @@ namespace DartApp.QueryService
 				foreach (var m in mRes)
 				{
 					var match = new Match(m);
-					match.Player1 = GetPlayerById(m[2]);
-					match.Player2 = GetPlayerById(m[3]);
+					match.Player1 = GetPlayerById(m[2], tempPlayers);
+					match.Player2 = GetPlayerById(m[3], tempPlayers);
 					t.Matches.Add(match);
 				}
 
@@ -180,7 +182,7 @@ namespace DartApp.QueryService
 				foreach (var p in pRes)
 				{
 					var placement = new Placement(p);
-					placement.Player = GetPlayerById(p[2]);
+					placement.Player = GetPlayerById(p[2], tempPlayers);
 					t.Placements.Add(placement);
 				}
 				series.Tournaments.Add(t);
@@ -202,7 +204,7 @@ namespace DartApp.QueryService
 				foreach (var value in cvRes)
 				{
 					var columnValue = new AdditionalColumnValue(value);
-					columnValue.Player = GetPlayerById(value[2]);
+					columnValue.Player = GetPlayerById(value[2], tempPlayers);
 					column.Values.Add(columnValue);
 				}
 				series.AdditionalColumns.Add(column);
@@ -210,14 +212,18 @@ namespace DartApp.QueryService
 			return series;
 		}
 
-		private Player GetPlayerById(string playerId)
+		private Player GetPlayerById(string playerId, List<Player> tempPlayers)
 		{
+			var ret = tempPlayers.FirstOrDefault(x => x.GetId() == playerId);
+			if (ret != null)
+				return ret;
 			var table = this.mapping.GetTableByObject(typeof (Player));
 			var condition = new Condition().Add(new PropertyExpression(table.Columns["Pid"], CompareEnum.Equals, playerId));
 			var query = new DataBaseQuery(table, condition);
 			var res = this.connection.ExecuteQuery(query).FirstOrDefault();
 			if(res == null)
 				return new Player("FL");
+			tempPlayers.Add(new Player(res));
 			return new Player(res);
 		}
 	}
