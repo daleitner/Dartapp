@@ -16,6 +16,10 @@ namespace DartApp.Club.Tournament
 		private string title = null;
 		private ObservableCollection<RankingViewModel> rankings = null;
 		private List<ResultViewModel> results = null;
+		private List<ResultViewModel> startResults = null;
+		private List<ResultViewModel> winResults = null;
+		private List<ResultViewModel> loseResults = null;
+		private ResultViewModel finaleResult = null;
 		private ObservableCollection<AdditionalColumnValueViewModel> additionalColumnValues;
 		private RelayCommand addCommand = null;
 		private RelayCommand removeCommand = null;
@@ -23,8 +27,7 @@ namespace DartApp.Club.Tournament
 		{
 			this.tournament = tournament;
 			this.title = this.tournament.DisplayName;
-			this.results = new List<ResultViewModel>();
-			this.tournament.Matches.ForEach(x => this.results.Add(new ResultViewModel(x)));
+			FillResults();
 			this.rankings = new ObservableCollection<RankingViewModel>();
 			var numberOfPlayers = this.tournament.Matches.Count / 2 + 1;
 			for (int i = 1; i <= numberOfPlayers; i++)
@@ -34,6 +37,27 @@ namespace DartApp.Club.Tournament
 			this.additionalColumnValues = new ObservableCollection<AdditionalColumnValueViewModel>() {new AdditionalColumnValueViewModel(tournament.GetAllPlayers(), additionalColumns)};
 			this.Players = tournament.GetAllPlayers();
 			this.Columns = additionalColumns;
+		}
+
+		private void FillResults()
+		{
+			this.results = new List<ResultViewModel>();
+			this.tournament.Matches.ForEach(x => this.results.Add(new ResultViewModel(x)));
+			this.startResults = new List<ResultViewModel>();
+			this.winResults = new List<ResultViewModel>();
+			this.loseResults = new List<ResultViewModel>();
+			int amountStartResults = (this.results.Count / 2 + 1) / 2;
+			for(int i = 0; i<this.results.Count; i++)
+			{
+				if (i < amountStartResults)
+					this.startResults.Add(this.results[i]);
+				else if (TournamentController.IsWinnerSide(i, amountStartResults * 2))
+					this.winResults.Add(this.results[i]);
+				else if (i == this.results.Count - 1)
+					this.finaleResult = this.results[i];
+				else
+					this.loseResults.Add(this.results[i]);
+			}
 		}
 
 		public string Title
@@ -72,6 +96,58 @@ namespace DartApp.Club.Tournament
 			{
 				this.results = value;
 				OnPropertyChanged("Results");
+			}
+		}
+
+		public List<ResultViewModel> StartResults
+		{
+			get
+			{
+				return this.startResults;
+			}
+			set
+			{
+				this.startResults = value;
+				OnPropertyChanged("StartResults");
+			}
+		}
+
+		public List<ResultViewModel> WinResults
+		{
+			get
+			{
+				return this.winResults;
+			}
+			set
+			{
+				this.winResults = value;
+				OnPropertyChanged("WinResults");
+			}
+		}
+
+		public List<ResultViewModel> LoseResults
+		{
+			get
+			{
+				return this.loseResults;
+			}
+			set
+			{
+				this.loseResults = value;
+				OnPropertyChanged("LoseResults");
+			}
+		}
+
+		public ResultViewModel FinaleResult
+		{
+			get
+			{
+				return this.finaleResult;
+			}
+			set
+			{
+				this.finaleResult = value;
+				OnPropertyChanged("FinaleResult");
 			}
 		}
 

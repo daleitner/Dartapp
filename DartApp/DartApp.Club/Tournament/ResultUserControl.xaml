@@ -4,12 +4,20 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
+			 Background="{DynamicResource ResourceKey=GrayBackground}"
              d:DesignHeight="300" d:DesignWidth="300">
-    <StackPanel Orientation="Horizontal">
-		<Label Content="{Binding Path=Player1Name}"  Width="60"/>
-		<Label Content="{Binding Path=Player1Legs}" Margin="2,0,0,0" Width="20" />
+	<Grid>
+		<Rectangle Fill="Black" VerticalAlignment="Top" Height="1"/>
+		<StackPanel Orientation="Horizontal" Margin="0,1,0,0">
+		<StackPanel Orientation="Vertical">
+			<Label Content="{Binding Path=Player1Name}"  Width="52"/>
+			<Label Content="{Binding Path=Player1Legs}" Margin="2,0,0,0" Width="20" />
+		</StackPanel>
 		<Label Content=":" />
-		<Label Content="{Binding Path=Player2Legs}" Width="20"/>
-		<Label Content="{Binding Path=Player2Name}" Margin="2,0,0,0" Width="60"/>
+		<StackPanel Orientation="Vertical">
+			<Label Content="{Binding Path=Player2Name}" Margin="2,0,0,0" Width="52"/>
+			<Label Content="{Binding Path=Player2Legs}" Width="20"/>
+		</StackPanel>
 	</StackPanel>
+	</Grid>
 </UserControl>

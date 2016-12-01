@@ -18,13 +18,47 @@
 				<DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="*" />
 			</DataGrid.Columns>
 		</DataGrid>
-		<ItemsControl Grid.Row="1" Margin="5,5,130,5" ItemsSource="{Binding Path=Results}">
+		<!--<ItemsControl Grid.Row="1" Margin="5,5,130,5" ItemsSource="{Binding Path=Results}">
+			<ItemsControl.ItemsPanel>
+				<ItemsPanelTemplate>
+					<WrapPanel Orientation="Vertical" />
+				</ItemsPanelTemplate>
+			</ItemsControl.ItemsPanel>
+		</ItemsControl>-->
+
+		<Label Content="Start" Grid.Row="1" FontSize="20" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+		<Label Content="Siegerstraße" Grid.Row="1" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,0,130,0"/>
+		<Label Content="Verliererstraße" Grid.Row="1" FontSize="20" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,0,130,0" />
+		<ScrollViewer Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="2,40,0,2">
+		<ItemsControl ItemsSource="{Binding Path=StartResults}" >
 			<ItemsControl.ItemsPanel>
 				<ItemsPanelTemplate>
 					<WrapPanel Orientation="Vertical" />
 				</ItemsPanelTemplate>
 			</ItemsControl.ItemsPanel>
 		</ItemsControl>
+		</ScrollViewer>
+		<ScrollViewer Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="2,40,128,100">
+			<ItemsControl ItemsSource="{Binding Path=WinResults}" >
+				<ItemsControl.ItemsPanel>
+					<ItemsPanelTemplate>
+						<WrapPanel Orientation="Vertical" />
+					</ItemsPanelTemplate>
+				</ItemsControl.ItemsPanel>
+			</ItemsControl>
+		</ScrollViewer>
+		<Label Content="Finale" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="2,0,128,60" FontSize="20" FontWeight="Bold" />
+		<ContentPresenter Content="{Binding Path=FinaleResult}" Grid.Row="1" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="2,0,128,2" />
+		<ScrollViewer Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="2,40,128,2">
+			<ItemsControl ItemsSource="{Binding Path=LoseResults}" >
+				<ItemsControl.ItemsPanel>
+					<ItemsPanelTemplate>
+						<WrapPanel Orientation="Vertical" />
+					</ItemsPanelTemplate>
+				</ItemsControl.ItemsPanel>
+			</ItemsControl>
+		</ScrollViewer>
+
 		<!--<DataGrid HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="2" Margin="5,0,0,5" ItemsSource="{Binding Path=AdditionalColumnValues}" AutoGenerateColumns="False">
 			<DataGrid.Columns>
 				<DataGridTemplateColumn Header="Spieler">

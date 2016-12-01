@@ -306,7 +306,7 @@ namespace DartApp.Club.Tournament
 			return false;
 		}
 
-		private static bool IsWinnerSide(int positionKey, int numberOfPlayers)
+		public static bool IsWinnerSide(int positionKey, int numberOfPlayers)
 		{
 			var start = numberOfPlayers / 2;
 			var areaSize = numberOfPlayers / 4;
