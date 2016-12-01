@@ -9,7 +9,7 @@
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         <Grid>
-            <Border BorderThickness="10" HorizontalAlignment="Left" Width="256" Height="256" VerticalAlignment="Top" Margin="20,20,0,0" CornerRadius="10" BorderBrush="LightBlue" >
+            <Border BorderThickness="10" HorizontalAlignment="Left" Width="256" Height="256" VerticalAlignment="Top" Margin="20,20,0,0" CornerRadius="10" BorderBrush="GreenYellow" >
                 <Border.InputBindings>
                     <MouseBinding MouseAction="LeftClick" Command="{Binding Path=ChooseCommand}" />
                 </Border.InputBindings>

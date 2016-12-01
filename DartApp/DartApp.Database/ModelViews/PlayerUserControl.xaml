@@ -16,7 +16,7 @@
 			<RowDefinition Height="250" />
 			<RowDefinition Height="*" />
 		</Grid.RowDefinitions>
-		<Border BorderThickness="5" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="20,20,20,20" CornerRadius="10" BorderBrush="LightBlue">
+		<Border BorderThickness="5" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="20,20,20,20" CornerRadius="10" BorderBrush="GreenYellow">
 			<Grid >
 				<Image Source="{Binding Path=ImageSource}" Stretch="Fill" />
 			</Grid>
