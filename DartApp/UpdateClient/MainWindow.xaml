@@ -1,0 +1,23 @@
+﻿<Window x:Class="UpdateClient.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:UpdateClient"
+        mc:Ignorable="d"
+        Title="Update Client" Height="350" Width="525">
+    <Grid>
+		<GroupBox Header="Informationen" Width="150" HorizontalAlignment="Left" VerticalAlignment="Top"> 
+			<StackPanel Orientation="Vertical">
+				<Label Content="Datenbank:" />
+				<Label Content="{Binding Path=DataBaseName}" />
+				<Label Content="Version:" />
+				<Label Content="{Binding Path=Version}" />
+			</StackPanel>
+		</GroupBox>
+		<Button Content="Update" Width="100" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5,100,0,0" Command="{Binding Path=UpdateCommand}" />
+		<TextBlock Text="{Binding Path=Statement}" Width="150" HorizontalAlignment="Left" VerticalAlignment="Top" Height="150" Margin="5,130,0,0" />
+		<Button Content="Ausführen" Width="100" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5,290,0,0" Command="{Binding Path=ExecuteCommand}" />
+		<DataGrid ItemsSource="{Binding Path=Data.DefaultView}" Margin="150,5,5,5" />
+	</Grid>
+</Window>

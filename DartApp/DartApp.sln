@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DartApp", "DartApp\DartApp.csproj", "{1398F526-11A5-4B79-B069-BF0EEE63C5BE}"
 EndProject
@@ -24,6 +24,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DartApp.Controls", "DartApp.Controls\DartApp.Controls.csproj", "{05E94030-0317-48AA-8B4E-50B894A30573}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DartApp.Styles", "DartApp.Styles\DartApp.Styles.csproj", "{2B75A6F0-9E91-4811-BB08-82F3F26A2762}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UpdateClient", "UpdateClient\UpdateClient.csproj", "{7D5F49FB-A52B-4DEF-B03C-B92FFAD73440}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -75,6 +77,10 @@ Global
 		{2B75A6F0-9E91-4811-BB08-82F3F26A2762}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2B75A6F0-9E91-4811-BB08-82F3F26A2762}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2B75A6F0-9E91-4811-BB08-82F3F26A2762}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7D5F49FB-A52B-4DEF-B03C-B92FFAD73440}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7D5F49FB-A52B-4DEF-B03C-B92FFAD73440}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7D5F49FB-A52B-4DEF-B03C-B92FFAD73440}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7D5F49FB-A52B-4DEF-B03C-B92FFAD73440}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
