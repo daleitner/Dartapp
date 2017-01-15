@@ -5,19 +5,21 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:UpdateClient"
         mc:Ignorable="d"
-        Title="Update Client" Height="350" Width="525">
+        Title="Update Client" Height="400" Width="600">
     <Grid>
-		<GroupBox Header="Informationen" Width="150" HorizontalAlignment="Left" VerticalAlignment="Top"> 
-			<StackPanel Orientation="Vertical">
-				<Label Content="Datenbank:" />
-				<Label Content="{Binding Path=DataBaseName}" />
-				<Label Content="Version:" />
-				<Label Content="{Binding Path=Version}" />
-			</StackPanel>
-		</GroupBox>
-		<Button Content="Update" Width="100" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5,100,0,0" Command="{Binding Path=UpdateCommand}" />
-		<TextBlock Text="{Binding Path=Statement}" Width="150" HorizontalAlignment="Left" VerticalAlignment="Top" Height="150" Margin="5,130,0,0" />
-		<Button Content="Ausführen" Width="100" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5,290,0,0" Command="{Binding Path=ExecuteCommand}" />
+		<StackPanel Orientation="Vertical">
+			<GroupBox Header="Informationen" Width="150" HorizontalAlignment="Left" VerticalAlignment="Top"> 
+				<StackPanel Orientation="Vertical">
+					<Label Content="Datenbank:" />
+					<Label Content="{Binding Path=DataBaseName}" />
+					<Label Content="Version:" />
+					<Label Content="{Binding Path=Version}" Height="20"/>
+				</StackPanel>
+			</GroupBox>
+			<Button Content="Update" Width="100" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5,5,0,0" Command="{Binding Path=UpdateCommand}" />
+			<TextBox Text="{Binding Path=Statement}" Width="145" HorizontalAlignment="Left" VerticalAlignment="Top" Height="150" Margin="5,5,0,0" />
+			<Button Content="Ausführen" Width="100" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5,5,0,0" Command="{Binding Path=ExecuteCommand}" />
+		</StackPanel>
 		<DataGrid ItemsSource="{Binding Path=Data.DefaultView}" Margin="150,5,5,5" />
 	</Grid>
 </Window>

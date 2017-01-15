@@ -38,6 +38,10 @@
     <Reference Include="Base">
       <HintPath>..\References\Base.dll</HintPath>
     </Reference>
+    <Reference Include="SQLDatabase, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Resources\SQLDatabase.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
@@ -98,6 +102,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DataBaseInitializer\DataBaseInitializer.csproj">
+      <Project>{42632621-0D74-4668-A943-ADCEAB81600B}</Project>
+      <Name>DataBaseInitializer</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
