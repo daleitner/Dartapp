@@ -15,7 +15,7 @@ namespace UpdateClient
 	{
 		#region members
 
-		private readonly string newestVersion = "1.0";
+		private readonly string newestVersion;
 		private readonly DataBaseManager dbCreator;
 		private DataTable data = null;
 		private RelayCommand updateCommand = null;
@@ -23,6 +23,7 @@ namespace UpdateClient
 		private string dataBaseName = "";
 		private string version = "";
 		private string statement = "";
+		private readonly PatchClass patchClass;
 		#endregion
 
 		#region ctors
@@ -31,7 +32,8 @@ namespace UpdateClient
 			var setup = Directory.GetCurrentDirectory() + "\\database.xml";
 			var testValueFile = Directory.GetCurrentDirectory() + "\\dbtestvalues.txt";
 			var mappingPath = Directory.GetCurrentDirectory() + "\\mapping.xml";
-
+			this.patchClass = new PatchClass();
+			this.newestVersion = this.patchClass.GetLatestVersion();
 			try
 			{
 				this.dbCreator = DataBaseManager.GetInstance(setup, mappingPath, testValueFile);
@@ -54,7 +56,7 @@ namespace UpdateClient
 			}
 			catch (NullReferenceException ne)
 			{
-				this.Version = "-";
+				this.Version = "0.9";
 			}
 			catch (Exception e)
 			{
@@ -145,6 +147,25 @@ namespace UpdateClient
 		#region private methods
 		private void Update()
 		{
+			var toUpdate = this.patchClass.GetVersionsForUpdate(this.Version);
+			if (toUpdate == null)
+				return;
+			try
+			{
+				foreach (var update in toUpdate)
+				{
+					var patches = this.patchClass.GetPatches(update);
+					foreach (var patch in patches)
+					{
+						//this.dbCreator.DataBaseConnection.ExecuteCommand(patch);
+					}
+				}
+			}
+			catch (Exception e)
+			{
+				Console.WriteLine(e.Message);
+			}
+
 		}
 
 		private bool CanUpdate()
