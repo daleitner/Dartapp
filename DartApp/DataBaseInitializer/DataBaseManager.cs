@@ -17,6 +17,7 @@ namespace DataBaseInitializer
 		private readonly string setup = "";
 		private readonly string testValueFile = "";
 		private readonly string mappingPath = "";
+		private string databaseName = "";
 		#endregion
 
 		#region ctor
@@ -70,7 +71,7 @@ namespace DataBaseInitializer
                    dataBaseNode = xml.FirstOrDefault();
 				if (dataBaseNode == null)
 					return null;
-
+				this.databaseName = dataBaseNode.Attributes["name"];
 				var dataBase = dataBaseNode.Attributes[dataBaseNode.Attributes.Keys.First()];
 				List<Node> tables = null;
 				if (dataBaseNode.Childs != null)
@@ -164,6 +165,11 @@ namespace DataBaseInitializer
 					Insert(child, newModelTree.Model);
 				}
 			}
+		}
+
+		public string GetDatabaseName()
+		{
+			return this.databaseName;
 		}
 		#endregion
 	}

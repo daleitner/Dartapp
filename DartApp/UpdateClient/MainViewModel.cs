@@ -43,6 +43,7 @@ namespace UpdateClient
 			}
 			try
 			{
+				this.DataBaseName = this.dbCreator.GetDatabaseName();
 				var res = this.dbCreator.DataBaseConnection.ExecuteQuery("select* from VersionTable;");
 				if (res.Count != 1)
 					this.Version = "-";
