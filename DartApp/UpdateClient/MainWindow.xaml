@@ -11,9 +11,9 @@
 			<GroupBox Header="Informationen" Width="150" HorizontalAlignment="Left" VerticalAlignment="Top"> 
 				<StackPanel Orientation="Vertical">
 					<Label Content="Datenbank:" />
-					<Label Content="{Binding Path=DataBaseName}" />
+					<Label Content="{Binding Path=DataBaseName}" FontWeight="Bold"/>
 					<Label Content="Version:" />
-					<Label Content="{Binding Path=Version}" Height="20"/>
+					<Label Content="{Binding Path=Version}" FontWeight="Bold"/>
 				</StackPanel>
 			</GroupBox>
 			<Button Content="Update" Width="100" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5,5,0,0" Command="{Binding Path=UpdateCommand}" />

@@ -25,7 +25,7 @@ namespace UpdateClient
 		#region patches
 		//Verson 1.0
 		private const string Patch1 = "CREATE TABLE VersionTable(Id INTEGER PRIMARY KEY, Version VARCHAR(255));";
-		private const string Patch2 = "INSERT INTO VersionTable(1,\"1.0\");";
+		private const string Patch2 = "INSERT INTO VersionTable VALUES (\"1\",\"1.0\");";
 
 		#endregion
 

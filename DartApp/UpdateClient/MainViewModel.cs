@@ -46,13 +46,7 @@ namespace UpdateClient
 			try
 			{
 				this.DataBaseName = this.dbCreator.GetDatabaseName();
-				var res = this.dbCreator.DataBaseConnection.ExecuteQuery("select* from VersionTable;");
-				if (res.Count != 1)
-					this.Version = "-";
-				else
-				{
-					this.Version = res[0][1];
-				}
+				GetVersion();
 			}
 			catch (NullReferenceException ne)
 			{
@@ -157,9 +151,10 @@ namespace UpdateClient
 					var patches = this.patchClass.GetPatches(update);
 					foreach (var patch in patches)
 					{
-						//this.dbCreator.DataBaseConnection.ExecuteCommand(patch);
+						this.dbCreator.DataBaseConnection.ExecuteCommand(patch);
 					}
 				}
+				GetVersion();
 			}
 			catch (Exception e)
 			{
@@ -195,6 +190,17 @@ namespace UpdateClient
 			{
 				Console.WriteLine(e.Message);
 				this.Data = null;
+			}
+		}
+
+		private void GetVersion()
+		{
+			var res = this.dbCreator.DataBaseConnection.ExecuteQuery("select* from VersionTable;");
+			if (res.Count != 1)
+				this.Version = "-";
+			else
+			{
+				this.Version = res[0][1];
 			}
 		}
 
