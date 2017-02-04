@@ -186,6 +186,12 @@ namespace DartApp.Club.Tournament
 					this.TournamentPlan.Rankings.First(x => x.Ranking == ranking).Player = null;
 					this.TournamentPlan.Rankings.First(x => x.Ranking == ranking + 1).Player = null;
 					this.tournamentFinished = false;
+					if (this.tournament.Matches.Count - 1 != match.PositionKey) //delete second match in finale
+					{
+						this.TournamentPlan.DeleteSecondResultInFinale();
+						this.tournament.Matches.RemoveAt(this.tournament.Matches.Count-1);
+						this.matches.RemoveAt(this.matches.Count-1);
+					}
 				}
 				else //match is at loser side
 				{
@@ -222,11 +228,11 @@ namespace DartApp.Club.Tournament
 		//wird ausgeführt, wenn ein match eingetragen wird.
 		void m_MatchChanged(Match match)
 		{
-			this.TournamentPlan.Results.First(x => x.GetMatchKey() == match.PositionKey).Refresh();
+			this.TournamentPlan.RefreshResult(match.PositionKey);
 			var toRefresh = TournamentController.EndMatch(match, this.tournament);
 			toRefresh.ForEach(i =>
 			{
-				this.TournamentPlan.Results.First(x => x.GetMatchKey() == i).Refresh();
+				this.TournamentPlan.RefreshResult(i);
 				this.matches[i].Refresh();
 			});
 
@@ -236,9 +242,22 @@ namespace DartApp.Club.Tournament
 			{
 				if (ranking == 1) //match is finale
 				{
-					this.TournamentPlan.Rankings.First(x => x.Ranking == ranking).Player = match.GetWinner();
-					this.TournamentPlan.Rankings.First(x => x.Ranking == ranking+1).Player = match.GetLoser();
-					this.tournamentFinished = true;
+					if (match.PositionKey % 2 == 1 && match.Player1Legs < match.Player2Legs)
+					{
+						var m = new Match(this.tournament.Matches.Count, match.Player1, match.Player2);
+						this.tournament.Matches.Add(m);
+						var mvm = new MatchViewModel(this.tournament.Matches.Last());
+						mvm.MatchChanged += m_MatchChanged;
+						this.matches.Add(mvm);
+						this.matches.Last().Refresh();
+						this.TournamentPlan.AddSecondResultForFinale();
+					}
+					else
+					{
+						this.TournamentPlan.Rankings.First(x => x.Ranking == ranking).Player = match.GetWinner();
+						this.TournamentPlan.Rankings.First(x => x.Ranking == ranking+1).Player = match.GetLoser();
+						this.tournamentFinished = true;
+					}
 				}
 				else //match is at loser side
 				{

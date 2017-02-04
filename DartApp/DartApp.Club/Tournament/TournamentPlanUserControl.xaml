@@ -38,7 +38,7 @@
 			</ItemsControl.ItemsPanel>
 		</ItemsControl>
 		</ScrollViewer>
-		<ScrollViewer Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="2,40,128,100">
+		<ScrollViewer Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="2,40,128,110">
 			<ItemsControl ItemsSource="{Binding Path=WinResults}" >
 				<ItemsControl.ItemsPanel>
 					<ItemsPanelTemplate>
@@ -47,8 +47,10 @@
 				</ItemsControl.ItemsPanel>
 			</ItemsControl>
 		</ScrollViewer>
-		<Label Content="Finale" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="2,0,128,60" FontSize="20" FontWeight="Bold" />
-		<ContentPresenter Content="{Binding Path=FinaleResult}" Grid.Row="1" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="2,0,128,2" />
+		<StackPanel Orientation="Vertical" VerticalAlignment="Bottom" Grid.Row="1" HorizontalAlignment="Center" Margin="2,0,128,2">
+			<Label Content="Finale" FontSize="20" FontWeight="Bold" />
+			<ContentPresenter Content="{Binding Path=FinaleResult}" />
+		</StackPanel>
 		<ScrollViewer Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="2,40,128,2">
 			<ItemsControl ItemsSource="{Binding Path=LoseResults}" >
 				<ItemsControl.ItemsPanel>

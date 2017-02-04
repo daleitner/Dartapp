@@ -72,6 +72,10 @@
       <DependentUpon>AdditionalColumnValueUserControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Tournament\AdditionalColumnValueViewModel.cs" />
+    <Compile Include="Tournament\FinaleUserControl.xaml.cs">
+      <DependentUpon>FinaleUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Tournament\FinaleViewModel.cs" />
     <Compile Include="Tournament\ManualPlayerSettingUserControl.xaml.cs">
       <DependentUpon>ManualPlayerSettingUserControl.xaml</DependentUpon>
     </Compile>
@@ -116,6 +120,10 @@
     <Page Include="Tournament\AdditionalColumnValueUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Tournament\FinaleUserControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Tournament\ManualPlayerSettingUserControl.xaml">
       <SubType>Designer</SubType>

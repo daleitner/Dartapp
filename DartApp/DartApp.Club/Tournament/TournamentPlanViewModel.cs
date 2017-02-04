@@ -19,7 +19,7 @@ namespace DartApp.Club.Tournament
 		private List<ResultViewModel> startResults = null;
 		private List<ResultViewModel> winResults = null;
 		private List<ResultViewModel> loseResults = null;
-		private ResultViewModel finaleResult = null;
+		private FinaleViewModel finaleResult = null;
 		private ObservableCollection<AdditionalColumnValueViewModel> additionalColumnValues;
 		private RelayCommand addCommand = null;
 		private RelayCommand removeCommand = null;
@@ -54,7 +54,7 @@ namespace DartApp.Club.Tournament
 				else if (TournamentController.IsWinnerSide(i, amountStartResults * 2))
 					this.winResults.Add(this.results[i]);
 				else if (i == this.results.Count - 1)
-					this.finaleResult = this.results[i];
+					this.finaleResult = new FinaleViewModel(this.results[i]);
 				else
 					this.loseResults.Add(this.results[i]);
 			}
@@ -138,7 +138,7 @@ namespace DartApp.Club.Tournament
 			}
 		}
 
-		public ResultViewModel FinaleResult
+		public FinaleViewModel FinaleResult
 		{
 			get
 			{
@@ -213,6 +213,26 @@ namespace DartApp.Club.Tournament
 		private bool CanRemove()
 		{
 			return this.AdditionalColumnValues.Count > 1;
+		}
+
+		public void RefreshResult(int positionKey)
+		{
+			if(positionKey == this.Results.Count-1 || (this.Results.Count % 2 == 1 && positionKey == this.Results.Count-2))
+				this.FinaleResult.Refresh();
+			else
+				this.Results.First(x => x.GetMatchKey() == positionKey).Refresh();
+		}
+
+		public void AddSecondResultForFinale()
+		{
+			this.Results.Add(new ResultViewModel(this.tournament.Matches.Last()));
+			this.FinaleResult.AddSecondResult(this.Results.Last());
+		}
+
+		public void DeleteSecondResultInFinale()
+		{
+			this.FinaleResult.DeleteSecondResult();
+			this.Results.RemoveAt(this.Results.Count-1);
 		}
 	}
 }

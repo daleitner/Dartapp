@@ -40,6 +40,9 @@
 	<DataTemplate DataType="{x:Type tournament:ResultViewModel}">
 		<tournament:ResultUserControl />
 	</DataTemplate>
+	<DataTemplate DataType="{x:Type tournament:FinaleViewModel}">
+		<tournament:FinaleUserControl />
+	</DataTemplate>
 	<DataTemplate DataType="{x:Type tournament:AdditionalColumnValueViewModel}">
 		<tournament:AdditionalColumnValueUserControl />
 	</DataTemplate>
