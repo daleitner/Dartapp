@@ -121,6 +121,11 @@ namespace DartApp.QueryService
 					statistic.TournamentSeries = series;
 					statistics.Add(statistic);
 				}
+				else
+				{
+					var statistic = new Statistic(player, series);
+					statistics.Add(statistic);
+				}
 			}
 			statistics = statistics.OrderByDescending(x => x.Points).ThenByDescending(x => (x.WonSets - x.LostSets)).ThenByDescending(x => (x.WonLegs - x.LostLegs)).ToList();
 			return statistics.Select(x => x.Player).ToList();

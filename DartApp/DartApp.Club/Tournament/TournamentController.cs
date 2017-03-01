@@ -42,7 +42,7 @@ namespace DartApp.Club.Tournament
 
 		private static List<Models.Player> GetOrderedPlayers(Models.Tournament tournament, List<Models.Player> players, string setOption, IDartAppQueryService queryService)
 		{
-			List<Models.Player> orderedPlayers = new List<Models.Player>();
+			List<Models.Player> orderedPlayers;
 			if (setOption != "Keine")
 			{
 				var tournamentSeries = queryService.GetTournamentSeriesOfTournament(tournament);
