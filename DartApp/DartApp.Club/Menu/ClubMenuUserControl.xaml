@@ -48,6 +48,7 @@
 				<GroupBox Header="Anzeige" Margin="0,20,0,100">
 					<StackPanel>
 						<CheckBox Content="Punkte" IsChecked="{Binding Path=ShowPoints}"></CheckBox>
+						<CheckBox Content="Setverhältnis" IsChecked="{Binding Path=ShowSetRatio}"></CheckBox>
 						<CheckBox Content="Legverhältnis" IsChecked="{Binding Path=ShowLegRatio}"></CheckBox>
 						<CheckBox Content="Zusatzinfos" IsChecked="{Binding Path=ShowAdditionalValues}"></CheckBox>
 					</StackPanel>

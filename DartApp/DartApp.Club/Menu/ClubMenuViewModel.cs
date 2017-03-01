@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Windows.Input;
+using System.Windows.Media.Media3D;
 using Base;
 using DartApp.Models;
 using DartApp.QueryService;
@@ -26,6 +27,7 @@ namespace DartApp.Club.Menu
 		private bool showPoints = true;
 		private bool showAdditionalValues = true;
 		private bool showLegRatio = true;
+		private bool showSetRatio = true;
 		private readonly IEventService eventService;
 		private readonly IDartAppQueryService queryService;
 		#endregion
@@ -190,6 +192,17 @@ namespace DartApp.Club.Menu
 				UpdateData();
 			}
 		}
+
+		public bool ShowSetRatio
+		{
+			get { return this.showSetRatio; }
+			set
+			{
+				this.showSetRatio = value;
+				OnPropertyChanged("ShowSetRatio");
+				UpdateData();
+			}
+		}
 		#endregion
 
 		#region private methods
@@ -219,6 +232,12 @@ namespace DartApp.Club.Menu
 			table.Columns.Add("Name");
 			if(this.ShowAdditionalValues)
 				this.selectedSeries.AdditionalColumns.ForEach(x => table.Columns.Add(x.Name));
+			if (this.ShowSetRatio)
+			{
+				table.Columns.Add("Sets+");
+				table.Columns.Add("Sets-");
+				table.Columns.Add("Sets Diff");
+			}
 			if (this.ShowLegRatio)
 			{
 				table.Columns.Add("Legs+");
@@ -232,32 +251,31 @@ namespace DartApp.Club.Menu
 			//fill rows
 			var allPlayers = GetAllPlayersOfTournamentSeries(this.selectedSeries);
 			this.dataViewModels = new List<DataViewModel>();
+			var fullDataViewModels = new List<DataViewModel>();
 			foreach (var player in allPlayers)
 			{
 				var dvm = new DataViewModel {Name = player.VorName + " " + player.NachName};
 
 				//additional values
-				if (this.ShowAdditionalValues)
+				foreach (var column in this.selectedSeries.AdditionalColumns)
 				{
-					foreach (var column in this.selectedSeries.AdditionalColumns)
+					bool found = false;
+					foreach (var value in column.Values)
 					{
-						bool found = false;
-						foreach (var value in column.Values)
+						if (value.Player.Equals(player))
 						{
-							if (value.Player.Equals(player))
-							{
-								dvm.AdditionalColumns.Add(column.Name, value.Value);
-								found = true;
-							}
+							dvm.AdditionalColumns.Add(column.Name, value.Value);
+							found = true;
 						}
-						if (!found)
-							dvm.AdditionalColumns.Add(column.Name, "");
 					}
+					if (!found)
+						dvm.AdditionalColumns.Add(column.Name, "");
 				}
 				var sum = 0;
 				var legsplus = 0;
 				var legsminus = 0;
-				var legratio = 0;
+				var setsplus = 0;
+				var setsminus = 0;
 				var pointsList = new List<int>();
 				foreach (var tournament in this.selectedSeries.Tournaments)
 				{
@@ -273,8 +291,7 @@ namespace DartApp.Club.Menu
 								while (this.Points.FirstOrDefault(x => x.Position == tmp) == null)
 									tmp--;
 								var p = this.Points.First(x => x.Position == tmp).Points;
-								if(this.showPoints)
-									dvm.Points.Add(tournament.Key.ToString(), p);
+								dvm.Points.Add(tournament.Key.ToString(), p);
 								pointsList.Add(p);
 								found = true;
 								break;
@@ -282,48 +299,54 @@ namespace DartApp.Club.Menu
 						}
 						if (!found)
 						{
-							if(this.ShowPoints)
-								dvm.Points.Add(tournament.Key.ToString(), "");
+							dvm.Points.Add(tournament.Key.ToString(), "");
 							pointsList.Add(0);
 						}
 
-						//Leg Ratio
-						if (this.showLegRatio)
+						//Leg Ratio, Set Ratio
+						foreach (var match in tournament.Matches)
 						{
-							foreach (var match in tournament.Matches)
+							if (match.Player1.Equals(player))
 							{
-								if (match.Player1.Equals(player))
+								if (!PlayerIsFreilos(match.Player2, allPlayers))
 								{
-									if (!PlayerIsFreilos(match.Player2, allPlayers))
-									{
-										legsplus += match.Player1Legs;
-										legsminus += match.Player2Legs;
-									}
+									legsplus += match.Player1Legs;
+									legsminus += match.Player2Legs;
+									if (match.Player1Legs > match.Player2Legs)
+										setsplus ++;
+									else
+										setsminus++;
 								}
-								else if (match.Player2.Equals(player))
+							}
+							else if (match.Player2.Equals(player))
+							{
+								if (!PlayerIsFreilos(match.Player1, allPlayers))
 								{
-									if (!PlayerIsFreilos(match.Player1, allPlayers))
-									{
-										legsplus += match.Player2Legs;
-										legsminus += match.Player1Legs;
-									}
+									legsplus += match.Player2Legs;
+									legsminus += match.Player1Legs;
+									if (match.Player1Legs > match.Player2Legs)
+										setsminus++;
+									else
+										setsplus++;
 								}
 							}
 						}
 					}
 					else
 					{
-						if(this.ShowPoints)
-							dvm.Points.Add(tournament.Key.ToString(), "");
+						dvm.Points.Add(tournament.Key.ToString(), "");
 						pointsList.Add(0);
 					}
 				}
-				if (this.ShowLegRatio)
-				{
-					dvm.LegRatios.Add("Legs+", legsplus);
-					dvm.LegRatios.Add("Legs-", legsminus);
-					dvm.LegRatios.Add("Leg Diff", legsplus-legsminus);
-				}
+
+				dvm.LegRatios.Add("Legs+", legsplus);
+				dvm.LegRatios.Add("Legs-", legsminus);
+				dvm.LegRatios.Add("Leg Diff", legsplus-legsminus);
+
+				dvm.SetRatios.Add("Sets+", setsplus);
+				dvm.SetRatios.Add("Sets-", setsminus);
+				dvm.SetRatios.Add("Set Diff", setsplus - setsminus);
+
 				var pointsOrderIndexList = GetOrderIndicess(pointsList);
 				pointsOrderIndexList = pointsOrderIndexList.GetRange(0, pointsOrderIndexList.Count - this.selectedSeries.RelevantTournaments);
 				//pointsList.Sort();
@@ -334,11 +357,31 @@ namespace DartApp.Club.Menu
 					sum += pointsList[i];
 				}
 				dvm.Sum = sum;
+				fullDataViewModels.Add(dvm);
+			}
+			fullDataViewModels = fullDataViewModels.OrderByDescending(x => x.Sum).ThenByDescending(x => x.SetRatios["Set Diff"]).ThenByDescending(x => x.LegRatios["Leg Diff"]).ToList();
+			for (int i = 0; i < fullDataViewModels.Count; i++)
+				fullDataViewModels[i].Placement = i + 1;
+
+			foreach (var dataViewModel in fullDataViewModels)
+			{
+				var dvm = new DataViewModel
+				{
+					Sum = dataViewModel.Sum,
+					Name = dataViewModel.Name,
+					Placement = dataViewModel.Placement
+				};
+
+				if (this.ShowAdditionalValues)
+					dvm.AdditionalColumns = dataViewModel.AdditionalColumns;
+				if (this.showSetRatio)
+					dvm.SetRatios = dataViewModel.SetRatios;
+				if (this.ShowLegRatio)
+					dvm.LegRatios = dataViewModel.LegRatios;
+				if (this.ShowPoints)
+					dvm.Points = dataViewModel.Points;
 				this.dataViewModels.Add(dvm);
 			}
-			this.dataViewModels = this.dataViewModels.OrderByDescending(x => x.Sum).ToList();
-			for (int i = 0; i < this.dataViewModels.Count; i++)
-				this.dataViewModels[i].Placement = i + 1;
 
 			foreach (var dvm in this.dataViewModels)
 			{
