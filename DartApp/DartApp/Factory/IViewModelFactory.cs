@@ -23,5 +23,6 @@ namespace DartApp.Factory
 		TournamentViewModel GetTournamentViewModel(Tournament tournament, TournamentSeries series);
 		IDartAppQueryService GetQueryService();
 	    ViewModelBase GetManualPlayerSettingViewModel(Tournament tournament, List<Player> players, TournamentSeries tournamentSeries);
+	    ViewModelBase GetStatisticViewModel(TournamentSeries series);
     }
 }

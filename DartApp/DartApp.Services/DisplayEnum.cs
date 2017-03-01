@@ -12,6 +12,7 @@ namespace DartApp.Services
 		Database,
 		Club,
 		PlayerSelection,
-		Tournament
+		Tournament,
+		Statistic
 	}
 }

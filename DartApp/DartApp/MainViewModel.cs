@@ -71,6 +71,9 @@ namespace DartApp
 					}
 					
 					break;
+				case DisplayEnum.Statistic:
+		            this.Content = this.factory.GetStatisticViewModel((TournamentSeries) eventArgs[0]);
+		            break;
             }
         }
 

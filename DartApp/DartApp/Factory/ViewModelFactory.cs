@@ -13,6 +13,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using Base;
+using DartApp.Club.Statistics;
 
 namespace DartApp.Factory
 {
@@ -75,7 +76,12 @@ namespace DartApp.Factory
 
 		public ViewModelBase GetManualPlayerSettingViewModel(Tournament tournament, List<Player> players, TournamentSeries tournamentSeries)
 		{
-			return new ManualPlayerSettingViewModel(tournament, players, tournamentSeries, eventService);
+			return new ManualPlayerSettingViewModel(tournament, players, tournamentSeries, this.eventService);
+		}
+
+		public ViewModelBase GetStatisticViewModel(TournamentSeries series)
+		{
+			return new StatisticsViewModel(this.eventService, this.dartAppQueryService, this.dartAppCommandService, series);
 		}
 	}
 }

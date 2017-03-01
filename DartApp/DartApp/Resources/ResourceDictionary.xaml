@@ -6,7 +6,8 @@
 					xmlns:cm="clr-namespace:DartApp.Club.Menu;assembly=DartApp.Club"
 					xmlns:controls="clr-namespace:DartApp.Controls;assembly=DartApp.Controls"
 					xmlns:dbmv="clr-namespace:DartApp.Database.ModelViews;assembly=DartApp.Database"
-					xmlns:tournament="clr-namespace:DartApp.Club.Tournament;assembly=DartApp.Club">
+					xmlns:tournament="clr-namespace:DartApp.Club.Tournament;assembly=DartApp.Club"
+					xmlns:stat="clr-namespace:DartApp.Club.Statistics;assembly=DartApp.Club">
 	<DataTemplate DataType="{x:Type home:HomeViewModel}">
 		<home:HomeUserControl />
 	</DataTemplate>
@@ -48,5 +49,8 @@
 	</DataTemplate>
 	<DataTemplate DataType="{x:Type tournament:ManualPlayerSettingViewModel}">
 		<tournament:ManualPlayerSettingUserControl />
+	</DataTemplate>
+	<DataTemplate DataType="{x:Type stat:StatisticsViewModel}">
+		<stat:StatisticsUserControl />
 	</DataTemplate>
 </ResourceDictionary>

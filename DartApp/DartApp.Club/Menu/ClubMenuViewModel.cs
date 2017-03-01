@@ -417,6 +417,7 @@ namespace DartApp.Club.Menu
 
 		private void Statistics()
 		{
+			this.eventService.PublishDisplayChangedEvent(DisplayEnum.Statistic, new List<object>() {this.selectedSeries});
 		}
 
 		private void Print()
