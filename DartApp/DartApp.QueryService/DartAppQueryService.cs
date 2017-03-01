@@ -212,6 +212,22 @@ namespace DartApp.QueryService
 			return series;
 		}
 
+		public List<Statistic> GetStatisticsByTournamentSeries(TournamentSeries selectedSeries)
+		{
+			var statistics = new List<Statistic>();
+			var stable = this.mapping.GetTableByObject(typeof(Statistic));
+			var scondition = new Condition().Add(new PropertyExpression(stable.Columns["TournamentSeries"], CompareEnum.Equals, selectedSeries.GetId()));
+			var sQuery = new DataBaseQuery(stable, scondition);
+			var sRes = this.connection.ExecuteQuery(sQuery);
+			foreach (var result in sRes)
+			{
+				var statistic = new Statistic(result);
+				statistic.Player = GetPlayerById(result[11], new List<Player>());
+				statistics.Add(statistic);
+			}
+			return statistics;
+		}
+
 		private Player GetPlayerById(string playerId, List<Player> tempPlayers)
 		{
 			var ret = tempPlayers.FirstOrDefault(x => x.GetId() == playerId);

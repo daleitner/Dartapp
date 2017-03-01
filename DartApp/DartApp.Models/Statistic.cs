@@ -11,18 +11,18 @@ namespace DartApp.Models
 		#region ctors
 		public Statistic()
 		{
-			Player = null;
-			TournamentSeries = null;
-			WonSets = 0;
-			LostSets = 0;
-			WonLegs = 0;
-			LostLegs = 0;
-			FLs = 0;
-			Average = 0;
-			First = 0;
-			Second = 0;
-			Third = 0;
-			Points = 0;
+			this.Player = null;
+			this.TournamentSeries = null;
+			this.WonSets = 0;
+			this.LostSets = 0;
+			this.WonLegs = 0;
+			this.LostLegs = 0;
+			this.FLs = 0;
+			this.Average = 0;
+			this.First = 0;
+			this.Second = 0;
+			this.Third = 0;
+			this.Points = 0;
 		}
 
 		public Statistic(Player player, TournamentSeries tournamentSeries)
@@ -35,16 +35,16 @@ namespace DartApp.Models
 		public Statistic(List<string> itemArray)
 		{
 			this.Id = itemArray[0];
-			WonSets = Int32.Parse(itemArray[1]);
-			LostSets = Int32.Parse(itemArray[2]);
-			WonLegs = Int32.Parse(itemArray[3]);
-			LostLegs = Int32.Parse(itemArray[4]);
-			FLs = Int32.Parse(itemArray[5]);
-			Average = Int32.Parse(itemArray[6]);
-			First = Int32.Parse(itemArray[7]);
-			Second = Int32.Parse(itemArray[8]);
-			Third = Int32.Parse(itemArray[9]);
-			Points = Int32.Parse(itemArray[10]);
+			this.WonSets = Int32.Parse(itemArray[1]);
+			this.LostSets = Int32.Parse(itemArray[2]);
+			this.WonLegs = Int32.Parse(itemArray[3]);
+			this.LostLegs = Int32.Parse(itemArray[4]);
+			this.FLs = Int32.Parse(itemArray[5]);
+			this.Average = Int32.Parse(itemArray[6]);
+			this.First = Int32.Parse(itemArray[7]);
+			this.Second = Int32.Parse(itemArray[8]);
+			this.Third = Int32.Parse(itemArray[9]);
+			this.Points = Int32.Parse(itemArray[10]);
 		}
 		#endregion
 
