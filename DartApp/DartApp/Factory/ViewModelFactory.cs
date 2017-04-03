@@ -65,7 +65,7 @@ namespace DartApp.Factory
 
 		public TournamentViewModel GetTournamentViewModel(Tournament tournament, TournamentSeries series)
 		{
-			return new TournamentViewModel(tournament, series, this.eventService, this.dartAppCommandService);
+			return new TournamentViewModel(tournament, series, this.eventService, this.dartAppCommandService, this.dartAppQueryService);
 		}
 
 

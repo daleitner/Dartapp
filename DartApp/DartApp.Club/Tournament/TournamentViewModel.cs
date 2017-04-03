@@ -7,6 +7,7 @@ using Base;
 using DartApp.CommandServices;
 using DartApp.Models;
 using DartApp.Services;
+using DartApp.QueryService;
 
 namespace DartApp.Club.Tournament
 {
@@ -23,13 +24,14 @@ namespace DartApp.Club.Tournament
 		private TournamentPlanViewModel tournamentPlan;
 		private readonly IEventService eventService;
 		private readonly IDartAppCommandService commandService;
+		private readonly IDartAppQueryService queryService;
 		private readonly TournamentSeries series;
 		private bool tournamentFinished = false;
 
 		#endregion
 
 		#region ctors
-		public TournamentViewModel(Models.Tournament tournament, TournamentSeries series, IEventService eventService, IDartAppCommandService commandService)
+		public TournamentViewModel(Models.Tournament tournament, TournamentSeries series, IEventService eventService, IDartAppCommandService commandService, IDartAppQueryService queryService)
 		{
 			this.series = series;
 			this.commandService = commandService;
@@ -136,7 +138,64 @@ namespace DartApp.Club.Tournament
 					columnValues.Add(new AdditionalColumnValue { Player = value.SelectedPlayer, Column = value.SelectedColumn, Value = Int32.Parse(value.Value) });
 			}
 			this.commandService.SaveAdditionalColumnValues(columnValues);
+			var statistics = CreateTournamentStatistics();
+			this.commandService.MergeStatistics(this.series, statistics);
 			this.eventService.PublishDisplayChangedEvent(DisplayEnum.Club, new List<object> { this.series});
+		}
+
+		private List<Statistic> CreateTournamentStatistics()
+		{
+			var ret = new List<Statistic>();
+			var placementPoints = this.queryService.GetPlacementPoints();
+			var rankings = this.TournamentPlan.Rankings.Where(x => x.Player.VorName != "FL");
+			foreach(var ranking in rankings)
+			{
+				var statistic = new Statistic(ranking.Player, this.series);
+				var tmpPlace = ranking.Ranking;
+				while (placementPoints.FirstOrDefault(x => x.Position == tmpPlace) == null)
+					tmpPlace--;
+				statistic.Points = placementPoints.First(x => x.Position == tmpPlace).Points;
+
+				if (ranking.Ranking == 1)
+					statistic.First++;
+				else if (ranking.Ranking == 2)
+					statistic.Second++;
+				else if (ranking.Ranking == 3)
+					statistic.Third++;
+
+				var matches = this.tournament.Matches.Where(x => x.Player1.Equals(ranking.Player));
+				foreach(var match in matches)
+				{
+					if (match.Player2.VorName == "FL")
+						statistic.FLs++;
+					else
+					{
+						statistic.WonLegs += match.Player1Legs;
+						statistic.LostLegs += match.Player2Legs;
+						if (match.Player1Legs < match.Player2Legs)
+							statistic.LostSets++;
+						else
+							statistic.WonSets++;
+					}
+				}
+
+				var matches2 = this.tournament.Matches.Where(x => x.Player2.Equals(ranking.Player));
+				foreach (var match in matches2)
+				{
+					if (match.Player1.VorName == "FL")
+						statistic.FLs++;
+					else
+					{
+						statistic.WonLegs += match.Player2Legs;
+						statistic.LostLegs += match.Player1Legs;
+						if (match.Player1Legs > match.Player2Legs)
+							statistic.LostSets++;
+						else
+							statistic.WonSets++;
+					}
+				}
+			}
+			return ret;
 		}
 
 		private bool CanSave()

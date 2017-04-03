@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Base;
 using DartApp.Models;
@@ -120,6 +121,38 @@ namespace DartApp.CommandServices
 			var dictionary = this.mapping.CreateDatabaseDictionary(table, tournament, series);
 			var condition = new Condition().Add(new PropertyExpression(table.Columns["Tid"], CompareEnum.Equals, tournament.GetId()));
 			this.connection.UpdateElement(new ElementUpdate(table, dictionary, condition));
+		}
+
+		public void MergeStatistics(TournamentSeries series, List<Statistic> tournamentStatistics)
+		{
+			var table = this.mapping.GetTableByObject(typeof(Statistic));
+			var condition = new Condition().Add(new PropertyExpression(table.Columns["TournamentSeries"], CompareEnum.Equals, series.GetId()));
+			var query = new DataBaseQuery(table, condition);
+			var ret = this.connection.ExecuteQuery(query);
+			if (ret == null)
+				return;
+			foreach(var list in ret)
+			{
+				var statistic = new Statistic(list);
+				statistic.Player = tournamentStatistics.Select(x => x.Player).FirstOrDefault(x => x.GetId() == list[11]);
+				if (statistic.Player != null)
+				{
+					statistic.Merge(tournamentStatistics.First(x => x.Player == statistic.Player));
+					var sCondition = new Condition().Add(new PropertyExpression(table.Columns["Sid"], CompareEnum.Equals, statistic.GetId()));
+					var dictionary = this.mapping.CreateDatabaseDictionary(table, statistic);
+					this.connection.UpdateElement(new ElementUpdate(table, dictionary, sCondition));
+				}
+			}
+
+		}
+
+		public void UpdateStatistic(Statistic newStatistic)
+		{
+			var table = this.mapping.GetTableByObject(typeof(Statistic));
+			
+			var sCondition = new Condition().Add(new PropertyExpression(table.Columns["Sid"], CompareEnum.Equals, newStatistic.GetId()));
+			var dictionary = this.mapping.CreateDatabaseDictionary(table, newStatistic);
+			this.connection.UpdateElement(new ElementUpdate(table, dictionary, sCondition));
 		}
 	}
 }

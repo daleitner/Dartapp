@@ -61,6 +61,51 @@ namespace DartApp.Models
 		public int Second { get; set; }
 		public int Third { get; set; }
 		public int Points { get; set; }
+
+		public void Merge(Statistic statistic)
+		{
+			this.WonSets += statistic.WonSets;
+			this.WonLegs += statistic.WonLegs;
+			this.LostSets += statistic.LostSets;
+			this.LostLegs += statistic.LostLegs;
+			this.FLs += statistic.FLs;
+			this.First += statistic.First;
+			this.Second += statistic.Second;
+			this.Third += statistic.Third;
+			this.Points += statistic.Points;
+		}
+
+		public bool IsOutOfDate(Statistic newStatistic)
+		{
+			if (!this.Player.Equals(newStatistic.Player) || !this.TournamentSeries.Equals(newStatistic.TournamentSeries))
+				return false;
+			if (this.WonSets == newStatistic.WonSets
+				&& this.LostSets == newStatistic.LostSets
+				&& this.WonLegs == newStatistic.WonLegs
+				&& this.LostLegs == newStatistic.LostLegs
+				&& this.First == newStatistic.First
+				&& this.Second == newStatistic.Second
+				&& this.Third == newStatistic.Third
+				&& this.Points == newStatistic.Points
+				&& this.FLs == newStatistic.FLs)
+				return false;
+			return true;
+		}
+
+		public void Update(Statistic newStatistic)
+		{
+			if (!this.Player.Equals(newStatistic.Player) || !this.TournamentSeries.Equals(newStatistic.TournamentSeries))
+				return;
+			this.WonSets = newStatistic.WonSets;
+			this.LostSets = newStatistic.LostSets;
+			this.WonLegs = newStatistic.WonLegs;
+			this.LostLegs = newStatistic.LostLegs;
+			this.First = newStatistic.First;
+			this.Second = newStatistic.Second;
+			this.Third = newStatistic.Third;
+			this.Points = newStatistic.Points;
+			this.FLs = newStatistic.FLs;
+		}
 		#endregion
- }
+	}
 }

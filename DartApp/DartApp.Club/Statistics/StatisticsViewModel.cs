@@ -16,7 +16,9 @@ namespace DartApp.Club.Statistics
 		#region members
 		private RelayCommand homeCommand = null;
 		private RelayCommand searchCommand = null;
+		private RelayCommand updateCommand = null;
 		private ObservableCollection<string> searchResult = null;
+		private List<Statistic> statistics;
 		private string selectedItem = "";
 		private string search = "";
 		private readonly IDartAppQueryService queryService;
@@ -38,8 +40,8 @@ namespace DartApp.Club.Statistics
 
 		private void LoadData()
 		{
-			var statistics = this.queryService.GetStatisticsByTournamentSeries(this.series);
-			if (statistics.Count == 0)
+			this.statistics = this.queryService.GetStatisticsByTournamentSeries(this.series);
+			if (this.statistics.Count == 0)
 				CreateStatistics();
 		}
 
@@ -162,6 +164,22 @@ namespace DartApp.Club.Statistics
 				return this.searchCommand;
 			}
 		}
+		public ICommand UpdateCommand
+		{
+			get
+			{
+				if (this.updateCommand == null)
+				{
+					this.updateCommand = new RelayCommand(
+						param => UpdateStatistics()
+					);
+				}
+				return this.updateCommand;
+			}
+		}
+
+
+
 		public ObservableCollection<string> SearchResult
 		{
 			get
@@ -208,6 +226,78 @@ namespace DartApp.Club.Statistics
 
 		private void Searchf()
 		{
+		}
+
+		private void UpdateStatistics()
+		{
+			var allPlayers = GetAllPlayersOfTournamentSeries(this.series);
+			var placementPoints = this.queryService.GetPlacementPoints();
+			foreach(var player in allPlayers)
+			{
+				var statistic = new Statistic(player, this.series);
+				foreach(var tournament in this.series.Tournaments)
+				{
+					if (!tournament.GetAllPlayers().Contains(player))
+						continue;
+
+					var position = tournament.Placements.First(x => x.Player.Equals(player)).Position;
+					//add first,second,third
+					if (position == 1)
+						statistic.First++;
+					else if (position == 2)
+						statistic.Second++;
+					else if (position == 3)
+						statistic.Third++;
+
+					//add points
+					var tmpPos = position;
+					while (placementPoints.FirstOrDefault(x => x.Position == tmpPos) == null)
+						tmpPos--;
+					statistic.Points += placementPoints.First(x => x.Position == tmpPos).Points;
+
+					//add Legs, Sets and FLs
+					var matches = tournament.Matches.Where(x => x.Player1.Equals(player));
+					foreach (var match in matches)
+					{
+						if (match.Player2.VorName == "FL")
+							statistic.FLs++;
+						else
+						{
+							statistic.WonLegs += match.Player1Legs;
+							statistic.LostLegs += match.Player2Legs;
+							if (match.Player1Legs < match.Player2Legs)
+								statistic.LostSets++;
+							else
+								statistic.WonSets++;
+						}
+					}
+
+					var matches2 = tournament.Matches.Where(x => x.Player2.Equals(player));
+					foreach (var match in matches2)
+					{
+						if (match.Player1.VorName == "FL")
+							statistic.FLs++;
+						else
+						{
+							statistic.WonLegs += match.Player2Legs;
+							statistic.LostLegs += match.Player1Legs;
+							if (match.Player1Legs > match.Player2Legs)
+								statistic.LostSets++;
+							else
+								statistic.WonSets++;
+						}
+					}
+				}
+
+				var oldStatistic = this.statistics.FirstOrDefault(x => x.Player.Equals(player));
+				if(oldStatistic == null)
+					this.commandService.InsertStatistic(statistic);
+				else if(oldStatistic.IsOutOfDate(statistic))
+				{
+					oldStatistic.Update(statistic);
+					this.commandService.UpdateStatistic(oldStatistic); //oldStatistic wegen der Id
+				}
+			}
 		}
 
 		private List<Player> GetAllPlayersOfTournamentSeries(TournamentSeries tournamentSeries)

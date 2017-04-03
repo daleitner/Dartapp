@@ -228,6 +228,7 @@ namespace DartApp.QueryService
 			{
 				var statistic = new Statistic(result);
 				statistic.Player = GetPlayerById(result[11], new List<Player>());
+				statistic.TournamentSeries = selectedSeries;
 				statistics.Add(statistic);
 			}
 			return statistics;
