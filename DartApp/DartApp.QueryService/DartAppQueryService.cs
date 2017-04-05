@@ -14,10 +14,14 @@ namespace DartApp.QueryService
 	{
 		private DataBaseConnection connection;
 		private ORDictionary mapping;
+		private List<PlacementPoint> placementPointBuffer;
+		private List<Player> playerBuffer;
 		public DartAppQueryService()
 		{
 			this.connection = DataBaseManager.GetInstance().DataBaseConnection;
 			this.mapping = DataBaseManager.GetInstance().Mapping;
+			this.placementPointBuffer = new List<PlacementPoint>();
+			this.playerBuffer = new List<Player>();
 		}
 
 		public List<ModelBase> GetSearchResult(string search, ModelEnum modelType)
@@ -61,9 +65,16 @@ namespace DartApp.QueryService
 
 		public List<Player> GetAllPlayers()
 		{
-			List<Player> ret = new List<Player>();
-			GetSearchResult("", ModelEnum.Player).ForEach(x => ret.Add((Player)x));
-			return ret;
+			if (this.playerBuffer.Count > 0)
+				return this.playerBuffer;
+			GetSearchResult("", ModelEnum.Player).ForEach(x => this.playerBuffer.Add((Player)x));
+			return this.playerBuffer;
+		}
+
+		public void ClearBuffers()
+		{
+			this.playerBuffer = new List<Player>();
+			this.placementPointBuffer = new List<PlacementPoint>();
 		}
 
 		public List<Player> GetAllHolidayPlayers()
@@ -77,15 +88,16 @@ namespace DartApp.QueryService
 
 		public List<PlacementPoint> GetPlacementPoints()
 		{
-			List<PlacementPoint> ret = new List<PlacementPoint>();
+			if (this.placementPointBuffer.Count > 0)
+				return this.placementPointBuffer;
 			var query = new DataBaseQuery(this.mapping.GetTableByObject(typeof(PlacementPoint)));
 			var result = this.connection.ExecuteQuery(query);
 			foreach (var res in result)
 			{
 				var pl = new PlacementPoint(res);
-				ret.Add(pl);
+				this.placementPointBuffer.Add(pl);
 			}
-			return ret;
+			return this.placementPointBuffer;
 		}
 
 		public List<TournamentSeries> GetTournamentSeries()
@@ -152,8 +164,6 @@ namespace DartApp.QueryService
 			series.Tournaments = new List<Tournament>();
 			series.AdditionalColumns = new List<AdditionalColumn>();
 
-			var tempPlayers = new List<Player>();
-
 			//get tournaments with matches and players of matches
 			var ttable = this.mapping.GetTableByObject(typeof(Tournament));
 			var tcondition = new Condition().Add(new PropertyExpression(ttable.Columns["TournamentSeries"], CompareEnum.Equals, series.GetId()));
@@ -173,8 +183,8 @@ namespace DartApp.QueryService
 				foreach (var m in mRes)
 				{
 					var match = new Match(m);
-					match.Player1 = GetPlayerById(m[2], tempPlayers);
-					match.Player2 = GetPlayerById(m[3], tempPlayers);
+					match.Player1 = GetPlayerById(m[2]);
+					match.Player2 = GetPlayerById(m[3]);
 					t.Matches.Add(match);
 				}
 
@@ -187,7 +197,7 @@ namespace DartApp.QueryService
 				foreach (var p in pRes)
 				{
 					var placement = new Placement(p);
-					placement.Player = GetPlayerById(p[2], tempPlayers);
+					placement.Player = GetPlayerById(p[2]);
 					t.Placements.Add(placement);
 				}
 				series.Tournaments.Add(t);
@@ -209,7 +219,7 @@ namespace DartApp.QueryService
 				foreach (var value in cvRes)
 				{
 					var columnValue = new AdditionalColumnValue(value);
-					columnValue.Player = GetPlayerById(value[2], tempPlayers);
+					columnValue.Player = GetPlayerById(value[2]);
 					column.Values.Add(columnValue);
 				}
 				series.AdditionalColumns.Add(column);
@@ -227,26 +237,22 @@ namespace DartApp.QueryService
 			foreach (var result in sRes)
 			{
 				var statistic = new Statistic(result);
-				statistic.Player = GetPlayerById(result[11], new List<Player>());
+				statistic.Player = GetPlayerById(result[11]);
 				statistic.TournamentSeries = selectedSeries;
 				statistics.Add(statistic);
 			}
 			return statistics;
 		}
 
-		private Player GetPlayerById(string playerId, List<Player> tempPlayers)
+		private Player GetPlayerById(string playerId)
 		{
-			var ret = tempPlayers.FirstOrDefault(x => x.GetId() == playerId);
+			if (this.playerBuffer.Count <= 0)
+				GetAllPlayers();
+
+			var ret = this.playerBuffer.FirstOrDefault(x => x.GetId() == playerId);
 			if (ret != null)
 				return ret;
-			var table = this.mapping.GetTableByObject(typeof (Player));
-			var condition = new Condition().Add(new PropertyExpression(table.Columns["Pid"], CompareEnum.Equals, playerId));
-			var query = new DataBaseQuery(table, condition);
-			var res = this.connection.ExecuteQuery(query).FirstOrDefault();
-			if(res == null)
-				return new Player("FL");
-			tempPlayers.Add(new Player(res));
-			return new Player(res);
+			return new Player("FL");
 		}
 	}
 }

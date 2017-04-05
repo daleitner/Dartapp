@@ -209,6 +209,8 @@ namespace DartApp.Club.Menu
 
 		private void LoadData(TournamentSeries selectedSeries)
 		{
+			this.queryService.ClearBuffers();
+			this.queryService.GetAllPlayers();
 			this.points = this.queryService.GetPlacementPoints();
 			this.series = this.queryService.GetTournamentSeries();
 			if(selectedSeries != null)

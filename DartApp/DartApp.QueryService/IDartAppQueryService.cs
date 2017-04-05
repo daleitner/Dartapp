@@ -20,5 +20,6 @@ namespace DartApp.QueryService
 		TournamentSeries GetTournamentSeriesOfTournament(Tournament tournament);
 		TournamentSeries GetFullTournamentSeries(TournamentSeries selectedSeries);
 		List<Statistic> GetStatisticsByTournamentSeries(TournamentSeries selectedSeries);
+		void ClearBuffers();
 	}
 }
