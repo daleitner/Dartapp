@@ -131,16 +131,24 @@ namespace DartApp.CommandServices
 			var ret = this.connection.ExecuteQuery(query);
 			if (ret == null)
 				return;
-			foreach(var list in ret)
+			var oldStatistics = ret.Select(x => 
 			{
-				var statistic = new Statistic(list);
-				statistic.Player = tournamentStatistics.Select(x => x.Player).FirstOrDefault(x => x.GetId() == list[11]);
-				if (statistic.Player != null)
+				var statistic = new Statistic(x);
+				statistic.Player = tournamentStatistics.Select(y => y.Player).FirstOrDefault(z => z.GetId() == x[11]);
+				return statistic;
+			}).Where(x => x.Player != null).ToList();
+
+			foreach(var newStatistic in tournamentStatistics)
+			{
+				var statistic = oldStatistics.FirstOrDefault(x => x.Player.Equals(newStatistic.Player));
+				if (statistic != null)
 				{
-					statistic.Merge(tournamentStatistics.First(x => x.Player == statistic.Player));
-					var sCondition = new Condition().Add(new PropertyExpression(table.Columns["Sid"], CompareEnum.Equals, statistic.GetId()));
-					var dictionary = this.mapping.CreateDatabaseDictionary(table, statistic);
-					this.connection.UpdateElement(new ElementUpdate(table, dictionary, sCondition));
+					statistic.Merge(newStatistic);
+					UpdateStatistic(statistic);
+				}
+				else
+				{
+					InsertStatistic(newStatistic);
 				}
 			}
 

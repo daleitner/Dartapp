@@ -34,6 +34,7 @@ namespace DartApp.Club.Tournament
 		public TournamentViewModel(Models.Tournament tournament, TournamentSeries series, IEventService eventService, IDartAppCommandService commandService, IDartAppQueryService queryService)
 		{
 			this.series = series;
+			this.queryService = queryService;
 			this.commandService = commandService;
 			this.tournament = tournament;
 			this.tournamentPlan = new TournamentPlanViewModel(this.tournament, series.AdditionalColumns);
@@ -194,6 +195,7 @@ namespace DartApp.Club.Tournament
 							statistic.WonSets++;
 					}
 				}
+				ret.Add(statistic);
 			}
 			return ret;
 		}
