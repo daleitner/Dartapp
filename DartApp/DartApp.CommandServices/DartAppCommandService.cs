@@ -135,6 +135,7 @@ namespace DartApp.CommandServices
 			{
 				var statistic = new Statistic(x);
 				statistic.Player = tournamentStatistics.Select(y => y.Player).FirstOrDefault(z => z.GetId() == x[11]);
+				statistic.TournamentSeries = series;
 				return statistic;
 			}).Where(x => x.Player != null).ToList();
 
