@@ -273,12 +273,12 @@ namespace DartApp.Club.Menu
 					if (!found)
 						dvm.AdditionalColumns.Add(column.Name, "");
 				}
-				var sum = 0;
-				var legsplus = 0;
-				var legsminus = 0;
-				var setsplus = 0;
-				var setsminus = 0;
+
 				var pointsList = new List<int>();
+				var legsPlusList = new List<int>();
+				var legsMinusList = new List<int>();
+				var setsPlusList = new List<int>();
+				var setsMinusList = new List<int>();
 				foreach (var tournament in this.selectedSeries.Tournaments)
 				{
 					if (tournament.State == TournamentState.Closed)
@@ -303,61 +303,88 @@ namespace DartApp.Club.Menu
 						{
 							dvm.Points.Add(tournament.Key.ToString(), "");
 							pointsList.Add(0);
+							legsPlusList.Add(0);
+							legsMinusList.Add(0);
+							setsPlusList.Add(0);
+							setsMinusList.Add(0);
 						}
-
-						//Leg Ratio, Set Ratio
-						foreach (var match in tournament.Matches)
+						else
 						{
-							if (match.Player1.Equals(player))
+							var legsp = 0;
+							var legsm = 0;
+							var setsp = 0;
+							var setsm = 0;
+							//Leg Ratio, Set Ratio
+							foreach (var match in tournament.Matches)
 							{
-								if (!PlayerIsFreilos(match.Player2, allPlayers))
+								if (match.Player1.Equals(player))
 								{
-									legsplus += match.Player1Legs;
-									legsminus += match.Player2Legs;
-									if (match.Player1Legs > match.Player2Legs)
-										setsplus ++;
-									else
-										setsminus++;
+									if (!PlayerIsFreilos(match.Player2, allPlayers))
+									{
+										legsp += match.Player1Legs;
+										legsm += match.Player2Legs;
+										if (match.Player1Legs > match.Player2Legs)
+											setsp++;
+										else
+											setsm++;
+									}
+								}
+								else if (match.Player2.Equals(player))
+								{
+									if (!PlayerIsFreilos(match.Player1, allPlayers))
+									{
+										legsp += match.Player2Legs;
+										legsm += match.Player1Legs;
+										if (match.Player1Legs > match.Player2Legs)
+											setsm++;
+										else
+											setsp++;
+									}
 								}
 							}
-							else if (match.Player2.Equals(player))
-							{
-								if (!PlayerIsFreilos(match.Player1, allPlayers))
-								{
-									legsplus += match.Player2Legs;
-									legsminus += match.Player1Legs;
-									if (match.Player1Legs > match.Player2Legs)
-										setsminus++;
-									else
-										setsplus++;
-								}
-							}
+							legsPlusList.Add(legsp);
+							legsMinusList.Add(legsm);
+							setsPlusList.Add(setsp);
+							setsMinusList.Add(setsm);
 						}
 					}
 					else
 					{
 						dvm.Points.Add(tournament.Key.ToString(), "");
 						pointsList.Add(0);
+						legsPlusList.Add(0);
+						legsMinusList.Add(0);
+						setsPlusList.Add(0);
+						setsMinusList.Add(0);
 					}
 				}
 
-				dvm.LegRatios.Add("Legs+", legsplus);
-				dvm.LegRatios.Add("Legs-", legsminus);
-				dvm.LegRatios.Add("Leg Diff", legsplus-legsminus);
-
-				dvm.SetRatios.Add("Sets+", setsplus);
-				dvm.SetRatios.Add("Sets-", setsminus);
-				dvm.SetRatios.Add("Set Diff", setsplus - setsminus);
-
 				var pointsOrderIndexList = GetOrderIndicess(pointsList);
 				pointsOrderIndexList = pointsOrderIndexList.GetRange(0, pointsOrderIndexList.Count - this.selectedSeries.RelevantTournaments);
+
+				var sum = 0;
+				var legsplus = 0;
+				var legsminus = 0;
+				var setsplus = 0;
+				var setsminus = 0;
 				//pointsList.Sort();
 				for (int i = 0; i < pointsList.Count; i++)
 				{
 					if (pointsOrderIndexList.Contains(i))
 						continue;
 					sum += pointsList[i];
+					legsplus += legsPlusList[i];
+					legsminus += legsMinusList[i];
+					setsplus += setsPlusList[i];
+					setsminus += setsMinusList[i];
 				}
+				dvm.LegRatios.Add("Legs+", legsplus);
+				dvm.LegRatios.Add("Legs-", legsminus);
+				dvm.LegRatios.Add("Leg Diff", legsplus - legsminus);
+
+				dvm.SetRatios.Add("Sets+", setsplus);
+				dvm.SetRatios.Add("Sets-", setsminus);
+				dvm.SetRatios.Add("Set Diff", setsplus - setsminus);
 				dvm.Sum = sum;
 				fullDataViewModels.Add(dvm);
 			}
