@@ -45,6 +45,11 @@ namespace DartApp.Club.Statistics
 			if (stat.Count == 0)
 				stat = CreateStatistics();
 			stat.ForEach(x => this.statistics.Add(new PlayerStatisticViewModel(x)));
+			this.statistics = this.statistics.OrderByDescending(x => x.Points).ThenByDescending(x => x.SetDifference).ThenByDescending(x => x.LegDifference).ToList();
+			for(int i = 1; i<= this.statistics.Count; i++)
+			{
+				this.statistics[i-1].Ranking = i;
+			}
 			this.statistics = this.statistics.OrderBy(x => x.Name).ToList();
 		}
 

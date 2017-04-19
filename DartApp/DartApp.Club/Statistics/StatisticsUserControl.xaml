@@ -39,21 +39,12 @@
 				<Grid Grid.Row="1">
 					<ScrollViewer Margin="0,0,5,0">
 						<Grid>
-							<!--Background="{StaticResource ColorMediumAquamarine}" -->
 							<ListBox HorizontalAlignment="Stretch"
                               SelectionMode="Single" VerticalAlignment="Stretch" ItemsSource="{Binding Path=Statistics}" 
                               SelectedItem="{Binding Path=SelectedStatistic}" Width="auto" AllowDrop="False" FontSize="16" DisplayMemberPath="Name">
 							</ListBox>
 						</Grid>
 					</ScrollViewer>
-				</Grid>
-				<Grid>
-					<Label Name="label8" Content="Suche:" Height="28" Width="55" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0,0,5,8" FontWeight="Bold" FontSize="14"/>
-					<TextBox Height="23" HorizontalAlignment="Stretch" Margin="55,5,10,0" Name="textBox1" VerticalAlignment="Top" Text="{Binding Path=Search, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
-						<TextBox.InputBindings>
-							<KeyBinding Command="{Binding Path=SearchCommand}" Key="Enter" />
-						</TextBox.InputBindings>
-					</TextBox>
 				</Grid>
 			</Grid>
 			<Grid Grid.Column="1">

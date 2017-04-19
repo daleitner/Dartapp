@@ -21,18 +21,10 @@ namespace DartApp.Club.Statistics
 
 		#region properties
 		public Statistic statistic { get; private set; }
-		//public int Ranking
-		//{
-		//	get
-		//	{
-		//		return this.statistic.Ranking;
-		//	}
-		//	set
-		//	{
-		//		this.ranking = value;
-		//		OnPropertyChanged("Ranking");
-		//	}
-		//}
+		public int Ranking
+		{
+			get; set;
+		}
 		public int Points
 		{
 			get
