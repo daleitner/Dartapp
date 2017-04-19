@@ -53,4 +53,7 @@
 	<DataTemplate DataType="{x:Type stat:StatisticsViewModel}">
 		<stat:StatisticsUserControl />
 	</DataTemplate>
+	<DataTemplate DataType="{x:Type stat:PlayerStatisticViewModel}">
+		<stat:PlayerStatisticUserControl />
+	</DataTemplate>
 </ResourceDictionary>

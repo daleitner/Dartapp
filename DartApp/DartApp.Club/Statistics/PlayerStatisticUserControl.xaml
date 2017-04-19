@@ -1,0 +1,64 @@
+﻿<UserControl x:Class="DartApp.Club.Statistics.PlayerStatisticUserControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:DartApp.Club.Statistics"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <Grid>
+		<Label Content="{Binding Path=Name}" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,10,0,0" FontSize="20" FontWeight="Bold" />
+		<ScrollViewer Margin="10,40,0,0" VerticalScrollBarVisibility="Auto">
+		<StackPanel>
+			<StackPanel Orientation="Horizontal">
+				<Label Content="Rang:"/>
+				<Label Content="{Binding Path=Ranking}"/>
+			</StackPanel>
+			<StackPanel Orientation="Horizontal">
+				<Label Content="Punkte:"/>
+				<Label Content="{Binding Path=Points}"/>
+			</StackPanel>
+			<StackPanel Orientation="Horizontal">
+				<Label Content="Sets gewonnen:"/>
+				<Label Content="{Binding Path=WonSets}"/>
+			</StackPanel>
+			<StackPanel Orientation="Horizontal">
+				<Label Content="Sets verloren:"/>
+				<Label Content="{Binding Path=LostSets}"/>
+			</StackPanel>
+			<StackPanel Orientation="Horizontal">
+				<Label Content="Set Differenz:"/>
+				<Label Content="{Binding Path=SetDifference}"/>
+			</StackPanel>
+			<StackPanel Orientation="Horizontal">
+				<Label Content="Legs gewonnen:"/>
+				<Label Content="{Binding Path=WonLegs}"/>
+			</StackPanel>
+			<StackPanel Orientation="Horizontal">
+				<Label Content="Legs verloren:"/>
+				<Label Content="{Binding Path=LostLegs}"/>
+			</StackPanel>
+			<StackPanel Orientation="Horizontal">
+				<Label Content="Leg Differenz:"/>
+				<Label Content="{Binding Path=LegDifference}"/>
+			</StackPanel>
+			<StackPanel Orientation="Horizontal">
+				<Label Content="Anzahl Freilose:"/>
+				<Label Content="{Binding Path=FLs}"/>
+			</StackPanel>
+			<StackPanel Orientation="Horizontal">
+				<Label Content="Goldmedallien:"/>
+				<Label Content="{Binding Path=First}"/>
+			</StackPanel>
+			<StackPanel Orientation="Horizontal">
+				<Label Content="Silbermedallien:"/>
+				<Label Content="{Binding Path=Second}"/>
+			</StackPanel>
+			<StackPanel Orientation="Horizontal">
+				<Label Content="Bronzemedallien:"/>
+				<Label Content="{Binding Path=Third}"/>
+			</StackPanel>
+		</StackPanel>
+		</ScrollViewer>
+	</Grid>
+</UserControl>

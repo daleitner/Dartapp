@@ -18,8 +18,8 @@ namespace DartApp.Club.Statistics
 		private RelayCommand searchCommand = null;
 		private RelayCommand updateCommand = null;
 		private ObservableCollection<string> searchResult = null;
-		private List<Statistic> statistics;
-		private string selectedItem = "";
+		private List<PlayerStatisticViewModel> statistics;
+		private PlayerStatisticViewModel selectedStatistic;
 		private string search = "";
 		private readonly IDartAppQueryService queryService;
 		private readonly IDartAppCommandService commandService;
@@ -34,21 +34,25 @@ namespace DartApp.Club.Statistics
 			this.queryService = queryService;
 			this.commandService = commandService;
 			this.series = selectedSeries;
+			this.statistics = new List<PlayerStatisticViewModel>();
 			if(this.series.Tournaments.Count != 0)
 				LoadData();
 		}
 
 		private void LoadData()
 		{
-			this.statistics = this.queryService.GetStatisticsByTournamentSeries(this.series);
-			if (this.statistics.Count == 0)
-				CreateStatistics();
+			var stat = this.queryService.GetStatisticsByTournamentSeries(this.series);
+			if (stat.Count == 0)
+				stat = CreateStatistics();
+			stat.ForEach(x => this.statistics.Add(new PlayerStatisticViewModel(x)));
+			this.statistics = this.statistics.OrderBy(x => x.Name).ToList();
 		}
 
-		private void CreateStatistics()
+		private List<Statistic> CreateStatistics()
 		{
+			var ret = new List<Statistic>();
 			if (this.series.Tournaments.Count(x => x.State == TournamentState.Closed) <= 0)
-				return;
+				return ret;
 
 			var points = this.queryService.GetPlacementPoints();
 			var allPlayers = GetAllPlayersOfTournamentSeries(this.series);
@@ -132,7 +136,9 @@ namespace DartApp.Club.Statistics
 				}
 				statistic.Average = (int)Math.Round((double)statistic.Points/played,0);
 				this.commandService.InsertStatistic(statistic);
+				ret.Add(statistic);
 			}
+			return ret;
 		}
 
 		#endregion
@@ -180,28 +186,28 @@ namespace DartApp.Club.Statistics
 
 
 
-		public ObservableCollection<string> SearchResult
+		public List<PlayerStatisticViewModel> Statistics
 		{
 			get
 			{
-				return this.searchResult;
+				return this.statistics;
 			}
 			set
 			{
-				this.searchResult = value;
-				OnPropertyChanged("SearchResult");
+				this.statistics = value;
+				OnPropertyChanged("Statistics");
 			}
 		}
-		public string SelectedItem
+		public PlayerStatisticViewModel SelectedStatistic
 		{
 			get
 			{
-				return this.selectedItem;
+				return this.selectedStatistic;
 			}
 			set
 			{
-				this.selectedItem = value;
-				OnPropertyChanged("SelectedItem");
+				this.selectedStatistic = value;
+				OnPropertyChanged("SelectedStatistic");
 			}
 		}
 		public string Search
@@ -232,6 +238,7 @@ namespace DartApp.Club.Statistics
 		{
 			var allPlayers = GetAllPlayersOfTournamentSeries(this.series);
 			var placementPoints = this.queryService.GetPlacementPoints();
+			var newStatistics = new List<Statistic>();
 			foreach(var player in allPlayers)
 			{
 				var statistic = new Statistic(player, this.series);
@@ -289,7 +296,7 @@ namespace DartApp.Club.Statistics
 					}
 				}
 
-				var oldStatistic = this.statistics.FirstOrDefault(x => x.Player.Equals(player));
+				var oldStatistic = this.statistics.Select(x => x.statistic).FirstOrDefault(x => x.Player.Equals(player));
 				if(oldStatistic == null)
 					this.commandService.InsertStatistic(statistic);
 				else if(oldStatistic.IsOutOfDate(statistic))
@@ -297,7 +304,9 @@ namespace DartApp.Club.Statistics
 					oldStatistic.Update(statistic);
 					this.commandService.UpdateStatistic(oldStatistic); //oldStatistic wegen der Id
 				}
+				newStatistics.Add(statistic);
 			}
+			this.Statistics = new List<PlayerStatisticViewModel>(newStatistics.Select(x=> new PlayerStatisticViewModel(x)).OrderBy(x => x.Name));
 		}
 
 		private List<Player> GetAllPlayersOfTournamentSeries(TournamentSeries tournamentSeries)

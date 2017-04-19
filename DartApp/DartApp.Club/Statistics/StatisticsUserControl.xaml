@@ -41,8 +41,8 @@
 						<Grid>
 							<!--Background="{StaticResource ColorMediumAquamarine}" -->
 							<ListBox HorizontalAlignment="Stretch"
-                              SelectionMode="Single" VerticalAlignment="Stretch" ItemsSource="{Binding Path=SearchResult, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                              SelectedItem="{Binding Path=SelectedItem}" Width="auto" AllowDrop="False" FontSize="16" DisplayMemberPath="DisplayName">
+                              SelectionMode="Single" VerticalAlignment="Stretch" ItemsSource="{Binding Path=Statistics}" 
+                              SelectedItem="{Binding Path=SelectedStatistic}" Width="auto" AllowDrop="False" FontSize="16" DisplayMemberPath="Name">
 							</ListBox>
 						</Grid>
 					</ScrollViewer>
@@ -56,10 +56,9 @@
 					</TextBox>
 				</Grid>
 			</Grid>
-			<!--<Grid Grid.Column="1">
-				<Label Content="{Binding Path=SelectedPlayer}" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="30" FontWeight="Bold" Margin="0,5,0,0" />
-				<ContentPresenter Content="{Binding Path=SpecificView}" Margin="0,35,0,0"/>
-			</Grid>-->
+			<Grid Grid.Column="1">
+				<ContentPresenter Content="{Binding Path=SelectedStatistic}" />
+			</Grid>
 		</Grid>
 	</Grid>
 </UserControl>
